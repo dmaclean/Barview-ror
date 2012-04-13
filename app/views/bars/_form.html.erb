@@ -1,0 +1,69 @@
+<%= form_for(@bar) do |f| %>
+  <% if @bar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bar.errors.count, "error") %> prohibited this bar from being saved:</h2>
+
+      <ul>
+      <% @bar.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id %><br />
+    <%= f.number_field :id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :zip %><br />
+    <%= f.text_field :zip %>
+  </div>
+  <div class="field">
+    <%= f.label :lat %><br />
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field">
+    <%= f.label :lng %><br />
+    <%= f.text_field :lng %>
+  </div>
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :reference %><br />
+    <%= f.text_area :reference %>
+  </div>
+  <div class="field">
+    <%= f.label :verified %><br />
+    <%= f.number_field :verified %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
