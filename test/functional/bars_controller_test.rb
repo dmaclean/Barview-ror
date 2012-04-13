@@ -3,6 +3,21 @@ require 'test_helper'
 class BarsControllerTest < ActionController::TestCase
   setup do
     @bar = bars(:one)
+    @update = {
+      :id => 3,
+	  :name => 'MyString',
+	  :address => 'MyString',
+	  :city => 'MyString',
+	  :state => 'MyString',
+	  :zip => '12345',
+	  :lat => 1.5,
+	  :lng => 1.5,
+	  :username => 'MyString2',
+	  :password => 'MyString',
+	  :email => 'dmaclean@bar-view.com',
+	  :reference => 'MyText',
+	  :verified => 1
+    }
   end
 
   test "should get index" do
@@ -18,7 +33,8 @@ class BarsControllerTest < ActionController::TestCase
 
   test "should create bar" do
     assert_difference('Bar.count') do
-      post :create, :bar => { :address => @bar.address, :city => @bar.city, :email => @bar.email, :id => @bar.id, :lat => @bar.lat, :lng => @bar.lng, :name => @bar.name, :password => @bar.password, :reference => @bar.reference, :state => @bar.state, :username => @bar.username, :verified => @bar.verified, :zip => @bar.zip }
+      #post :create, :bar => { :address => @bar.address, :city => @bar.city, :email => @bar.email, :id => @bar.id, :lat => @bar.lat, :lng => @bar.lng, :name => @bar.name, :password => @bar.password, :reference => @bar.reference, :state => @bar.state, :username => @bar.username, :verified => @bar.verified, :zip => @bar.zip }
+      post :create, :bar => @update
     end
 
     assert_redirected_to bar_path(assigns(:bar))
@@ -35,7 +51,8 @@ class BarsControllerTest < ActionController::TestCase
   end
 
   test "should update bar" do
-    put :update, :id => @bar, :bar => { :address => @bar.address, :city => @bar.city, :email => @bar.email, :id => @bar.id, :lat => @bar.lat, :lng => @bar.lng, :name => @bar.name, :password => @bar.password, :reference => @bar.reference, :state => @bar.state, :username => @bar.username, :verified => @bar.verified, :zip => @bar.zip }
+    #put :update, :id => @bar, :bar => { :address => @bar.address, :city => @bar.city, :email => @bar.email, :id => @bar.id, :lat => @bar.lat, :lng => @bar.lng, :name => @bar.name, :password => @bar.password, :reference => @bar.reference, :state => @bar.state, :username => @bar.username, :verified => @bar.verified, :zip => @bar.zip }
+    put :update, :id => @bar, :bar => @update
     assert_redirected_to bar_path(assigns(:bar))
   end
 

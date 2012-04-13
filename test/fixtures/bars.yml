@@ -6,26 +6,26 @@ one:
   address: MyString
   city: MyString
   state: MyString
-  zip: MyString
+  zip: 01234
   lat: 1.5
   lng: 1.5
-  username: MyString
+  username: username1
   password: MyString
-  email: MyString
+  email: dmaclean@test.com
   reference: MyText
   verified: 1
 
 two:
-  id: 1
+  id: 2
   name: MyString
   address: MyString
   city: MyString
   state: MyString
-  zip: MyString
+  zip: 98765
   lat: 1.5
   lng: 1.5
-  username: MyString
+  username: username1
   password: MyString
-  email: MyString
+  email: dan@bar-view.com
   reference: MyText
   verified: 1
