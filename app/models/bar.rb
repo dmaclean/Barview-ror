@@ -7,6 +7,6 @@ class Bar < ActiveRecord::Base
   					:message => "A zip code must consist of exactly 5 numbers (no letters)"
   }
   validates :email, :format => {
-              		:with    => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i,
-              		:message => "Only letters allowed" }
+              		:with    => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(?:[a-zA-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$/i,
+              		:message => "A valid email address is required." }
 end

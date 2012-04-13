@@ -1,10 +1,7 @@
 require 'test_helper'
 
 class BarTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  
+ 
   test "Bar attributes cannot be empty" do
     bar = Bar.new
     assert bar.invalid?
@@ -51,6 +48,41 @@ class BarTest < ActiveSupport::TestCase
     # 5 digits - should pass
     bar.zip = '12345'
     assert bar.valid?
+  end
+  
+  test "Email must be in correct format" do
+    bar = Bar.new(
+      :id => 1,
+      :address => '10 Juniper Lane',
+      :city => 'Medfield',
+      :email => 'dan',
+      :lat => 1.5,
+      :lng => 1.5,
+      :name => 'Dan Bar',
+      :password => 'password',
+      :reference => 'hello',
+      :state => 'MA',
+      :username => 'dmaclean',
+      :verified => 0,
+      :zip => '12345'
+    )
     
+    assert bar.invalid?
+    assert_equal "A valid email address is required.", bar.errors[:email].join('; ')
+    
+    bar.email = 'dan@'
+    assert bar.invalid?
+    assert_equal "A valid email address is required.", bar.errors[:email].join('; ')
+    
+    bar.email = '@something.com'
+    assert bar.invalid?
+    assert_equal "A valid email address is required.", bar.errors[:email].join('; ')
+    
+    bar.email = '@something'
+    assert bar.invalid?
+    assert_equal "A valid email address is required.", bar.errors[:email].join('; ')
+    
+    bar.email = 'dan@bar-view.com'
+    assert bar.valid?
   end
 end
