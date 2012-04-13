@@ -1,4 +1,6 @@
 BarviewRor::Application.routes.draw do
+  resources :bars
+
   get "home/index"
 
   # The priority is based upon order of creation:
