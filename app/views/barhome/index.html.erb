@@ -1,2 +1,82 @@
-<h1>Barhome#index</h1>
-<p>Find me in app/views/barhome/index.html.erb</p>
+<p>Logged in status is <%= @logged_in %> with <%= session[:session_id] %>
+<% if @bar != nil %>
+	for <%= @bar.name %> (<%= @bar.id %>)</p>
+<% end %>
+
+<!--
+  BAR OWNER IS NOT LOGGED IN!
+-->
+<% if not @logged_in %>
+	<div class="row">
+		<div id="welcome" class="span8">
+			<h1>Welcome to Bar-view.com.</h1>
+			<p>
+			Bar-view.com is a service that allows bars to provide a real-time video 
+			stream of what's happening at their establishment to Barview users.
+			</p>
+		</div>
+	</div>
+			
+	<div class="row">
+		<div id="webcam_desc" class="span8">
+			<!--Barview.com bars-->
+			<p>
+			Using the bar-view.com broadcasting service requires a webcam to be connected to your computer.  If
+			you don't already have a webcam then you can find several models at <a href="http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=wireless+webcam&x=0&y=0">amazon.com</a>.
+			</p>
+		</div>
+	</div>
+	<div class="row">
+		<div id="signup_desc" class="span8">
+			<p>
+			If you are a bar owner and would like to sign up for Bar-view.com then 
+			click <a href="<?php echo base_url(); ?>index.php?/signup">here to register</a>.  If
+			you have already signed up then click the "Login" link to log in and begin streaming.
+			</p>
+		</div>
+	</div>
+	
+<!--
+  BAR OWNER IS LOGGED IN - SHOW THE VIDEO FEED
+-->
+<% else %>
+	<div class="row">
+		<div class="span3">
+			<h2>Viewers</h2>
+			<ul id="realtime" class="unstyled"><div>Finding realtime viewers...</div></ul>
+		</div>
+		<div class="span9">
+			<h2>Broadcast to Bar-view</h2>
+			<div id="broadcast" class="broadcast">			
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="barview_cam">
+					<param name="movie" value="<?php echo base_url();?>camera/barview_cam.swf?<%= rand(100000000) %>" />
+					<param name="quality" value="high" />
+					<param name="bgcolor" value="#ffffff" />
+					<param name="allowScriptAccess" value="sameDomain" />
+					<param name="allowFullScreen" value="true" />
+					<param name="FlashVars" value="bar_name=<%= url_encode @bar.name %>&session_id=<%= session[:session_id] %>&bar_id=<%= @bar.id %>&server_url=<?php echo base_url(); ?>index.php?/rest/barimage/<%= @bar.id %>"/>
+					<embed 	src="<?php echo base_url();?>camera/barview_cam.swf?<%= rand(100000000) %>" 
+							width="500" 
+							height="400" 
+							FlashVars="bar_name=<%= url_encode @bar.name %>&session_id=<%= session[:session_id] %>&bar_id=<%= @bar.id %>&server_url=<?php echo base_url(); ?>index.php?/rest/barimage/<%= @bar.id %>"/>"></embed>
+					<!--<![endif]-->
+				</object>	
+			</div>
+		</div>
+
+		<div class="span4">
+			<h2>My Current Deals</h2>
+			<dl id="bar_events_list">
+				<?php foreach($events as $e) { ?>
+					<dt id="event_<?php echo $e['id'] ?>"><?php echo $e['detail']; ?></dt>
+					<dd id="event_<?php echo $e['id'];?>_a"><a class="btn small danger"  onclick="deleteEvent('<?php echo base_url(); ?>', <?php echo $e['id']; ?>, <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>');">delete</a></dd>
+				<?php } ?>
+			</dl>
+			<div class="bar_events_edit">
+				<textarea id="event_text" name="event_text" rows="5"></textarea><br/>
+				<button class="btn primary" type="button" id="submit" name="submit" value="Add new event or deal." 
+								onclick="addEvent('<?php echo base_url(); ?>', $('#event_text').val(), <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>');">Add new event or deal.</button>
+			</div>
+		</div>
+	</div>
+<% end %>
