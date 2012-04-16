@@ -1,4 +1,15 @@
 BarviewRor::Application.routes.draw do
+  controller :barlogin do
+    get 'login' => :new
+    post 'login' => :create
+    delete 'logout' => :destroy
+  end
+
+  #get "barhome/index"
+  controller :barhome do
+    get 'barhome' => :index
+  end
+
   resources :bars
 
   get "home/index"
