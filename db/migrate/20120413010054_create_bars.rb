@@ -1,7 +1,7 @@
 class CreateBars < ActiveRecord::Migration
   def change
     create_table :bars do |t|
-      t.integer :id
+      #t.integer :id
       t.string :name
       t.string :address
       t.string :city
@@ -10,7 +10,8 @@ class CreateBars < ActiveRecord::Migration
       t.float :lat
       t.float :lng
       t.string :username
-      t.string :password
+      t.string :hashed_password
+      t.string :salt
       t.string :email
       t.text :reference
       t.integer :verified

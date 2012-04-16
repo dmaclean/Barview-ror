@@ -3,9 +3,8 @@ require 'test_helper'
 class BarsControllerTest < ActionController::TestCase
   setup do
     @bar = bars(:one)
-    @update = {
-      :id => 3,
-	  :name => 'MyString',
+    @new = {
+      :name => 'MyString',
 	  :address => 'MyString',
 	  :city => 'MyString',
 	  :state => 'MyString',
@@ -14,6 +13,20 @@ class BarsControllerTest < ActionController::TestCase
 	  :lng => 1.5,
 	  :username => 'MyString2',
 	  :password => 'MyString',
+	  :password_confirmation => 'MyString',
+	  :email => 'dmaclean@bar-view.com',
+	  :reference => 'MyText',
+	  :verified => 1
+    }
+    @update = {
+      :name => 'MyString',
+	  :address => 'MyString',
+	  :city => 'MyString',
+	  :state => 'MyString',
+	  :zip => '12345',
+	  :lat => 1.5,
+	  :lng => 1.5,
+	  :username => 'MyString2',
 	  :email => 'dmaclean@bar-view.com',
 	  :reference => 'MyText',
 	  :verified => 1
@@ -34,10 +47,10 @@ class BarsControllerTest < ActionController::TestCase
   test "should create bar" do
     assert_difference('Bar.count') do
       #post :create, :bar => { :address => @bar.address, :city => @bar.city, :email => @bar.email, :id => @bar.id, :lat => @bar.lat, :lng => @bar.lng, :name => @bar.name, :password => @bar.password, :reference => @bar.reference, :state => @bar.state, :username => @bar.username, :verified => @bar.verified, :zip => @bar.zip }
-      post :create, :bar => @update
+      post :create, :bar => @new
     end
 
-    assert_redirected_to bar_path(assigns(:bar))
+    assert_redirected_to bars_path
   end
 
   test "should show bar" do
@@ -53,7 +66,7 @@ class BarsControllerTest < ActionController::TestCase
   test "should update bar" do
     #put :update, :id => @bar, :bar => { :address => @bar.address, :city => @bar.city, :email => @bar.email, :id => @bar.id, :lat => @bar.lat, :lng => @bar.lng, :name => @bar.name, :password => @bar.password, :reference => @bar.reference, :state => @bar.state, :username => @bar.username, :verified => @bar.verified, :zip => @bar.zip }
     put :update, :id => @bar, :bar => @update
-    assert_redirected_to bar_path(assigns(:bar))
+    assert_redirected_to bars_path
   end
 
   test "should destroy bar" do

@@ -1,5 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+<% SALT = "NaCl" unless defined?(SALT) %>
+
 one:
   id: 1
   name: MyString
@@ -10,7 +12,8 @@ one:
   lat: 1.5
   lng: 1.5
   username: username1
-  password: MyString
+  hashed_password: <%= Bar.encrypt_password('secret', SALT) %>
+  salt: <%= SALT %>
   email: dmaclean@test.com
   reference: MyText
   verified: 1
@@ -24,8 +27,9 @@ two:
   zip: 98765
   lat: 1.5
   lng: 1.5
-  username: username1
-  password: MyString
+  username: username2
+  hashed_password: MyString
+  salt: MyString
   email: dan@bar-view.com
   reference: MyText
   verified: 1

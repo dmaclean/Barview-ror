@@ -2,7 +2,7 @@ class BarsController < ApplicationController
   # GET /bars
   # GET /bars.json
   def index
-    @bars = Bar.all
+    @bars = Bar.order(:name)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,11 +40,24 @@ class BarsController < ApplicationController
   # POST /bars
   # POST /bars.json
   def create
-    @bar = Bar.new(params[:bar])
+    #@bar = Bar.new(params[:bar])
+    @bar = Bar.new
+    @bar.address = params[:bar][:address]
+    @bar.city = params[:bar][:city]
+    @bar.email = params[:bar][:email]
+    @bar.lat = params[:bar][:lat]
+    @bar.lng = params[:bar][:lng]
+    @bar.name = params[:bar][:name]
+    @bar.reference = params[:bar][:reference]
+    @bar.state = params[:bar][:state]
+    @bar.username = params[:bar][:username]
+    @bar.password = params[:bar][:password]
+    @bar.verified = params[:bar][:verified]
+    @bar.zip = params[:bar][:zip]
 
     respond_to do |format|
       if @bar.save
-        format.html { redirect_to @bar, :notice => 'Bar was successfully created.' }
+        format.html { redirect_to bars_url, :notice => 'Bar #{@bar.name} was successfully created.' }
         format.json { render :json => @bar, :status => :created, :location => @bar }
       else
         format.html { render :action => "new" }
@@ -60,7 +73,7 @@ class BarsController < ApplicationController
 
     respond_to do |format|
       if @bar.update_attributes(params[:bar])
-        format.html { redirect_to @bar, :notice => 'Bar was successfully updated.' }
+        format.html { redirect_to bars_url, :notice => 'Bar #{@bar.name} was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

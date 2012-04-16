@@ -19,20 +19,19 @@ class BarTest < ActiveSupport::TestCase
   
   test "Zip code must be 5 digits" do
     bar = Bar.new(
-      :id => 1,
       :address => '10 Juniper Lane',
       :city => 'Medfield',
       :email => 'dan@bar-view.com',
       :lat => 1.5,
       :lng => 1.5,
       :name => 'Dan Bar',
-      :password => 'password',
       :reference => 'hello',
       :state => 'MA',
       :username => 'dmaclean',
       :verified => 0,
       :zip => 'abc'
     )
+    bar.password = 'password'
     
     # Should be invalid with 'abc' zip code
     assert bar.invalid?
@@ -52,21 +51,22 @@ class BarTest < ActiveSupport::TestCase
   
   test "Email must be in correct format" do
     bar = Bar.new(
-      :id => 1,
       :address => '10 Juniper Lane',
       :city => 'Medfield',
       :email => 'dan',
       :lat => 1.5,
       :lng => 1.5,
       :name => 'Dan Bar',
-      :password => 'password',
       :reference => 'hello',
       :state => 'MA',
       :username => 'dmaclean',
       :verified => 0,
       :zip => '12345'
     )
+    bar.password = 'password'
     
+    bar2 = Bar.find(1)
+    print bar2
     assert bar.invalid?
     assert_equal "A valid email address is required.", bar.errors[:email].join('; ')
     

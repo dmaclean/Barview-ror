@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413010054) do
+ActiveRecord::Schema.define(:version => 20120416011104) do
 
   create_table "bars", :force => true do |t|
     t.string   "name"
@@ -21,12 +21,13 @@ ActiveRecord::Schema.define(:version => 20120413010054) do
     t.float    "lat"
     t.float    "lng"
     t.string   "username"
-    t.string   "password"
     t.string   "email"
     t.text     "reference"
     t.integer  "verified"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "hashed_password"
+    t.string   "salt"
   end
 
 end
