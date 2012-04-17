@@ -32,6 +32,8 @@ class BarTest < ActiveSupport::TestCase
       :zip => 'abc'
     )
     bar.password = 'password'
+    bar.build_barimage
+    assert bar.barimage != nil
     
     # Should be invalid with 'abc' zip code
     assert bar.invalid?
@@ -66,7 +68,6 @@ class BarTest < ActiveSupport::TestCase
     bar.password = 'password'
     
     bar2 = Bar.find(1)
-    print bar2
     assert bar.invalid?
     assert_equal "A valid email address is required.", bar.errors[:email].join('; ')
     

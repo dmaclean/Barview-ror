@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  bar_id: 1
+  image: public/broadcast_images/1.jpeg
+
+two:
+  bar_id: 2
+  image: public/broadcast_images/2.jpeg

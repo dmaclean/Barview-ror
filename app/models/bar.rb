@@ -16,6 +16,8 @@ class Bar < ActiveRecord::Base
   attr_accessor :password_confirmation
   attr_reader   :password
   
+  has_one :barimage
+  
   validate :password_must_be_present
   
   class << self
