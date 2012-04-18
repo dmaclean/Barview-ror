@@ -49,17 +49,17 @@
 			<h2>Broadcast to Bar-view</h2>
 			<div id="broadcast" class="broadcast">			
 				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="barview_cam">
-					<param name="movie" value="<?php echo base_url();?>camera/barview_cam.swf?<%= rand(100000000) %>" />
+					<param name="movie" value="camera/barview_cam.swf?<%= rand(100000000) %>" />
 					<param name="quality" value="high" />
 					<param name="bgcolor" value="#ffffff" />
 					<param name="allowScriptAccess" value="sameDomain" />
 					<param name="allowFullScreen" value="true" />
-					<param name="FlashVars" value="bar_name=<%= url_encode @bar.name %>&session_id=<%= session[:session_id] %>&bar_id=<%= @bar.id %>&server_url=<?php echo base_url(); ?>index.php?/rest/barimage/<%= @bar.id %>"/>
-					<embed 	src="<?php echo base_url();?>camera/barview_cam.swf?<%= rand(100000000) %>" 
+					<param name="FlashVars" value="bar_name=<%= url_encode @bar.name %>&session_id=<%= session[:session_id] %>&bar_id=<%= @bar.id %>&server_url=http://<%= request.env['HTTP_HOST']%>/barimage/<%= @bar.id %>"/>
+					<embed 	src="camera/barview_cam.swf?<%= rand(100000000) %>" 
 							width="500" 
 							height="400" 
-							FlashVars="bar_name=<%= url_encode @bar.name %>&session_id=<%= session[:session_id] %>&bar_id=<%= @bar.id %>&server_url=<?php echo base_url(); ?>index.php?/rest/barimage/<%= @bar.id %>"/>"></embed>
-					<!--<![endif]-->
+							FlashVars="bar_name=<%= url_encode @bar.name %>&session_id=<%= session[:session_id] %>&bar_id=<%= @bar.id %>&server_url=http://<%= request.env['HTTP_HOST']%>/barimage/<%= @bar.id %>">
+					</embed>
 				</object>	
 			</div>
 		</div>
