@@ -70,9 +70,14 @@ class BarsControllerTest < ActionController::TestCase
   end
 
   test "should destroy bar" do
+    barcount = Barimage.count
+    
     assert_difference('Bar.count', -1) do
       delete :destroy, :id => @bar
     end
+    
+    barcount2 = Barimage.count
+    assert barcount > barcount2
 
     assert_redirected_to bars_path
   end
