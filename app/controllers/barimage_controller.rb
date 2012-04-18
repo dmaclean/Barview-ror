@@ -3,7 +3,7 @@ require 'base64'
 class BarimageController < ApplicationController
   def show
     begin
-      @img = Barimage.find_by_bar_id(params[:id])
+      @img = Barimage.find_by_bar_id!(params[:id])
     rescue
       @img = Barimage.new
       @img.bar_id = -1
