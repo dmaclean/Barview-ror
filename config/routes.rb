@@ -10,7 +10,7 @@ BarviewRor::Application.routes.draw do
     get 'barhome' => :index
   end
 
-  resources :bars
+  resources :bars, :barimage
 
   get "home/index"
 

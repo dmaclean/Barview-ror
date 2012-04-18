@@ -7,10 +7,11 @@ class BarimageTest < ActiveSupport::TestCase
   
   test "save image works" do
     bar_image = Barimage.new
-    bar_image[:bar_id] = 1
-    bar_image[:image] = 'public/broadcast_images/1.jpeg'
+    bar_image[:bar_id] = 2
+    bar_image[:image] = 'broadcast_images/2.jpeg'
     bar_image.save
-    bar_image = Barimage.find_by_bar_id(1)
-    assert bar_image.read_file != nil
+    bar_image = Barimage.find_by_bar_id(2)
+    assert bar_image[:bar_id] == 2
+    assert bar_image[:image] == 'broadcast_images/2.jpeg'
   end
 end
