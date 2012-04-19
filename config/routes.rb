@@ -1,4 +1,6 @@
 BarviewRor::Application.routes.draw do
+  resources :bar_events
+
   controller :barlogin do
     get 'login' => :new
     post 'login' => :create
