@@ -1,3 +1,10 @@
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "barview" %>
+<%= javascript_include_tag "fancybox/jquery.fancybox-1.3.4" %>
+
+<%= stylesheet_link_tag "http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css" %>
+<%= stylesheet_link_tag "fancybox/jquery.fancybox-1.3.4" %>
+
 <p>Logged in status is <%= @logged_in %> with <%= session[:session_id] %>
 <% if @bar != nil %>
 	for <%= @bar.name %> (<%= @bar.id %>)</p>
@@ -67,15 +74,21 @@
 		<div class="span4">
 			<h2>My Current Deals</h2>
 			<dl id="bar_events_list">
-				<?php foreach($events as $e) { ?>
-					<dt id="event_<?php echo $e['id'] ?>"><?php echo $e['detail']; ?></dt>
-					<dd id="event_<?php echo $e['id'];?>_a"><a class="btn small danger"  onclick="deleteEvent('<?php echo base_url(); ?>', <?php echo $e['id']; ?>, <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>');">delete</a></dd>
-				<?php } ?>
+				<% 
+				  if @events != nil
+				    @events.each do |e| 
+				%>
+					<dt id="event_<%= e.id %>"><%= e.detail%></dt>
+					<dd id="event_<%= e.id %>_a"><a class="btn small danger"  onclick="deleteEvent('http://<%= request.env['HTTP_HOST']%>', <%= e.id %>, <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>');">delete</a></dd>
+				<% 
+				    end 
+			      end 
+			    %>
 			</dl>
 			<div class="bar_events_edit">
 				<textarea id="event_text" name="event_text" rows="5"></textarea><br/>
 				<button class="btn primary" type="button" id="submit" name="submit" value="Add new event or deal." 
-								onclick="addEvent('<?php echo base_url(); ?>', $('#event_text').val(), <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>');">Add new event or deal.</button>
+								onclick="addEvent('http://<%= request.env['HTTP_HOST']%>', $('#event_text').val(), <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>');">Add new event or deal.</button>
 			</div>
 		</div>
 	</div>
