@@ -10,7 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120416203145) do
+ActiveRecord::Schema.define(:version => 20120418204542) do
+
+  create_table "bar_events", :force => true do |t|
+    t.integer  "bar_id"
+    t.text     "detail"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "barimages", :force => true do |t|
     t.integer  "bar_id"
