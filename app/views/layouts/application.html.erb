@@ -36,7 +36,7 @@
 				<ul class="nav secondary-nav">
 					<% if session[:bar_id] %>
 						<li><!--<a href="<%= @base_url %>/logout">Log out</a>-->
-						<%= link_to("Destroy", @base_url + "/logout", :method => :delete, :confirm => "Are you sure?")%></li>
+						<%= link_to("Log out", @base_url + "/logout", :method => :delete)%></li>
 					<% else %>
 						<li><a href="<%= @base_url %>/home">Users</a></li>
 						<li><a id="bar_login" href="#data">Login</a></li>
