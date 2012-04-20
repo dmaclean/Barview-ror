@@ -1,14 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BarviewRor</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<title>bar-view.com</title> 
+	
+  <!--<%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>-->
+  <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "barview" %>
+  <%= javascript_include_tag "jquery.fancybox" %>
+
+  <%= stylesheet_link_tag "http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css" %>
+  <%= stylesheet_link_tag "jquery.fancybox" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+	<div class="topbar">
+		<div class="fill">
+			<div class="container">
+				<h3><a href="<%= @base_url %>">Bar-view.com</a></h3>
+				<ul>
+					<li class="active"><a href="<%= @base_url %>/barhome">Home</a></li>
+					<% if session[:bar_id] %>
+						<li><a href="<%= @base_url %>/editinfo">Edit Info</a></li>
+					<% end %>
+					<li><a href="<%= @base_url %>/about">About us</a></li>
+				</ul>
+			<!--	<?php echo form_open('search/submit'); ?>
+					<?php 
+						$search_atts = array('id' => 'search', 'name' => 'search', 'maxlength' => '100', 'placeholder' => 'Search bars');
+						echo form_input($search_atts); 
+					?>
+				<?php echo form_close(); ?>-->
+				<ul class="nav secondary-nav">
+					<% if session[:bar_id] %>
+						<li><a href="<%= @base_url %>/logout">Log out</a></li>
+					<% else %>
+						<li><a href="<%= @base_url %>/home">Users</a></li>
+						<li><a id="bar_login" href="#data">Login</a></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>	
+
+	<div class="container">
+		
+		
+		<!-- ERROR/INFO MESSAGES -->
+		<% if flash[:error] %>
+			<div class="alert-message error"><p><%= flash[:error] %></div>
+		<% end
+		if flash[:notice] %>
+			<div class="alert-message info"><p><%= flash[:notice] %></div>
+		<% end %>
+		
+		<div style="display:none">
+			<div id="data" style="overflow-x: auto; overflow-y: auto; width: 450px; height: 250px; ">
+				<%= form_tag("/login", :method => "post") do %>
+					<!--<?php echo validation_errors('<div class="alert-message error"><p><strong>','</strong></p></div>')?>-->
+					<fieldset>
+						<div class="clearfix">
+							<label for="username">Username: </label>
+							<div class="input">
+								<!--<?php echo form_input('username', set_value('username'));?>-->
+								<input type="text" name="username" id="username" />
+							</div>
+						</div>
+						<div class="clearfix">
+							<label for="password">Password: </label>
+							<div class="input">
+								<!--<?php echo form_password('password');?>-->
+								<input type="text" name="password" id="password" />
+							</div>
+						</div>
+						<div class="actions">
+							<input type="submit" name="submit" value="Login" class="btn primary" />
+							<!--<?php 
+								$options = array('name'=>'submit', 'value'=>'Login', 'class'=>'btn primary');
+								echo form_submit($options);
+							?>-->
+						</div>
+					</fieldset>
+				<% end %>
+				<p>
+					Don't have an account?  Register <a href="<%= @base_url %>/signup">here</a>.
+				</p>
+				<p>
+					<a href="<%= @base_url %>/forgotpassword">Forgot your password?</a>
+				</p>
+			</div>
+		</div>
+
+
+
 <%= yield %>
 
+
+<div id="footerWrapper" class="row" style="margin-top:50px;">
+	<div class="span14"><p>©<%= Date.today.year %> Barview.com. All Rights Reserved.</p></div>
+	<div class="span2"><p><a href="<%= @base_url %>/tos.html">Terms of Use</a></p></div>
+</div>
 </body>
 </html>
