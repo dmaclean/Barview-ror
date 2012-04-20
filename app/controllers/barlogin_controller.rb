@@ -10,7 +10,7 @@ class BarloginController < ApplicationController
       session[:bar_id] = bar.id
       redirect_to barhome_url
     else
-      redirect_to login_url, :alert => "Invalid username/password combination"
+      redirect_to barhome_url, :flash => { :error => "Invalid username/password combination" }
     end
   end
 

@@ -16,7 +16,8 @@ class BarloginControllerTest < ActionController::TestCase
   test "should fail login" do
     bar = bars(:one)
     post :create, :name => bar.username, :password => 'something else'
-    assert_redirected_to login_url
+    assert_redirected_to barhome_url
+    assert_equal flash[:error], 'Invalid username/password combination'
     assert_equal session[:bar_id], nil
   end
 
