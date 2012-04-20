@@ -4,8 +4,8 @@
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<title>bar-view.com</title> 
 	
-  <!--<%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>-->
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "jquery" %>
   <%= javascript_include_tag "barview" %>
   <%= javascript_include_tag "jquery.fancybox" %>
@@ -35,7 +35,8 @@
 				<?php echo form_close(); ?>-->
 				<ul class="nav secondary-nav">
 					<% if session[:bar_id] %>
-						<li><a href="<%= @base_url %>/logout">Log out</a></li>
+						<li><!--<a href="<%= @base_url %>/logout">Log out</a>-->
+						<%= link_to("Destroy", @base_url + "/logout", :method => :delete, :confirm => "Are you sure?")%></li>
 					<% else %>
 						<li><a href="<%= @base_url %>/home">Users</a></li>
 						<li><a id="bar_login" href="#data">Login</a></li>
@@ -97,10 +98,10 @@
 
 <%= yield %>
 
-
-<div id="footerWrapper" class="row" style="margin-top:50px;">
-	<div class="span14"><p>©<%= Date.today.year %> Barview.com. All Rights Reserved.</p></div>
-	<div class="span2"><p><a href="<%= @base_url %>/tos.html">Terms of Use</a></p></div>
+	<div id="footerWrapper" class="row" style="margin-top:50px;">
+		<div class="span14"><p>©<%= Date.today.year %> Barview.com. All Rights Reserved.</p></div>
+		<div class="span2"><p><a href="<%= @base_url %>/tos.html">Terms of Use</a></p></div>
+	</div>
 </div>
 </body>
 </html>
