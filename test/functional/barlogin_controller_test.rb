@@ -22,8 +22,9 @@ class BarloginControllerTest < ActionController::TestCase
 
   test "should logout" do
     delete :destroy
+    assert_equal flash[:notice], 'Logged out'
     assert_equal session[:bar_id], nil
-    assert_redirected_to login_url
+    assert_redirected_to barhome_url
   end
   
   test "already logged in" do

@@ -16,6 +16,6 @@ class BarloginController < ApplicationController
 
   def destroy
     session[:bar_id] = nil
-    redirect_to login_url, :notice => "Logged out"
+    redirect_to barhome_url, :notice => "Logged out"
   end
 end
