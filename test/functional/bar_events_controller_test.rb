@@ -46,6 +46,6 @@ class BarEventsControllerTest < ActionController::TestCase
       delete :destroy, :id => @bar_event
     end
 
-    assert_redirected_to bar_events_path
+    assert_response :success
   end
 end

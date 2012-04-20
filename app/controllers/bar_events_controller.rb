@@ -40,11 +40,20 @@ class BarEventsController < ApplicationController
   # POST /bar_events
   # POST /bar_events.json
   def create
-    @bar_event = BarEvent.new(params[:bar_event])
+    @bar_event = BarEvent.new
+    @bar_event.bar_id = params[:bar_id]
+    @bar_event.detail = params[:detail]
     
     #for header in request.env.select {|k,v| k.match("^HTTP.*")}
     #  print header
     #end
+    #print "Bar id: " + request.env["HTTP_BAR_ID"] + "\n"
+    #print "Session id: " + request.env["HTTP_SESSION_ID"] + "\n"
+    #print "Bar name: " + request.env["HTTP_BAR_NAME"] + "\n"
+    #print "CSRF token: " + request.env["HTTP_X_CSRF_TOKEN"] + "\n"
+    
+    # Get data and save to the bar_event object
+    #print params.to_s
 
     respond_to do |format|
       if @bar_event.save
@@ -55,7 +64,7 @@ class BarEventsController < ApplicationController
         format.html { render :action => "new" }
         format.json { render :json => @bar_event.errors, :status => :unprocessable_entity }
       end
-    end
+	end
   end
 
   # PUT /bar_events/1
@@ -81,7 +90,8 @@ class BarEventsController < ApplicationController
     @bar_event.destroy
 
     respond_to do |format|
-      format.html { redirect_to bar_events_url }
+      #format.html { redirect_to bar_events_url }
+      format.html { head :no_content }
       format.json { head :no_content }
     end
   end
