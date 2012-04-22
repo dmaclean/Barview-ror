@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120418204542) do
+ActiveRecord::Schema.define(:version => 20120421031819) do
 
   create_table "bar_events", :force => true do |t|
     t.integer  "bar_id"
@@ -41,6 +41,27 @@ ActiveRecord::Schema.define(:version => 20120418204542) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "hashed_password"
+    t.string   "salt"
+  end
+
+  create_table "favorites", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "bar_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "hashed_password"
+    t.date     "dob"
+    t.string   "city"
+    t.string   "state"
+    t.string   "gender"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "salt"
   end
 

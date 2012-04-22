@@ -1,4 +1,8 @@
 BarviewRor::Application.routes.draw do
+  resources :favorites
+
+  resources :users
+
   resources :bar_events
 
   controller :barlogin do
