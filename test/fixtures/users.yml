@@ -5,7 +5,7 @@ one:
   id: 1
   first_name: MyString
   last_name: MyString
-  email: MyString
+  email: dmaclean@agencyport.com
   hashed_password: <%= User.encrypt_password('secret', SALT) %>
   salt: <%= SALT %>
   dob: 2012-04-20
@@ -17,7 +17,7 @@ two:
   id: 2
   first_name: MyString
   last_name: MyString
-  email: MyString
+  email: smaclean@acmepacket.com
   hashed_password: <%= User.encrypt_password('secret', SALT) %>
   salt: <%= SALT %>
   dob: 2012-04-20
