@@ -70,10 +70,19 @@ class BarsController < ApplicationController
   # PUT /bars/1.json
   def update
     @bar = Bar.find(params[:id])
+    @bar.password = params[:bar][:password]
+    submission_hash = {
+      :address => params[:bar][:address],
+      :city => params[:bar][:city],
+      :email => params[:bar][:email],
+      :name => params[:bar][:name],
+      :state => params[:bar][:state],
+      :zip => params[:bar][:zip]
+    }
 
     respond_to do |format|
-      if @bar.update_attributes(params[:bar])
-        format.html { redirect_to bars_url, :notice => 'Bar #{@bar.name} was successfully updated.' }
+      if @bar.update_attributes(submission_hash)
+        format.html { redirect_to bars_url, :notice => "Bar #{@bar.name} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

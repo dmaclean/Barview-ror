@@ -66,10 +66,20 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    @user.password = params[:user][:password]
+    
+    submission_hash = {
+      :city => params[:user][:city],
+      :dob => params[:user][:dob],
+      :first_name => params[:user][:first_name],
+      :gender => params[:user][:gender],
+      :last_name => params[:user][:last_name],
+      :state => params[:user][:state]
+    }
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, :notice => 'User was successfully updated.' }
+      if @user.update_attributes(submission_hash)
+        format.html { redirect_to @user, :notice => "#{params[:user][:first_name]} #{params[:user][:last_name]} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

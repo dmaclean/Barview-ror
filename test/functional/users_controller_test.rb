@@ -18,14 +18,13 @@ class UsersControllerTest < ActionController::TestCase
     }
     
     @update = {
-      :id => 101,
       :first_name => "Dan",
       :last_name => "MacLean",
       :dob => "1982-10-21",
       :gender => "Male",
-      :email => "dan@bar-view.com",
+      :email => "dmaclean82@gmail.com",
       :city => "Medfield",
-      :state => "MA"
+      :state => "MA",
     }
   end
 
