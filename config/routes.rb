@@ -1,9 +1,26 @@
 BarviewRor::Application.routes.draw do
+  #get "user_home/index"
+  controller :user_home do
+    get 'userhome' => :index
+  end
+
+  #get "user_login/new"
+
+  #get "user_login/create"
+
+  #get "user_login/destroy"
+
   resources :favorites
 
   resources :users
 
   resources :bar_events
+  
+  controller :user_login do
+    get 'userlogin' => :new
+    post 'userlogin' => :create
+    delete 'userlogout' => :destroy
+  end
 
   controller :barlogin do
     get 'login' => :new
