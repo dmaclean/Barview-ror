@@ -9,5 +9,7 @@ class ApplicationController < ActionController::Base
     if request.port != 80
       @base_url += ':' + request.port.to_s
     end
+    
+    @is_bar_side = request.url =~ /barhome/i
   end
 end

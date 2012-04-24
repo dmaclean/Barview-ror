@@ -11,6 +11,7 @@ class UserLoginControllerTest < ActionController::TestCase
     post :create, :email => user.email, :password => 'secret'
     assert_redirected_to userhome_url
     assert_equal user.id, session[:user_id]
+    assert_equal "BARVIEW", session[:usertype]
   end
   
   test "should fail login" do

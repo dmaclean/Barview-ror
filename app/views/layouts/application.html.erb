@@ -16,6 +16,7 @@
 </head>
 <body>
 
+<% if @is_bar_side %>
 	<div class="topbar">
 		<div class="fill">
 			<div class="container">
@@ -38,7 +39,7 @@
 						<li><!--<a href="<%= @base_url %>/logout">Log out</a>-->
 						<%= link_to("Log out", @base_url + "/logout", :method => :delete)%></li>
 					<% else %>
-						<li><a href="<%= @base_url %>/home">Users</a></li>
+						<li><a href="<%= @base_url %>/userhome">Users</a></li>
 						<li><a id="bar_login" href="#data">Login</a></li>
 					<% end %>
 				</ul>
@@ -94,6 +95,172 @@
 			</div>
 		</div>
 
+
+<% else %>
+
+	<div id="base_url" style="display:none"><%= @base_url %></div>
+	<div id="show_questionnaire" style="display:none">
+		<!--<?php  
+			if(isset($show_questionnaire) && $show_questionnaire)
+				echo 'true';
+			else
+				echo 'false';
+		?>-->
+	</div>
+	<div id="fb_user" style="display:none">
+		<!--<?php 
+			if($this->session->userdata('uid') && $this->session->userdata('usertype') == FACEBOOK_TYPE)
+				echo 'true';
+			else
+				echo 'false';
+		?>-->
+	</div>
+	<div class="topbar">
+		<div class="fill">
+			<div class="container">
+				<h3><a href="<%= @base_url %>">Bar-view.com</a></h3>
+				<ul>
+					<li class="active"><a href="<%= @base_url %>">Home</a></li>
+					<% if session[:user_id] and session[:usertype] == "BARVIEW" %>
+						<li><a href="<%= @base_url %>/index.php?/editinfo">Edit Info</a></li>
+					<% end %>
+					<li><a href="<%= @base_url %>/index.php?/mobileinfo">Mobile</a></li>
+					<li><a href="<%= @base_url %>/index.php?/about">About us</a></li>
+				</ul>
+				<!--<?php echo form_open('search/submit'); ?>
+					<?php 
+						$search_atts = array('id' => 'search', 'name' => 'search', 'maxlength' => '100', 'placeholder' => 'Search bars');
+						echo form_input($search_atts); 
+					?>
+				<?php echo form_close(); ?>-->
+				<ul class="nav secondary-nav">
+					<% if not session[:user_id] %>
+						<li><a href="<%= @base_url %>/barhome">Bars</a></li>
+						<li><a class="user_login" href="#data">Login</a></li>
+					<% elsif session[:usertype] == "FACEBOOK" %>
+						<li>
+							<%
+								callback_url = @base_url + '/userlogout';
+								fb_array = ['next' => callback_url];
+							%>
+							<a href="<?php echo $facebook->getLogoutUrl($fb_array); ?>">
+								<img 	src="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif" 
+										alt="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif"/>
+							</a>
+						</li>
+					<!-- BARVIEW logout -->
+					<% elsif session[:usertype] == "BARVIEW" %>
+						<li><%= link_to("Log out", @base_url + "/userlogout", :method => :delete)%></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<% if not ( @search_results or @no_hero )	%>
+			<div class="hero-unit">
+				<h1>Your night starts here</h1>
+				<!--<p>Barview lets you do cool stuff...</p>-->
+			</div>
+		<% end %>
+
+		
+		
+		
+		<!-- ERROR/INFO MESSAGES -->
+		<% if flash[:error] %>
+			<div class="alert-message error"><p><%= flash[:error] %></div>
+		<% end
+		if flash[:notice] %>
+			<div class="alert-message info"><p><%= flash[:notice] %></div>
+		<% end %>
+		
+		
+		<!-- QUESTIONNAIRE DIV FOR FACEBOOK USERS -->
+		<!--<div style="display:none">
+			<div id="fb_questionnaire">
+				<div class="container">
+					<div class="row">
+						<div class="span12">
+							<?php
+								$form_options = array('id' => 'fb_questionnaire_form');
+								echo form_open('questionnaire/submit', $form_options); 
+								echo form_hidden('user_id', $this->session->userdata('uid'));
+							?>
+								<fieldset>
+									<legend>Quick questionnaire (you'll only have to do this once).</legend>
+									<div id="fbq_errors"></div>
+									<?php if(isset($user_questions)) { 
+										foreach($user_questions as $k => $q) {
+									?>
+										<div class="clearfix">
+											<label for="q<?php echo $k; ?>"><?php echo $q['question'] ?></label>
+											<div class="input">
+												<?php 
+													$qfield = 'q'.$k;
+													echo form_dropdown($qfield, $q['options'], set_value($qfield)); 
+												?>
+											</div>
+										</div>
+									<?php 
+										} 
+									} ?>
+									<div class="actions">
+										<input id="fbq_submit" type="button" class="btn primary" value="Submit" onclick="submitFBQuestionnaire()" />
+									</div>
+								</fieldset>
+							<?php echo form_close(); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a style="display:none" id="fb_questionnaire_anchor" href="#fb_questionnaire"></a>-->
+		
+		<!-- LOGIN DIV FOR FANCYBOX -->
+		<div style="display:none">
+			<div id="data">
+				<div class="row">
+					<div class="span7">
+						<%= form_tag("/userlogin", :method => "post") do %>
+							<fieldset>
+								<legend>Log in to Barview</legend>
+								<div class="clearfix">
+									<label for="username">Email: </label>
+									<div class="input">
+										<input type="text" name="email" id="email" />
+									</div>
+								</div>
+								<div class="clearfix">
+									<label for="password">Password: </label>
+									<div class="input">
+										<input type="password" name="password" id="password"/>
+									</div>
+								</div>
+								<div class="actions">
+									<input type="submit" name="submit" value="Login" class="btn primary"/>
+								</div>
+							</fieldset>
+						<% end %>
+						<p>
+							Don't have an account?  Register <a href="<%= @base_url %>/user/new">here</a>.
+						</p>
+						<p>
+							<a href="<?php echo base_url(); ?>index.php?/forgotpassworduser">Forgot your password?</a>
+						</p>
+					</div>
+					<div class="span6">
+						<h3>Use an existing account:</h3>
+						<!--<?php 
+							$callback_url = base_url(); 
+							$fb_array  = array('next' => $callback_url, 'scope' => 'email,user_birthday,user_location', 'cancel_url' => $callback_url);
+						?>-->
+						<a href="<?php echo $facebook->getLoginUrl($fb_array); ?>"><img src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif"></a>
+					</div>
+				</div>
+			</div>
+
+<% end %>
 
 
 <%= yield %>
