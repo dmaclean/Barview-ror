@@ -24,3 +24,15 @@ two:
   city: MyString
   state: MyString
   gender: MyString
+
+three:
+  id: 3
+  first_name: Paul
+  last_name: Smith
+  email: psmith@example.com
+  hashed_password: <%= User.encrypt_password('secret', SALT) %>
+  salt: <%= SALT %>
+  dob: 2012-04-20
+  city: MyString
+  state: MyString
+  gender: MyString

@@ -1,2 +1,114 @@
-<h1>UserHome#index</h1>
-<p>Find me in app/views/user_home/index.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<!--  (Favorites or just all the bars) -->
+		<div class="span4 columns" id="fave_col">
+			<div class="home_header">
+				<h1 id="fave_h1">
+				<% if session[:user_id] and @has_favorites %>
+					Your Favorites
+				<% else %>
+					Bar-view Bars
+				<% end %>
+				</h1>
+			</div>
+			<ul class="unstyled">
+			<% for b in @bars do
+				location = '(' +  b.city + ', ' + b.state + ')';
+				%>
+				<li>
+					<h4>
+						<% if session[:user_id] %>
+							<a href="<%= @base_url %>/bardetail/index/<%= b.id %>"><%= b.name %></a>
+						<% else %>
+							<a class="user_login" href="#data"><%= b.name %></a>
+						<% end %>
+					</h4>
+					<%= location %>
+				</li>
+			<% end %>
+			
+			</ul>
+		</div>
+	
+		<div class="span6 columns">
+			<h1 id="feeds_h1">
+			<% if session[:user_id] and @has_favorites %>
+				Feeds from your favorites
+			<% else %>
+				Current Feeds
+			<% end %>
+			</h1>
+			<ul class="unstyled" id="feeds_list">
+				<% if not @has_favorites %>
+					Here are a few bars you might like.
+				<% end
+					for b in @bars do
+						location = '(' + b.city + ', ' + b.state + ')';
+					%>
+					<li>
+						<div><h4><%= b.name %></h4><%= location %></div>
+						<!--<div><img id="<%= b.id %>" class="bar_image" src="<%= @base_url %>/broadcast_images/<%= b.id %>.jpeg"/></div>-->
+						
+						<!-- User is logged in and has favorites - show the "Remove from Favorites" link -->
+						<% if session[:user_id] and @has_favorites %>
+						<div><a class="btn danger" id="<%= b.id %>_favorite" onclick="removeFromFavorites('<%= @base_url %>', <%= b.id %>, '<%= session[:user_id] %>');">Remove from favorites</a></div>
+						
+						<!-- User is logged in but has no favorites - show the "Add to Favorites" link -->
+						<% elsif session[:user_id] and not @has_favorites %>
+						<div><a class="btn success" id="<%= b.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= b.id %>, '<%= session[:user_id] %>');">Add to favorites</a></div>
+						<% end %>
+					</li>
+					<br/><br/><br/>
+				<% end %>
+			
+			<% if session[:user_id] and @nonfaves and not @nonfaves.empty? %>
+			<ul><br/><br/><br/><h2>Other bars you might like</h2></ul>
+			
+				<!--
+					NON-FAVORITES (for logged-in users)
+				-->
+				<% for n in @nonfaves do
+					location = '(' + n.city + ', ' + n.state + ')'
+				%>
+						<li>
+							<div><h4><%= n.name %></h4><%= location %></div>
+							<!--<div><img id="<%= n.id %>" class="bar_image" src="<%= @base_url %>/broadcast_images/<%= n.id %>.jpeg"/></div>-->
+							<div><a class="btn success" id="<%= n.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= n.id %>, '<%= session[:user_id] %>');">Add to favorites</a></div>
+						</li>
+						<br/><br/><br/>
+					
+				<% end %>
+			</ul>
+			<% end %>
+		</div>
+		
+		<!-- (Current deals) -->
+		<div class="span6 columns">
+			<h1>Current Deals</h1>
+			<dl>
+				<% if not @has_favorites %>
+					You don't have any favorite bars yet, so we'll show you some events and deals for random bars.
+				<% end %>
+				<% for n,e in @events %>
+				  <dt><%= n %></dt>
+				  <% for event in e %>
+				    <dd><%= event %></dd>
+				  <% end %>
+				<% end %>
+			</dl>
+			
+			<% if session[:user_id] and @nonfave_events and not @nonfave_events.empty? %>
+				<dl>
+					<!-- NON-FAVORITE EVENTS - for logged-in users -->
+					<% for n,e in @nonfave_events %>
+						<dt><%= n %></dt>
+							<% for event in e %>
+								<dd><%= event %></dd>
+							<% end %>
+					<% end %>
+				</dl>
+			<% end %>
+		</div>
+	</div>
+</div>
