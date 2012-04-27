@@ -48,7 +48,7 @@
 					%>
 					<li>
 						<div><h4><%= b.name %></h4><%= location %></div>
-						<!--<div><img id="<%= b.id %>" class="bar_image" src="<%= @base_url %>/broadcast_images/<%= b.id %>.jpeg"/></div>-->
+						<div><img id="<%= b.id %>" class="bar_image" src="<%= @base_url %>/broadcast_images/<%= b.id %>.jpeg"/></div>
 						
 						<!-- User is logged in and has favorites - show the "Remove from Favorites" link -->
 						<% if session[:user_id] and @has_favorites %>
@@ -74,7 +74,7 @@
 				%>
 						<li>
 							<div><h4><%= n.name %></h4><%= location %></div>
-							<!--<div><img id="<%= n.id %>" class="bar_image" src="<%= @base_url %>/broadcast_images/<%= n.id %>.jpeg"/></div>-->
+							<div><img id="<%= n.id %>" class="bar_image" src="<%= @base_url %>/broadcast_images/<%= n.id %>.jpeg"/></div>
 							<div><a class="btn success" id="<%= n.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= n.id %>, '<%= session[:user_id] %>');">Add to favorites</a></div>
 						</li>
 						<br/><br/><br/>

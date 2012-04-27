@@ -36,7 +36,7 @@ $(document).ready(function(){
 			function(index) {
 				var id = $(this).attr('id');
 				var d = new Date();
-				var newsrc = base_url + 'index.php?/getimage/index/' + id + '?'+d.getTime();
+				var newsrc = base_url + '/barimage/' + id + '.jpeg?'+d.getTime();
 				$(this).attr('src', newsrc);
 			}
 		);

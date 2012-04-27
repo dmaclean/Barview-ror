@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class BarimageControllerTest < ActionController::TestCase
+  test "get binary" do
+    get :show, :id => 2, :format => "jpeg"
+    assert_response :success
+    assert @response.body != nil
+    assert @response.body != ''
+  end
+  
   test "get xml" do
     get :show, :id => 2, :format => "xml"
     assert_response :success
