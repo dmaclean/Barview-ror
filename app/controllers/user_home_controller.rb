@@ -28,7 +28,7 @@ class UserHomeController < ApplicationController
   private
   def get_events_for_favorites
     events = Hash.new
-    temp = Bar.find(:all, :select => 'bars.name, bar_events.detail', :joins => :bar_event, :conditions => ['id in (select bar_id from favorites where user_id = ?)', [session[:user_id]] ])
+    temp = Bar.find(:all, :select => 'bars.name, bar_events.detail', :joins => :bar_event, :conditions => ['bars.id in (select bar_id from favorites where user_id = ?)', [session[:user_id]] ])
     for t in temp do
 	  if events.key?(t.name)
 	    events[t.name] << t.detail
