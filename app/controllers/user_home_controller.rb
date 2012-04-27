@@ -15,7 +15,7 @@ class UserHomeController < ApplicationController
         @events = get_all_events
       else
         @nonfaves = Bar.all(:limit => 5 - @bars.length, :conditions => ['id not in (select bar_id from favorites where user_id = ?)', [session[:user_id]] ])
-        @nonfave_events = Bar.all(:select => 'bars.name, bar_events.detail', :joins => :bar_event)
+        @nonfave_events = get_all_events
 		@events = get_events_for_favorites
         @has_favorites = true
       end
