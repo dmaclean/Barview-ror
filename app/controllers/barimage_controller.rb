@@ -8,7 +8,7 @@ class BarimageController < ApplicationController
       format.html { render :text => Base64.encode64(open('public/' + @img.image, 'r').read) }
       format.json { render :json => @img }
       format.xml { render :text => render_bv_xml(@img) }
-      format.jpeg { send_data(open('public/' + @img.image, 'r').read, :type => 'image/jpg', :disposition => 'inline') }
+      format.jpeg { send_data(open('public/' + @img.image, 'r').read, :type => 'image/jpeg', :disposition => 'inline') }
     end
   end
   
@@ -36,7 +36,13 @@ class BarimageController < ApplicationController
     begin
       @img = Barimage.find_by_bar_id!(params[:id])
       
-      
+      user_id = request.env['HTTP_USER_ID']
+      if user_id != nil
+  	    bir = BarImageRequest.new
+	    bir.user_id = user_id
+	    bir.bar_id = params[:id]
+	    bir.save
+      end
     rescue
       @img = Barimage.new
       @img.bar_id = -1
