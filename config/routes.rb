@@ -1,4 +1,6 @@
 BarviewRor::Application.routes.draw do
+  get "search/index"
+
   #get "user_home/index"
   controller :user_home do
     get 'userhome' => :index

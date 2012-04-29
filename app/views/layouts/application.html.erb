@@ -126,12 +126,9 @@
 					<li><a href="<%= @base_url %>/index.php?/mobileinfo">Mobile</a></li>
 					<li><a href="<%= @base_url %>/index.php?/about">About us</a></li>
 				</ul>
-				<!--<?php echo form_open('search/submit'); ?>
-					<?php 
-						$search_atts = array('id' => 'search', 'name' => 'search', 'maxlength' => '100', 'placeholder' => 'Search bars');
-						echo form_input($search_atts); 
-					?>
-				<?php echo form_close(); ?>-->
+				<%= form_tag("/search/index", :method => "get") do %>
+					<input type="text" id="search" name="search" maxlength="100" value="Search bars" />
+				<% end %>
 				<ul class="nav secondary-nav">
 					<% if not session[:user_id] %>
 						<li><a href="<%= @base_url %>/barhome">Bars</a></li>

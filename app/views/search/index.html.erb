@@ -1,0 +1,47 @@
+
+	<h1>Search results</h1>
+	
+	<% if not @results.any? %>
+	<div class="row">
+		<span id="no_results">No results found.</span>
+	</div>
+	<% else %>
+
+		<% for bar in @results %>
+			<div class="row">
+				<!--
+					0 - id
+					1 - name
+					2 - address
+				-->
+				<div class="span8 offset4">
+					<div>
+						<h3>
+							<% if session[:user_id] %>
+								<a href="<%= @base_url %>/bardetail/<%= bar.id %>"><%= bar.name %></a>
+							<% else %>
+								<a class="user_login" href="#data"><%= bar.name %></a>
+							<% end %>
+						</h3>
+					</div>
+					<div class="search_bar_address"><%= bar.address %> <%= bar.city %> <%= bar.state %></div>
+					<div><img id="<%= bar.id %>" class="bar_image" src="<%= @base_url %>/barimage/<%= bar.id %>.jpeg?<%= rand(100000) %>"/></div>
+					<% if session[:user_id] %>
+					
+						<% if @fave_hash[bar.id] %>
+							<a class="btn danger" id="<%= bar.id %>_favorite" onclick="removeFromFavorites('<%= @base_url %>', <%= bar.id %>, '<%= session[:user_id] %>');">Remove from favorites</a>
+						<% else %>
+							<a class="btn success" id="<%= bar.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= bar.id %>, '<%= session[:user_id] %>');">Add to favorites</a>
+						<% end %>
+					
+					<% end %>
+				</div>
+				
+			</div>
+		<% end %>
+	<% end %>
+	
+	<div class="row">
+		<br/><br/>
+		<h2>Don't see your favorite bar here?  Tell them to sign up for Barview!</h2>
+	</div>
