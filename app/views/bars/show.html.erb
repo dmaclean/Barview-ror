@@ -1,70 +1,112 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Id:</b>
-  <%= @bar.id %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @bar.name %>
-</p>
-
-<p>
-  <b>Address:</b>
-  <%= @bar.address %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @bar.city %>
-</p>
-
-<p>
-  <b>State:</b>
-  <%= @bar.state %>
-</p>
-
-<p>
-  <b>Zip:</b>
-  <%= @bar.zip %>
-</p>
-
-<p>
-  <b>Lat:</b>
-  <%= @bar.lat %>
-</p>
-
-<p>
-  <b>Lng:</b>
-  <%= @bar.lng %>
-</p>
-
-<p>
-  <b>Username:</b>
-  <%= @bar.username %>
-</p>
-
-<p>
-  <b>Password:</b>
-  <%= @bar.password %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @bar.email %>
-</p>
-
-<p>
-  <b>Reference:</b>
-  <%= @bar.reference %>
-</p>
-
-<p>
-  <b>Verified:</b>
-  <%= @bar.verified %>
-</p>
-
-
-<%= link_to 'Edit', edit_bar_path(@bar) %> |
-<%= link_to 'Back', bars_path %>
+<!-- User is logged in -->
+<% if session[:user_id] %>
+	<div class="container">
+		<div class="row">
+			<div class="home_header">
+				<h1 id="name_h1"><%= @bar.name %></h1>
+			</div>
+			<div class="span4 columns">
+				<h2 id="address_h2">Address</h2>
+				<p id="address_content">
+					<%= @bar.address; %><br/>
+					<%= @bar.city %>, <%= @bar.state %> <%= @bar.zip %>
+				</p>
+			</div>
+			
+			<div class="span6 columns">
+				<h2>Current Feed</h2>
+				<div><img id="<%= @bar.id %>" class="bar_image" src="<%= @base_url %>/barimage/<%= @bar.id %>.jpeg?<%= rand(100000) %>"/></div>
+				<% if session[:user_id] %>					
+					<% if not @favorite.empty? %>
+						<a class="btn danger" id="<%= @bar.id %>_favorite" onclick="removeFromFavorites('<%= @base_url %>', <%= @bar.id %>, '<%= session[:user_id] %>');">Remove from favorites</a>
+					<% else %>
+						<a class="btn success" id="<%= @bar.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= @bar.id %>, '<%= session[:user_id] %>');">Add to favorites</a>
+					<% end %>
+				<% end %>
+			</div>
+			
+			<div class="span6 columns">
+				<h2>Current Deals</h2>
+				<% if not @events.empty? 
+					for e in @events do  %>
+						<p class='detail_deal'><%= e.detail %></p>
+					<% end 
+				else %>
+						<p>No deals or events at the moment.</p>
+				<% end %>
+			</div>
+		</div>
+	</div>
+<!-- Bar is logged in -->
+<% elsif session[:bar_id] %>	
+	<p id="notice"><%= notice %></p>
+	
+	<p>
+	  <b>Id:</b>
+	  <%= @bar.id %>
+	</p>
+	
+	<p>
+	  <b>Name:</b>
+	  <%= @bar.name %>
+	</p>
+	
+	<p>
+	  <b>Address:</b>
+	  <%= @bar.address %>
+	</p>
+	
+	<p>
+	  <b>City:</b>
+	  <%= @bar.city %>
+	</p>
+	
+	<p>
+	  <b>State:</b>
+	  <%= @bar.state %>
+	</p>
+	
+	<p>
+	  <b>Zip:</b>
+	  <%= @bar.zip %>
+	</p>
+	
+	<p>
+	  <b>Lat:</b>
+	  <%= @bar.lat %>
+	</p>
+	
+	<p>
+	  <b>Lng:</b>
+	  <%= @bar.lng %>
+	</p>
+	
+	<p>
+	  <b>Username:</b>
+	  <%= @bar.username %>
+	</p>
+	
+	<p>
+	  <b>Password:</b>
+	  <%= @bar.password %>
+	</p>
+	
+	<p>
+	  <b>Email:</b>
+	  <%= @bar.email %>
+	</p>
+	
+	<p>
+	  <b>Reference:</b>
+	  <%= @bar.reference %>
+	</p>
+	
+	<p>
+	  <b>Verified:</b>
+	  <%= @bar.verified %>
+	</p>
+	
+	
+	<%= link_to 'Edit', edit_bar_path(@bar) %> |
+	<%= link_to 'Back', bars_path %>
+<% end %>

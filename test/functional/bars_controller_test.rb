@@ -54,6 +54,7 @@ class BarsControllerTest < ActionController::TestCase
   end
 
   test "should show bar" do
+    session[:bar_id] = 1
     get :show, :id => @bar
     assert_response :success
   end
@@ -86,5 +87,42 @@ class BarsControllerTest < ActionController::TestCase
     assert favecount > favecount2
 
     assert_redirected_to bars_path
+  end
+  
+  test "detail for favorite" do
+    session[:user_id] = 1
+    get :show, :id => 1
+    assert_response :success
+    
+    assert_select '#name_h1', 'MyString'
+    assert_select '#address_content', :text => %r'MyString\s+MyString, MyString 668'	# No clue why 668 keeps coming up
+    assert_select '#1', 1
+    assert_select '#1_favorite', 'Remove from favorites'
+    assert_select '.detail_deal', 'MyText'
+  end
+  
+  test "detail for non-favorite" do
+    session[:user_id] = 1
+    get :show, :id => 2
+    
+    assert_response :success
+    assert_select '#name_h1', 'MyString'
+    assert_select '#address_content', :text => %r'MyString2\s+MyString, MyString 98765'
+    assert_select '#2', 1
+    assert_select '#2_favorite', 'Add to favorites'
+    assert_select '.detail_deal', 'MyText2'
+  end
+  
+  test "detail for non-existent bar" do
+    session[:user_id] = 1
+    get :show, :id => 99999999
+    
+    assert_redirected_to '/userhome'
+  end
+  
+  # When the user is not logged in we send them to the homepage.
+  test "detail user not logged in" do
+    get :show
+    assert_redirected_to '/userhome'
   end
 end

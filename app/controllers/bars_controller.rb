@@ -13,7 +13,26 @@ class BarsController < ApplicationController
   # GET /bars/1
   # GET /bars/1.json
   def show
-    @bar = Bar.find(params[:id])
+    # Let's make sure someone is logged in.  If not, send them to the user homepage
+    if not session[:user_id] and not session[:bar_id]
+      redirect_to '/userhome'
+      return
+    end
+  
+    # Fetch the bar being requested
+    begin
+      @bar = Bar.find(params[:id])
+    rescue
+      flash[:notice] = 'The requested bar does not exist.'
+      redirect_to '/userhome'
+      return
+    end
+    
+    # Fetch the favorites 
+    @favorite = Favorite.where('user_id = ? and bar_id = ?', session[:user_id], @bar.id)
+    
+    # Fetch the events
+    @events = BarEvent.where('bar_id = ?', @bar.id)
 
     respond_to do |format|
       format.html # show.html.erb

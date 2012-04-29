@@ -18,7 +18,7 @@
 					<div>
 						<h3>
 							<% if session[:user_id] %>
-								<a href="<%= @base_url %>/bardetail/<%= bar.id %>"><%= bar.name %></a>
+								<a href="<%= @base_url %>/bars/<%= bar.id %>"><%= bar.name %></a>
 							<% else %>
 								<a class="user_login" href="#data"><%= bar.name %></a>
 							<% end %>
