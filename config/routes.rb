@@ -1,4 +1,6 @@
 BarviewRor::Application.routes.draw do
+  get "about/index"
+
   get "mobile_info/index"
 
   get "search/index"
