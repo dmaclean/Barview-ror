@@ -40,11 +40,14 @@ class FavoritesController < ApplicationController
   # POST /favorites
   # POST /favorites.json
   def create
-    @favorite = Favorite.new(params[:favorite])
+    @favorite = Favorite.new
+    @favorite.user_id = request.env['HTTP_USER_ID']
+    @favorite.bar_id = request.env['HTTP_BAR_ID']
 
     respond_to do |format|
       if @favorite.save
-        format.html { redirect_to @favorite, :notice => 'Favorite was successfully created.' }
+        #format.html { redirect_to @favorite, :notice => 'Favorite was successfully created.' }
+        format.html { render :text => @favorite.id }
         format.json { render :json => @favorite, :status => :created, :location => @favorite }
       else
         format.html { render :action => "new" }

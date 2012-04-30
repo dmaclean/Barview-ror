@@ -17,11 +17,17 @@ class FavoritesControllerTest < ActionController::TestCase
   end
 
   test "should create favorite" do
+    @request.env['USER_ID'] = 1
+    @request.env['BAR_ID'] = 2
+  
     assert_difference('Favorite.count') do
-      post :create, :favorite => { :bar_id => @favorite.bar_id, :user_id => @favorite.user_id }
+      #post :create, :favorite => { :bar_id => @favorite.bar_id, :user_id => @favorite.user_id }
+      post :create
     end
 
-    assert_redirected_to favorite_path(assigns(:favorite))
+    #assert_redirected_to favorite_path(assigns(:favorite))
+    assert_response :success
+    assert_not_nil response.body =~ /\d+/	# Make sure we are getting back a number
   end
 
   test "should show favorite" do

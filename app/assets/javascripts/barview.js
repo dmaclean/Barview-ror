@@ -112,12 +112,14 @@ function submitFBQuestionnaire() {
  * for a user.  If successful, the link "Add to favorites" will be changed to "Remove from favorites"
  * and its onClick event will be changed to the removeFromFavorites() function.
  */
-function addToFavorites(base_url, bar_id, user_id) {
+function addToFavorites(base_url, bar_id, user_id, token) {
 	$.ajax({
 		type: 'POST',
-		url: base_url + 'index.php?/rest/favorite/' + bar_id,
+		url: base_url + '/favorites',
 		beforeSend: function(xhr) {
 				xhr.setRequestHeader('USER_ID', user_id);
+				xhr.setRequestHeader('BAR_ID', bar_id);
+				xhr.setRequestHeader('X-CSRF-Token', token);
 			},
 		success: function() {
 					var element = '#' + bar_id + '_favorite';
@@ -127,6 +129,9 @@ function addToFavorites(base_url, bar_id, user_id) {
 							removeFromFavorites(e.data.base_url, e.data.bar_id, e.data.user_id);
 						}
 					);
+				},
+		error: function(jqXHR, textStatus, errorThrown) {
+					alert(errorThrown);
 				}
 	});
 }
