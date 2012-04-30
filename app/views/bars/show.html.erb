@@ -18,9 +18,9 @@
 				<div><img id="<%= @bar.id %>" class="bar_image" src="<%= @base_url %>/barimage/<%= @bar.id %>.jpeg?<%= rand(100000) %>"/></div>
 				<% if session[:user_id] %>					
 					<% if not @favorite.empty? %>
-						<a class="btn danger" id="<%= @bar.id %>_favorite" onclick="removeFromFavorites('<%= @base_url %>', <%= @bar.id %>, '<%= session[:user_id] %>');">Remove from favorites</a>
+						<a class="btn danger" id="<%= @bar.id %>_favorite" onclick="removeFromFavorites('<%= @base_url %>', <%= @bar.id %>, '<%= session[:user_id] %>', '<%= form_authenticity_token.to_s %>');">Remove from favorites</a>
 					<% else %>
-						<a class="btn success" id="<%= @bar.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= @bar.id %>, '<%= session[:user_id] %>');">Add to favorites</a>
+						<a class="btn success" id="<%= @bar.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= @bar.id %>, '<%= session[:user_id] %>', '<%= form_authenticity_token.to_s %>');">Add to favorites</a>
 					<% end %>
 				<% end %>
 			</div>

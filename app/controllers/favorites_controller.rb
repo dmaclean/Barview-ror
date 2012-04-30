@@ -75,11 +75,31 @@ class FavoritesController < ApplicationController
   # DELETE /favorites/1
   # DELETE /favorites/1.json
   def destroy
-    @favorite = Favorite.find(params[:id])
-    @favorite.destroy
+    # Make sure the user is deleting their own favorite
+    if session[:user_id].to_s != request.env['HTTP_USER_ID']
+      logger.debug { 'The user id (' + session[:user_id].to_s + ') in session does not match the one in the request header (' + request.env['HTTP_USER_ID'] + ').' }
+      respond_to do |format|
+        format.html { render :text => '500' }
+        format.json { head :no_content }
+      end
+      
+      return
+    end
+  
+    begin
+      Favorite.delete_all(['user_id = ? and bar_id = ?', request.env['HTTP_USER_ID'], request.env['HTTP_BAR_ID']])
+    rescue => ex
+      print "Unable to delete favorite with user_id #{ request.env['HTTP_USER_ID'] } and bar_id #{ request.env['HTTP_BAR_ID'] }.  #{ex.class} - #{ex.message}"
+      respond_to do |format|
+        format.html { render :text => '500' }
+        format.json { head :no_content }
+      end
+      
+      return
+    end
 
     respond_to do |format|
-      format.html { redirect_to favorites_url }
+      format.html { render :text => '200' }
       format.json { head :no_content }
     end
   end

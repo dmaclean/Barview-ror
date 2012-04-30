@@ -46,10 +46,41 @@ class FavoritesControllerTest < ActionController::TestCase
   end
 
   test "should destroy favorite" do
+    session[:user_id] = 2
+    @request.env['HTTP_USER_ID'] = '2'
+    @request.env['HTTP_BAR_ID'] = '2'
+  
     assert_difference('Favorite.count', -1) do
       delete :destroy, :id => @favorite
     end
 
-    assert_redirected_to favorites_path
+    assert_response :success
+    assert_not_nil response.body == '200'
+  end
+  
+  test "should destroy favorite bad bar" do
+    session[:user_id] = 1
+    @request.env['HTTP_USER_ID'] = '1'
+    @request.env['HTTP_BAR_ID'] = '9999'
+  
+    assert_no_difference('Favorite.count') do
+      delete :destroy, :id => @favorite
+    end
+
+    assert_response :success
+    assert_not_nil response.body == '500'
+  end
+  
+  test "should destroy favorite not logged in user" do
+    session[:user_id] = 2
+    @request.env['HTTP_USER_ID'] = '1'
+    @request.env['HTTP_BAR_ID'] = '2'
+  
+    assert_no_difference('Favorite.count') do
+      delete :destroy, :id => @favorite
+    end
+
+    assert_response :success
+    assert_not_nil response.body == '500'
   end
 end

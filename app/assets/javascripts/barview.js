@@ -125,8 +125,8 @@ function addToFavorites(base_url, bar_id, user_id, token) {
 					var element = '#' + bar_id + '_favorite';
 					$(element).text('Remove from favorites');
 					$(element).removeClass("btn success").addClass("btn danger");
-					$(element).click({'base_url' : base_url, 'bar_id' : bar_id, 'user_id' : user_id}, function(e) {
-							removeFromFavorites(e.data.base_url, e.data.bar_id, e.data.user_id);
+					$(element).click({'base_url' : base_url, 'bar_id' : bar_id, 'user_id' : user_id, 'token' : token}, function(e) {
+							removeFromFavorites(e.data.base_url, e.data.bar_id, e.data.user_id, e.data.token);
 						}
 					);
 				},
@@ -141,21 +141,26 @@ function addToFavorites(base_url, bar_id, user_id, token) {
  * for a user.  If successful, the link "Remove from favorites" will be changed to "Add to favorites"
  * and its onClick event will be changed to the addToFavorites() function.
  */
-function removeFromFavorites(base_url, bar_id, user_id) {
+function removeFromFavorites(base_url, bar_id, user_id, token) {
 	$.ajax({
 		type: 'DELETE',
-		url: base_url + 'index.php?/rest/favorite/' + bar_id,
+		url: base_url + '/favorites/' + bar_id,
 		beforeSend: function(xhr) {
 				xhr.setRequestHeader('USER_ID', user_id);
+				xhr.setRequestHeader('BAR_ID', bar_id);
+				xhr.setRequestHeader('X-CSRF-Token', token);
 			},
 		success: function() {
 					var element = '#' + bar_id + '_favorite';
 					$(element).text('Add to favorites');
 					$(element).removeClass("btn danger").addClass("btn success");
-					$(element).click({'base_url' : base_url, 'bar_id' : bar_id, 'user_id' : user_id}, function(e) {
-							addToFavorites(e.data.base_url, e.data.bar_id, e.data.user_id);
+					$(element).click({'base_url' : base_url, 'bar_id' : bar_id, 'user_id' : user_id, 'token' : token}, function(e) {
+							addToFavorites(e.data.base_url, e.data.bar_id, e.data.user_id, e.data.token);
 						}
 					);
+				},
+		error: function(jqXHR, textStatus, errorThrown) {
+					alert(errorThrown);
 				}
 	});
 }
