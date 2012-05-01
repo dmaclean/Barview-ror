@@ -16,7 +16,6 @@ class NearbyBarsController < ApplicationController
 	lat_high = lat.to_f + 0.025
 	lng_low = lng.to_f - 0.025
 	lng_high = lng.to_f + 0.025
-	print lat_low
 	
 	logger.debug { "Attempting to find bars in the proximity of #{ lat }/#{ lng }" }
 	
@@ -34,8 +33,7 @@ class NearbyBarsController < ApplicationController
       xml += "</bar>"
     end
 
-	xml += '</nearbybars>';
-	print xml
+	xml += '</nearbybars>'
 	
 	respond_to do |format|
 	  format.html { render :text => xml }
