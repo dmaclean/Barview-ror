@@ -1,3 +1,5 @@
+<div class="row">
+  	<div class="span12">
 <%= form_for(@bar) do |f| %>
   <% if @bar.errors.any? %>
     <div id="error_explanation">
@@ -12,65 +14,135 @@
   <% end %>
 
   <fieldset>
-  <legend>Enter Bar details</legend>
-  <!--<div class="field">
-    <%= f.label :id %><br />
-    <%= f.number_field :id %>
-  </div>-->
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <legend>Bar Information</legend>
+
+  <div class="clearfix">
+    <%= f.label :name %>
+    <div class="input">
+    	<%= f.text_field :name, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address %>
+  <div class="clearfix">
+    <%= f.label :address %>
+    <div class="input">
+	    <%= f.text_field :address, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
+  <div class="clearfix">
+    <%= f.label :city %>
+    <div class="input">
+	    <%= f.text_field :city, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :state %><br />
-    <%= f.text_field :state %>
+  <div class="clearfix">
+    <%= f.label :state %>
+    <div class="input">
+	    <%= f.select :state, ['AK','AL',
+				'AR',
+				'AZ',
+				'CA',
+				'CO',
+				'CT',
+				'DC',
+				'DE',
+				'FL',
+				'GA',
+				'HI',
+				'IA',
+				'ID',
+				'IL',
+				'IN',
+				'KS',
+				'KY',
+				'LA',
+				'MA',
+				'MD',
+				'ME',
+				'MI',
+				'MN',
+				'MO',
+				'MS',
+				'MT',
+				'NC',
+				'ND',
+				'NE',
+				'NH',
+				'NJ',
+				'NM',
+				'NV',
+				'NY',
+				'OH',
+				'OK',
+				'OR',
+				'PA',
+				'RI',
+				'SC',
+				'SD',
+				'TN',
+				'TX',
+				'UT',
+				'VA',
+				'VT',
+				'WA',
+				'WI',
+				'WV',
+				'WY'], 
+				:include_blank => true %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :zip %><br />
-    <%= f.text_field :zip %>
+  <div class="clearfix">
+    <%= f.label :zip %>
+    <div class="input">
+	    <%= f.text_field :zip, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :lat %><br />
-    <%= f.text_field :lat %>
+  <div class="clearfix">
+    <%= f.label :lat %>
+    <div class="input">
+	    <%= f.text_field :lat, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :lng %><br />
-    <%= f.text_field :lng %>
+  <div class="clearfix">
+    <%= f.label :lng %>
+    <div class="input">
+	    <%= f.text_field :lng, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
+  <div class="clearfix">
+    <%= f.label :username %>
+    <div class="input">
+	    <%= f.text_field :username, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
+  <div class="clearfix">
+    <%= f.label :password %>
+    <div class="input">
+	    <%= f.password_field :password, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :password_confirmation, 'Confirm' %>:
-    <%= f.password_field :password_confirmation, :size => 40 %>
+  <div class="clearfix">
+    <%= f.label :password_confirmation, 'Confirm' %>
+    <div class="input">
+	    <%= f.password_field :password_confirmation, :size => 40, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
+  <div class="clearfix">
+    <%= f.label :email %>
+    <div class="input">
+	    <%= f.text_field :email, :class => 'input-xlarge' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :reference %><br />
-    <%= f.text_area :reference %>
-  </div>
-  <div class="field">
-    <%= f.label :verified %><br />
-    <%= f.number_field :verified %>
+  <div class="clearfix">
+    <%= f.label :reference %>
+    <div class="input">
+	    <%= f.text_area :reference %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn primary'%>
   </div>
   </fieldset>
 <% end %>
+
+</div> <!-- span12 -->
+</div> <!-- row -->

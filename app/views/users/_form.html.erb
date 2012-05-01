@@ -1,4 +1,6 @@
-<%= form_for(@user) do |f| %>
+<div class="row">
+  	<div class="span12">
+<%= form_for(@user, :html => { :class => "form-horizontal" }) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -10,44 +12,117 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation, 'Confirm' %>:
-    <%= f.password_field :password_confirmation, :size => 40 %>
-  </div>
-  <div class="field">
-    Date of Birth (YYYY-MM-DD)<br />
-    <%= f.text_field :dob %>
-  </div>
-  <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br />
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :gender %><br />
-    <%= select("user", "gender", %w{Male Female}, {:prompt => 'Select One'}) %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+	<fieldset>
+		<legend>User Information</legend>
+			<div class="clearfix">
+	  			<%= f.label :first_name %>
+	  			<div class="input">
+					<%= f.text_field :first_name, :class => 'input-xlarge' %>
+				</div>
+	  		</div>
+	  
+	  		<div class="clearfix">
+				<%= f.label :last_name %>
+				<div class="input">
+					<%= f.text_field :last_name, :class => 'input-xlarge' %>
+				</div>
+			</div>
+			<div class="clearfix">
+				<%= f.label :email %>
+				<div class="input">
+					<%= f.text_field :email, :class => 'input-xlarge' %>
+				</div>
+			</div>
+	  		<div class="clearfix">
+				<%= f.label :password %>
+				<div class="input">
+					<%= f.password_field :password, :class => 'input-xlarge' %>
+				</div>
+	  		</div>
+	  		<div class="clearfix">
+				<%= f.label :password_confirmation, 'Confirm' %>
+				<div class="input">
+					<%= f.password_field :password_confirmation, :size => 40, :class => 'input-xlarge' %>
+				</div>
+	 		</div>
+	  		<div class="clearfix">
+				<label for="dob">Date of Birth (YYYY-MM-DD)</label>
+				<div class="input">
+					<%= f.text_field :dob, :class => 'input-xlarge' %>
+				</div>
+	  		</div>
+	  		<div class="clearfix">
+				<%= f.label :city %>
+				<div class="input">
+					<%= f.text_field :city %>
+				</div>
+	  		</div>
+	  		<div class="clearfix">
+				<%= f.label :state %>
+				<div class="input">
+					<%= f.select :state, ['AK','AL',
+				'AR',
+				'AZ',
+				'CA',
+				'CO',
+				'CT',
+				'DC',
+				'DE',
+				'FL',
+				'GA',
+				'HI',
+				'IA',
+				'ID',
+				'IL',
+				'IN',
+				'KS',
+				'KY',
+				'LA',
+				'MA',
+				'MD',
+				'ME',
+				'MI',
+				'MN',
+				'MO',
+				'MS',
+				'MT',
+				'NC',
+				'ND',
+				'NE',
+				'NH',
+				'NJ',
+				'NM',
+				'NV',
+				'NY',
+				'OH',
+				'OK',
+				'OR',
+				'PA',
+				'RI',
+				'SC',
+				'SD',
+				'TN',
+				'TX',
+				'UT',
+				'VA',
+				'VT',
+				'WA',
+				'WI',
+				'WV',
+				'WY'], 
+				:include_blank => true %>
+				</div>
+	  		</div>
+	  		<div class="clearfix">
+				<%= f.label :gender %>
+				<div class="input">
+					<%= select("user", "gender", %w{Male Female}, {:prompt => 'Select One'}) %>
+				</div>
+	  		</div>
+	 		<div class="actions">
+				<%= f.submit :class => 'btn primary' %>
+	  		</div>
+	  	</fieldset>
+	</div> <!-- span8 -->
   </div>
 <% end %>
