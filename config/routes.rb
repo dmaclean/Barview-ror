@@ -1,4 +1,8 @@
 BarviewRor::Application.routes.draw do
+  get "user_questionnaire/index"
+
+  post "user_questionnaire/create"
+
   get "nearby_bars/index"
 
   get "about/index"

@@ -27,5 +27,23 @@ class UserHomeControllerTest < ActionController::TestCase
     get :index
     assert_redirected_to barhome_url
   end
+  
+  test "show questionnaire" do
+    session[:user_id] = 999
+    get :index
+    
+    assert_response :success
+    assert_select '#show_questionnaire', 'true'
+    assert_select '#q1_0', 1
+    assert_select '#q2_0', 1
+  end
+  
+  test "do not show questionnaire" do
+    session[:user_id] = 1
+    get :index
+    
+    assert_response :success
+    assert_select '#show_questionnaire', 'false'
+  end
 
 end

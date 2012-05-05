@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+q1o1:
+  user_questionnaire_question_id: 1
+  answer: Option 1 to question 1
+
+q1o2:
+  user_questionnaire_question_id: 2
+  answer: Option 2 to question 1
+
+q2o1:
+  user_questionnaire_question_id: 3
+  answer: Option 1 to question 2
+
+q2o2:
+  user_questionnaire_question_id: 4
+  answer: Option 2 to question 2

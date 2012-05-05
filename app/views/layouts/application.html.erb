@@ -99,12 +99,11 @@
 
 	<div id="base_url" style="display:none"><%= @base_url %></div>
 	<div id="show_questionnaire" style="display:none">
-		<!--<?php  
-			if(isset($show_questionnaire) && $show_questionnaire)
-				echo 'true';
-			else
-				echo 'false';
-		?>-->
+		<% if @show_questionnaire then %>
+		  true 
+		<% else %>
+		  false 
+ 		<% end %>
 	</div>
 	<div id="fb_user" style="display:none">
 		<!--<?php 
@@ -173,45 +172,39 @@
 		
 		
 		<!-- QUESTIONNAIRE DIV FOR FACEBOOK USERS -->
-		<!--<div style="display:none">
+		<div style="display:none">
 			<div id="fb_questionnaire">
 				<div class="container">
 					<div class="row">
 						<div class="span12">
-							<?php
-								$form_options = array('id' => 'fb_questionnaire_form');
-								echo form_open('questionnaire/submit', $form_options); 
-								echo form_hidden('user_id', $this->session->userdata('uid'));
-							?>
+							<%= form_tag("/user_questionnaire/create", :method => "post") do %>
 								<fieldset>
 									<legend>Quick questionnaire (you'll only have to do this once).</legend>
 									<div id="fbq_errors"></div>
-									<?php if(isset($user_questions)) { 
-										foreach($user_questions as $k => $q) {
-									?>
+									<% if @questionnaire 
+										for k, q in @questionnaire
+									%>
 										<div class="clearfix">
-											<label for="q<?php echo $k; ?>"><?php echo $q['question'] ?></label>
+											<label for="q<%= k %>"><%= q['question'] %></label>
 											<div class="input">
-												<?php 
-													$qfield = 'q'.$k;
-													echo form_dropdown($qfield, $q['options'], set_value($qfield)); 
-												?>
+												<%= select('q' + k.to_s, 0, options_for_select(q['options'].invert)) %>
 											</div>
 										</div>
-									<?php 
-										} 
-									} ?>
+									<%   end
+									  end
+									%>
 									<div class="actions">
-										<input id="fbq_submit" type="button" class="btn primary" value="Submit" onclick="submitFBQuestionnaire()" />
+										<!--<input id="fbq_submit" type="button" class="btn primary" value="Submit" onclick="submitFBQuestionnaire()" />-->
+										<%= submit_tag("Submit", :class => "btn primary") %>
 									</div>
 								</fieldset>
-							<?php echo form_close(); ?>
+							<% end %>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<a style="display:none" id="fb_questionnaire_anchor" href="#fb_questionnaire"></a>-->
+		<a style="display:none" id="fb_questionnaire_anchor" href="#fb_questionnaire"></a>
 		
 		<!-- LOGIN DIV FOR FANCYBOX -->
 		<div style="display:none">

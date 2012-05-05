@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   attr_reader   :password
   
   has_many :favorites, :dependent => :destroy
+  has_many :user_questionnaire_answers, :dependent => :destroy
   
   validate :password_must_be_present
   

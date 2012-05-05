@@ -10,6 +10,14 @@ class UserHomeController < ApplicationController
     if session[:user_id]
       @bars = Bar.joins(:favorites).where('favorites.user_id' => session[:user_id])
       
+      # Determine if we should show the questionnaire for the user.  If so, then
+      # grab all the questions and their associated options.
+      @show_questionnaire = show_questionnaire?
+      if @show_questionnaire
+        @questionnaire = fetch_questionnaire
+        logger.debug { @questionnaire.inspect }
+      end
+      
       if @bars.empty? 
         @bars = Bar.find(:all)
         @events = get_all_events
@@ -52,5 +60,41 @@ class UserHomeController < ApplicationController
 	end
 	
 	events
+  end
+  
+  #############################################################################
+  # Determine whether or not the user questionnaire should be shown based on 
+  # whether the user has any answers in the database.
+  #############################################################################
+  def show_questionnaire?
+    show = true
+  
+    begin
+      answers = UserQuestionnaireAnswer.where(['user_id = ?', session[:user_id]])
+      show = answers.empty?
+    rescue => e
+      logger.debug { "#{ e.class } - #{ e.message }" }
+    end
+    
+    show
+  end
+  
+  def fetch_questionnaire
+    questions = UserQuestionnaireQuestion.find(:all, :select => 'user_questionnaire_questions.id as qid, user_questionnaire_questions.question as question, user_questionnaire_options.id as oid, user_questionnaire_options.user_questionnaire_question_id as oqid, user_questionnaire_options.answer as answer', :joins => :user_questionnaire_option)
+    qhash = Hash.new
+    for q in questions do
+      if qhash.key?(q.qid)
+        question = qhash[q.qid]
+        question['options'][q.oid] = q.answer
+      else
+        question = Hash.new
+        question['question'] = q.question
+        question['options'] = Hash.new
+        question['options'][q.oid] = q.answer
+        qhash[q.qid] = question
+      end
+    end
+    
+    qhash
   end
 end

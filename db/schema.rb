@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427115423) do
+ActiveRecord::Schema.define(:version => 20120501202600) do
 
   create_table "bar_events", :force => true do |t|
     t.integer  "bar_id"
@@ -54,6 +54,27 @@ ActiveRecord::Schema.define(:version => 20120427115423) do
   create_table "favorites", :force => true do |t|
     t.integer  "user_id"
     t.integer  "bar_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "user_questionnaire_answers", :force => true do |t|
+    t.integer  "user_questionnaire_question_id"
+    t.integer  "user_id"
+    t.integer  "user_questionnaire_option_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "user_questionnaire_options", :force => true do |t|
+    t.integer  "user_questionnaire_question_id"
+    t.text     "answer"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "user_questionnaire_questions", :force => true do |t|
+    t.text     "question"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
