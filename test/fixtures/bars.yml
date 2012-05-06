@@ -33,3 +33,20 @@ two:
   email: dan@bar-view.com
   reference: MyText
   verified: 1
+
+unverified:
+  id: 3
+  name: Unverified Bar
+  address: 10 Juniper Lane
+  city: Medfield
+  state: MA
+  zip: 02052
+  lat: 42.123456
+  lng: -71.8034353
+  username: dan
+  hashed_password: <%= Bar.encrypt_password('mypass', SALT) %>
+  salt: <%= SALT %>
+  email: dmaclean82@gmail.com
+  reference: testing
+  verified: 0
+  

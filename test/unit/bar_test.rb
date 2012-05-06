@@ -105,4 +105,16 @@ class BarTest < ActiveSupport::TestCase
     assert bar.lat == 42.1709272
     assert bar.lng == -71.3008238
   end
+  
+  test "successful login" do
+    assert Bar.authenticate('username1', 'secret')
+  end
+  
+  test "unsuccessful login" do
+    assert_nil Bar.authenticate('username1', 'badpassword')
+  end
+  
+  test "unsuccessful login because unverified" do
+    assert_nil Bar.authenticate('dan', 'mypass')
+  end
 end

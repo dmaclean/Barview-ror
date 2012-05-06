@@ -99,12 +99,13 @@ class BarsController < ApplicationController
       :state => params[:bar][:state],
       :zip => params[:bar][:zip]
     }
-    
-     @bar.fetch_coordinates
 
     respond_to do |format|
       if @bar.update_attributes(submission_hash)
-        format.html { redirect_to bars_url, :notice => "Bar #{@bar.name} was successfully updated." }
+        @bar.fetch_coordinates
+        @bar.save
+        
+        format.html { redirect_to bars_url, :notice => "#{@bar.name} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

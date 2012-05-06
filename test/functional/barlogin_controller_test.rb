@@ -20,6 +20,14 @@ class BarloginControllerTest < ActionController::TestCase
     assert_equal flash[:error], 'Invalid username/password combination'
     assert_equal session[:bar_id], nil
   end
+  
+  test "should fail login for unverified bar" do
+    bar = bars(:unverified)
+    post :create, :name => bar.username, :password => 'mypass'
+    assert_redirected_to barhome_url
+    assert_equal flash[:error], 'Invalid username/password combination'
+    assert_equal session[:bar_id], nil
+  end
 
   test "should logout" do
     delete :destroy

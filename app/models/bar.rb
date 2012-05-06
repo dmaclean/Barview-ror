@@ -25,7 +25,7 @@ class Bar < ActiveRecord::Base
   class << self
     def authenticate(name, password)
       if bar = find_by_username(name)
-        if bar.hashed_password == encrypt_password(password, bar.salt)
+        if bar.hashed_password == encrypt_password(password, bar.salt) and bar.verified == 1
           bar
         end
       end

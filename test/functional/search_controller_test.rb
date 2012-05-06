@@ -20,6 +20,13 @@ class SearchControllerTest < ActionController::TestCase
     assert_select '#2_favorite', 'Add to favorites'
   end
   
+  test "do not find unverified bar for logged-in user" do
+    session[:user_id] = 1
+    get :index, :search => 'Unverified'
+    assert_response :success
+    assert_no_match /unverified bar/i, response.body
+  end
+  
   test "should get no results" do
     get :index, :search => 'doesnotexist'
     assert_response :success

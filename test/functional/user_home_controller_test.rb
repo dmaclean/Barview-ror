@@ -14,6 +14,19 @@ class UserHomeControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "make sure unverified bar does not show up for logged-in user" do
+    session[:user_id] = 1
+    get :index
+    assert_no_match /Unverified Bar/i, response.body
+    assert_no_match /Unverified event/i, response.body
+  end
+  
+  test "make sure unverified bar does not show up for logged-out user" do
+    get :index
+    assert_no_match /Unverified Bar/i, response.body
+    assert_no_match /Unverified event/i, response.body
+  end
+  
   test "should get index user without favorites" do
     session[:user_id ] = 3
     get :index

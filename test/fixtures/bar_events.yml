@@ -7,3 +7,7 @@ one:
 two:
   bar_id: 2
   detail: MyText2
+
+unverified_event:
+  bar_id: 3
+  detail: Unverified event
