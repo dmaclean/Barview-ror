@@ -4,6 +4,17 @@ class BarsController < ApplicationController
   # GET /bars
   # GET /bars.json
   def index
+    # Verify a bar if one was specified
+    if params[:verify]
+      bar_to_verify = Bar.find(params[:verify])
+      bar_to_verify.verified = 1
+      unless bar_to_verify.save
+        flash[:error] = "Unable to verify #{ bar_to_verify.name }"
+      else
+        flash[:notice] = "Successfully verified #{ bar_to_verify.name }"
+      end
+    end
+    
     @bars = Bar.order(:name)
 
     respond_to do |format|

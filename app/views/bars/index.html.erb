@@ -1,4 +1,13 @@
+<br/><br/><br/>
 <h1>Listing bars</h1>
+
+<!-- ERROR/INFO MESSAGES -->
+<% if flash[:error] %>
+	<div class="alert-message error"><p><%= flash[:error] %></div>
+<% end
+if flash[:notice] %>
+	<div class="alert-message info"><p><%= flash[:notice] %></div>
+<% end %>
 
 <table>
   <tr>
@@ -11,11 +20,12 @@
     <th>Lat</th>
     <th>Lng</th>
     <th>Username</th>
-    <th>Hashed Password</th>
-    <th>Salt</th>
+    <!--<th>Hashed Password</th>
+    <th>Salt</th>-->
     <th>Email</th>
     <th>Reference</th>
     <th>Verified</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -32,14 +42,17 @@
     <td><%= bar.lat %></td>
     <td><%= bar.lng %></td>
     <td><%= bar.username %></td>
-    <td><%= bar.hashed_password %></td>
-    <td><%= bar.salt %></td>
+    <!--<td><%= bar.hashed_password %></td>
+    <td><%= bar.salt %></td>-->
     <td><%= bar.email %></td>
     <td><%= bar.reference %></td>
     <td><%= bar.verified %></td>
     <td><%= link_to 'Show', bar %></td>
     <td><%= link_to 'Edit', edit_bar_path(bar) %></td>
     <td><%= link_to 'Destroy', bar, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if bar.verified == 0 %>
+    <td><%= link_to 'Verify', bars_path(:verify => bar.id) %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

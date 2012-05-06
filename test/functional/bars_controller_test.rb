@@ -38,6 +38,18 @@ class BarsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:bars)
   end
+  
+  test "should get index and verify" do
+    get :index, :verify => 3
+    assert_response :success
+    assert_not_nil assigns(:bars)
+    assert flash[:notice] == "Successfully verified Unverified Bar"
+    for bar in assigns(:bars) do
+      if bar.id == 3
+        assert bar.verified == 1
+      end
+    end
+  end
 
   test "should get new" do
     get :new
