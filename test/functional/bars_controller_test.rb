@@ -4,11 +4,11 @@ class BarsControllerTest < ActionController::TestCase
   setup do
     @bar = bars(:one)
     @new = {
-      :name => 'MyString',
-	  :address => 'MyString',
-	  :city => 'MyString',
-	  :state => 'MyString',
-	  :zip => '12345',
+      :name => 'Mom and Dads',
+	  :address => '20 Wire Village Rd',
+	  :city => 'Spencer',
+	  :state => 'MA',
+	  :zip => '01562',
 	  :lat => 1.5,
 	  :lng => 1.5,
 	  :username => 'MyString2',
@@ -20,10 +20,10 @@ class BarsControllerTest < ActionController::TestCase
     }
     @update = {
       :name => 'MyString',
-	  :address => 'MyString',
-	  :city => 'MyString',
-	  :state => 'MyString',
-	  :zip => '12345',
+	  :address => '51 North St',
+	  :city => 'Medfield',
+	  :state => 'MA',
+	  :zip => '02052',
 	  :lat => 1.5,
 	  :lng => 1.5,
 	  :username => 'MyString2',

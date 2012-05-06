@@ -1,3 +1,5 @@
+require 'net/http'
+
 class BarsController < ApplicationController
   # GET /bars
   # GET /bars.json
@@ -59,24 +61,23 @@ class BarsController < ApplicationController
   # POST /bars
   # POST /bars.json
   def create
-    #@bar = Bar.new(params[:bar])
     @bar = Bar.new
     @bar.address = params[:bar][:address]
     @bar.city = params[:bar][:city]
     @bar.email = params[:bar][:email]
-    @bar.lat = params[:bar][:lat]
-    @bar.lng = params[:bar][:lng]
     @bar.name = params[:bar][:name]
     @bar.reference = params[:bar][:reference]
     @bar.state = params[:bar][:state]
     @bar.username = params[:bar][:username]
     @bar.password = params[:bar][:password]
-    @bar.verified = params[:bar][:verified]
+    @bar.verified = 0
     @bar.zip = params[:bar][:zip]
+    
+    @bar.fetch_coordinates
 
     respond_to do |format|
       if @bar.save
-        format.html { redirect_to bars_url, :notice => 'Bar #{@bar.name} was successfully created.' }
+        format.html { redirect_to bars_url, :notice => "Bar #{@bar.name} was successfully created." }
         format.json { render :json => @bar, :status => :created, :location => @bar }
       else
         format.html { render :action => "new" }
@@ -98,6 +99,8 @@ class BarsController < ApplicationController
       :state => params[:bar][:state],
       :zip => params[:bar][:zip]
     }
+    
+     @bar.fetch_coordinates
 
     respond_to do |format|
       if @bar.update_attributes(submission_hash)

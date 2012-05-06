@@ -86,4 +86,23 @@ class BarTest < ActiveSupport::TestCase
     bar.email = 'dan@bar-view.com'
     assert bar.valid?
   end
+  
+  test "get coordinates for juniper lane" do
+    bar = Bar.new(
+      :address => '10 Juniper Lane',
+      :city => 'Medfield',
+      :state => 'MA',
+      :email => 'dan@bar-view.com',
+      :name => 'Dan Bar',
+      :reference => 'hello',
+      :username => 'dmaclean',
+      :verified => 0,
+      :zip => 'abc'
+    )
+    
+    bar.fetch_coordinates
+    
+    assert bar.lat == 42.1709272
+    assert bar.lng == -71.3008238
+  end
 end

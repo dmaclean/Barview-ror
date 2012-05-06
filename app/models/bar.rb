@@ -46,6 +46,28 @@ class Bar < ActiveRecord::Base
     end
   end
   
+  def fetch_coordinates
+    host = 'maps.googleapis.com'
+    reverseCodingUrl = '/maps/api/geocode/xml?address=' +
+    				self.address.gsub(" ", "+") + ',' + 
+					self.city.gsub(" ", "+") + ',' +
+					self.state + '&sensor=false'
+	
+	coords = [0.0, 0.0]
+	
+	http = Net::HTTP.new(host)
+	headers, body = http.get(reverseCodingUrl)
+	if headers.code == "200"
+	  if /<location>\s*<lat>([-0-9\.]*)<\/lat>\s*<lng>([-0-9\.]*)<\/lng>\s*<\/location>/i =~ body
+	    data = Regexp.last_match
+	    self.lat = data[1].to_f
+	    self.lng = data[2].to_f
+	  end
+	else
+	  logger.debug { "Error while fetching coordinates for #{ self.address } #{ self.city }, #{ self.state }" }
+	end
+  end
+  
   private
     def password_must_be_present
       errors.add(:password, "Missing password") unless hashed_password.present?
