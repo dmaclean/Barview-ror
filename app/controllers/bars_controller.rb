@@ -12,6 +12,7 @@ class BarsController < ApplicationController
         flash[:error] = "Unable to verify #{ bar_to_verify.name }"
       else
         flash[:notice] = "Successfully verified #{ bar_to_verify.name }"
+        BvMailer.bar_verification_email(bar_to_verify).deliver
       end
     end
     
@@ -88,6 +89,9 @@ class BarsController < ApplicationController
 
     respond_to do |format|
       if @bar.save
+        BvMailer.bar_registration_email(@bar).deliver
+        BvMailer.support_alert_email(@bar).deliver
+      
         format.html { redirect_to bars_url, :notice => "Bar #{@bar.name} was successfully created." }
         format.json { render :json => @bar, :status => :created, :location => @bar }
       else

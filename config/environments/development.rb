@@ -34,4 +34,14 @@ BarviewRor::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+:address => 'smtpout.secureserver.net',
+:domain  => 'www.bar-view.com',
+:port      => 80,
+:user_name => 'support@bar-view.com',
+:password => 'HeSX@nP',
+:authentication => :plain
+}
 end
