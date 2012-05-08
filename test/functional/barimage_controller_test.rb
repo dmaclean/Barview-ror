@@ -974,5 +974,12 @@ LDlmiEYieXjY48Qatv6DdTdy/l5Even0gweX21iUGbp5Clu0Wsssty7flsMM
 NRLqsJ6kCltNtu68S14G2yuubfkN7hSBhgydDcIUgbCjs7DDCEP/2Q==
 '
   end
+  
+  test "do put for new image" do
+    @request.env['RAW_POST_DATA'] = 'SOME CONTENT'
+    put :update, :id => 100
+    assert_response :success
+    assert_not_nil assigns(:img)
+  end
 
 end

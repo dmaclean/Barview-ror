@@ -14,9 +14,18 @@ class BarimageController < ApplicationController
   
   def update
     data = request.body.read
+    
     if data.size > 0
       @img = Barimage.find_by_bar_id(params[:id])
-      @img.write_file(data)
+      
+      if @img
+        @img.write_file(data)
+      else
+        @img = Barimage.new(:image => "broadcast_images/#{ params[:id] }.jpg")
+        @img.bar_id = params[:id]
+        @img.save
+        @img.write_file(data)
+      end
     end
 
     respond_to do |format|
