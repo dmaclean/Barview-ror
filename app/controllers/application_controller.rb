@@ -3,6 +3,13 @@ class ApplicationController < ActionController::Base
   
   before_filter :init_vars
   
+  ##############################################################
+  # Convenience method that sends a user back to the homepage.
+  ##############################################################
+  def redirect_to_home
+    redirect_to '/'
+  end
+  
   private
   def init_vars
     @base_url = 'http://' + request.host
