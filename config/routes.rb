@@ -1,4 +1,6 @@
 BarviewRor::Application.routes.draw do
+  get "viewers/index"
+
   get "user_questionnaire/index"
 
   post "user_questionnaire/create"

@@ -15,4 +15,16 @@ class BarImageRequestTest < ActiveSupport::TestCase
     bir.bar_id = 1
     assert bir.valid?
   end
+  
+  test "fetch two bar image requests" do
+    viewers = BarImageRequest.get_realtime_viewers(1, 2)
+    
+    assert viewers != ''
+  end
+  
+  test "fetch zero bar image requests" do
+    viewers = BarImageRequest.get_realtime_viewers(2, 2)
+    
+    assert viewers == ''
+  end
 end

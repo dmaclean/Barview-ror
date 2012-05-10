@@ -1,4 +1,3 @@
-
 <!--
   BAR OWNER IS NOT LOGGED IN!
 -->
@@ -37,6 +36,12 @@
   BAR OWNER IS LOGGED IN - SHOW THE VIDEO FEED
 -->
 <% else %>
+<!-- Run the AJAX to get the latest Realtime Viewer list every 10 seconds -->
+<script type="text/javascript">
+	setInterval( function() {
+					getRealtimeUsers("<%= @base_url %>", <%= session[:bar_id] %>, "<%= @bar.name %>", 60, "<%= form_authenticity_token.to_s %>");
+				}, 10000 );
+</script>
 	<div class="row">
 		<div class="span3">
 			<h2>Viewers</h2>

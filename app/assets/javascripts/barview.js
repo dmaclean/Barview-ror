@@ -220,14 +220,15 @@ function deleteEvent(base_url, event_id, bar_id, bar_name, session_id, token) {
 	});
 }
 
-function getRealtimeUsers(base_url, bar_id, bar_name, session_id, seconds_back) {
+function getRealtimeUsers(base_url, bar_id, bar_name, seconds_back, token) {
 	$.ajax({
 		type: 'GET',
-		url: base_url + 'index.php?/rest/viewers/' + seconds_back,
+		url: base_url + '/viewers/index',
 		beforeSend: function(xhr) {
 						xhr.setRequestHeader('BAR_ID', bar_id);
 						xhr.setRequestHeader('BAR_NAME', bar_name);
-						xhr.setRequestHeader('SESSION_ID', session_id);
+						xhr.setRequestHeader('SECONDS_BACK', seconds_back);
+						xhr.setRequestHeader('X-CSRF-Token', token);
 					},
 		success: function(data, textStatus, jqXHR) {
 					// Clear out existing entries since we just got a fresh list from the server.
@@ -243,6 +244,11 @@ function getRealtimeUsers(base_url, bar_id, bar_name, session_id, seconds_back) 
 						for(i in items)
 							$('#realtime').append('<li>' + items[i] + '</li>');
 					}
+				},
+		error: function(jqXHR, textStatus, errorThrown) {
+					// Clear out existing entries since we just got a fresh list from the server.
+					$('#realtime').children().remove();
+					$('#realtime').append('<div>Unable to retrieve viewers at this time.</div>');
 				}
 	});
 }
