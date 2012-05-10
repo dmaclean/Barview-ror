@@ -1,40 +1,54 @@
+#################################################################################
+# We only use POST and DELETE for this controller.  There is currently no need
+# for us to create, update, or show a bar event via the HTML forms.
+#
+# Therefore, any non POST or DELETE will be redirected back to the home page.
+#################################################################################
 class BarEventsController < ApplicationController
   # GET /bar_events
   # GET /bar_events.json
   def index
-    @bar_events = BarEvent.all
+    redirect_to_home
+    
+    #@bar_events = BarEvent.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @bar_events }
-    end
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.json { render :json => @bar_events }
+    #end
   end
 
   # GET /bar_events/1
   # GET /bar_events/1.json
   def show
-    @bar_event = BarEvent.find(params[:id])
+    redirect_to_home
+    
+    #@bar_event = BarEvent.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @bar_event }
-    end
+    #respond_to do |format|
+    #  format.html # show.html.erb
+    #  format.json { render :json => @bar_event }
+    #end
   end
 
   # GET /bar_events/new
   # GET /bar_events/new.json
   def new
-    @bar_event = BarEvent.new
+    redirect_to_home
+    
+    #@bar_event = BarEvent.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @bar_event }
-    end
+    #respond_to do |format|
+    #  format.html # new.html.erb
+    #  format.json { render :json => @bar_event }
+    #end
   end
 
   # GET /bar_events/1/edit
   def edit
-    @bar_event = BarEvent.find(params[:id])
+    redirect_to_home
+    
+    #@bar_event = BarEvent.find(params[:id])
   end
 
   # POST /bar_events
@@ -70,17 +84,19 @@ class BarEventsController < ApplicationController
   # PUT /bar_events/1
   # PUT /bar_events/1.json
   def update
-    @bar_event = BarEvent.find(params[:id])
+    redirect_to_home
+    
+    #@bar_event = BarEvent.find(params[:id])
 
-    respond_to do |format|
-      if @bar_event.update_attributes(params[:bar_event])
-        format.html { redirect_to @bar_event, :notice => 'Bar event was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @bar_event.errors, :status => :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+    #  if @bar_event.update_attributes(params[:bar_event])
+    #    format.html { redirect_to @bar_event, :notice => 'Bar event was successfully updated.' }
+    #    format.json { head :no_content }
+    #  else
+    #    format.html { render :action => "edit" }
+    #    format.json { render :json => @bar_event.errors, :status => :unprocessable_entity }
+    #  end
+    #end
   end
 
   # DELETE /bar_events/1
