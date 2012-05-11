@@ -30,6 +30,12 @@ BarviewRor::Application.routes.draw do
 
   resources :bar_events
   
+  controller :admins do
+    get 'adminlogin' => :new
+    post 'adminlogin' => :create
+    delete 'adminlogout' => :destroy
+  end
+  
   controller :user_login do
     get 'userlogin' => :new
     post 'userlogin' => :create
