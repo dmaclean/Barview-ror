@@ -4,6 +4,12 @@ class BarsController < ApplicationController
   # GET /bars
   # GET /bars.json
   def index
+    # If request comes from a non-admin then boot them to the main page
+    unless session[:admin_id]
+      redirect_to_home
+      return
+    end
+  
     # Verify a bar if one was specified
     if params[:verify]
       bar_to_verify = Bar.find(params[:verify])
@@ -132,6 +138,12 @@ class BarsController < ApplicationController
   # DELETE /bars/1
   # DELETE /bars/1.json
   def destroy
+    # Make sure the request came from an admin
+    unless session[:admin_id]
+      redirect_to_home
+      return
+    end
+  
     @bar = Bar.find(params[:id])
     @bar.destroy
 

@@ -2,6 +2,12 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    # Make sure the request came from an admin
+    unless session[:admin_id]
+      redirect_to_home
+      return
+    end
+  
     @users = User.all
 
     respond_to do |format|
@@ -94,6 +100,12 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    # Make sure the request came from an admin
+    unless session[:admin_id]
+      redirect_to_home
+      return
+    end
+  
     @user = User.find(params[:id])
     @user.destroy
 

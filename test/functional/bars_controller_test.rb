@@ -34,12 +34,14 @@ class BarsControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
+    session[:admin_id] = 1
     get :index
     assert_response :success
     assert_not_nil assigns(:bars)
   end
   
   test "should get index and verify" do
+    session[:admin_id] = 1
     get :index, :verify => 3
     assert_response :success
     assert_not_nil assigns(:bars)
@@ -81,8 +83,18 @@ class BarsControllerTest < ActionController::TestCase
     put :update, :id => @bar, :bar => @update
     assert_redirected_to bars_path
   end
+  
+  test "non-admin cannot destroy bar" do
+    assert_difference('Bar.count', 0) do
+      delete :destroy, :id => @bar
+    end
+    
+    assert_redirected_to '/'
+  end
 
   test "should destroy bar" do
+    session[:admin_id] = 1
+  
     imagecount = Barimage.count
     eventcount = BarEvent.count
     favecount = Favorite.count
@@ -136,5 +148,16 @@ class BarsControllerTest < ActionController::TestCase
   test "detail user not logged in" do
     get :show
     assert_redirected_to '/userhome'
+  end
+  
+  test "do not show bar list for non-admin" do
+    get :index
+    assert_redirected_to '/'
+  end
+  
+  test "show bar list for admin" do
+    session[:admin_id] = 1
+    get :index
+    assert_response :success
   end
 end

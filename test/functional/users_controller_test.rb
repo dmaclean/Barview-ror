@@ -28,7 +28,13 @@ class UsersControllerTest < ActionController::TestCase
     }
   end
 
+  test "non-admin cannot see user list" do
+    get :index
+    assert_redirected_to '/'
+  end
+
   test "should get index" do
+    session[:admin_id] = 1
     get :index
     assert_response :success
     assert_not_nil assigns(:users)
@@ -64,7 +70,17 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to user_path(assigns(:user))
   end
 
+  test "non-admin cannot destroy user" do
+    assert_difference('User.count', 0) do
+      delete :destroy, :id => @user
+    end
+    
+    assert_redirected_to '/'
+  end
+
   test "should destroy user" do
+    session[:admin_id] = 1
+    
     favecount = Favorite.count
     qcount = UserQuestionnaireAnswer.count
   
