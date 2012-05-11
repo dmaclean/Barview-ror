@@ -10,13 +10,13 @@ class BarEventsControllerTest < ActionController::TestCase
     #assert_response :success
     #assert_not_nil assigns(:bar_events)
     
-    assert_redirected_to '/userhome'
+    assert_redirected_to '/'
   end
 
   test "should get new" do
     get :new
     #assert_response :success
-    assert_redirected_to '/userhome'
+    assert_redirected_to '/'
   end
 
   test "should create bar_event" do
@@ -32,19 +32,19 @@ class BarEventsControllerTest < ActionController::TestCase
   test "should show bar_event" do
     get :show, :id => @bar_event
     #assert_response :success
-    assert_redirected_to '/userhome'
+    assert_redirected_to '/'
   end
 
   test "should get edit" do
     get :edit, :id => @bar_event
     #assert_response :success
-    assert_redirected_to '/userhome'
+    assert_redirected_to '/'
   end
 
   test "should update bar_event" do
     put :update, :id => @bar_event, :bar_event => { :bar_id => @bar_event.bar_id, :detail => @bar_event.detail }
     #assert_redirected_to bar_event_path(assigns(:bar_event))
-    assert_redirected_to '/userhome'
+    assert_redirected_to '/'
   end
 
   test "should destroy bar_event" do
