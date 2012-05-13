@@ -88,7 +88,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(submission_hash)
-        format.html { redirect_to @user, :notice => "#{params[:user][:first_name]} #{params[:user][:last_name]} was successfully updated." }
+        format.html { redirect_to '/', :notice => "#{params[:user][:first_name]} #{params[:user][:last_name]} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

@@ -67,7 +67,7 @@ class UsersControllerTest < ActionController::TestCase
   test "should update user" do
     #put :update, :id => @user, :user => { :city => @user.city, :dob => @user.dob, :email => @user.email, :first_name => @user.first_name, :gender => @user.gender, :hashed_password => @user.hashed_password, :last_name => @user.last_name, :state => @user.state }
     put :update, :id => @user, :user => @update
-    assert_redirected_to user_path(assigns(:user))
+    assert_redirected_to '/'#user_path(assigns(:user))
   end
 
   test "non-admin cannot destroy user" do

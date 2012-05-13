@@ -23,7 +23,7 @@
 				<ul>
 					<li class="active"><a href="<%= @base_url %>/barhome">Home</a></li>
 					<% if session[:bar_id] %>
-						<li><a href="<%= @base_url %>/editinfo">Edit Info</a></li>
+						<li><a href="<%= @base_url %>/bars/<%= session[:bar_id] %>/edit">Edit Info</a></li>
 					<% end %>
 					<li><a href="<%= @base_url %>/about/index">About us</a></li>
 				</ul>
@@ -121,7 +121,7 @@
 				<ul>
 					<li class="active"><a href="<%= @base_url %>">Home</a></li>
 					<% if session[:user_id] and session[:usertype] == "BARVIEW" %>
-						<li><a href="<%= @base_url %>/index.php?/editinfo">Edit Info</a></li>
+						<li><a href="<%= @base_url %>/users/<%= session[:user_id] %>/edit">Edit Info</a></li>
 					<% end %>
 					<li><a href="<%= @base_url %>/mobile_info/index">Mobile</a></li>
 					<li><a href="<%= @base_url %>/about/index">About us</a></li>
