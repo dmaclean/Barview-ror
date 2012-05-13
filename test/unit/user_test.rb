@@ -72,4 +72,22 @@ class UserTest < ActiveSupport::TestCase
     user.dob = '1982-10-21'
     assert user.valid?
   end
+  
+  test "reset password" do
+    user = User.new(
+      :first_name => 'Dan',
+      :last_name => 'MacLean',
+      :dob => '1982-10-ab',
+      :gender => 'Male',
+      :city => 'Medfield',
+      :email => 'dan',
+      :state => 'MA',
+      :email => 'dan@bar-view.com'
+    )
+    user.password = 'password'
+    
+    before = user.hashed_password
+    user.reset_password
+    assert user.hashed_password != before and not user.hashed_password.empty?
+  end
 end

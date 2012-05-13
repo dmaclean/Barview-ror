@@ -47,6 +47,20 @@ class User < ActiveRecord::Base
     end
   end
   
+  def reset_password
+    pw = 'barviewpassword' + Time.now.to_s
+    pw = self.class.encrypt_password(pw, self.salt)
+    pw = pw[0,10]
+    
+    self.hashed_password = self.class.encrypt_password(pw, self.salt)
+    if self.save
+      # Send the welcome email message
+      BvMailer.reset_user_password(self, pw).deliver
+      
+      pw
+    end
+  end
+  
   private
     def password_must_be_present
       errors.add(:password, "Missing password") unless hashed_password.present?

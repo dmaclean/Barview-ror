@@ -18,6 +18,6 @@ class ApplicationController < ActionController::Base
     end
     
     @is_bar_side = request.url =~ /barhome/i
-    @no_hero = request.url =~ /(about|bars|mobile_info|users)/i
+    @no_hero = request.url =~ /(about|adminlogin|bars|forgot_password|mobile_info|users)/i
   end
 end

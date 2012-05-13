@@ -1,4 +1,8 @@
 BarviewRor::Application.routes.draw do
+  get "forgot_password/index"
+
+  post "forgot_password/create"
+
   get "viewers/index"
 
   get "user_questionnaire/index"

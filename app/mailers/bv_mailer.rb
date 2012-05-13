@@ -24,4 +24,11 @@ class BvMailer < ActionMailer::Base
     
     mail(:to => "support@bar-view.com", :subject => "Signup from #{ @bar.name } (#{ @bar.address })")
   end
+  
+  def reset_user_password(user, newpass)
+    @user = user
+    @newpass = newpass
+    
+    mail(:to => @user.email, :subject => "bar-view.com password reset for #{ user.first_name } #{ user.last_name }")
+  end
 end

@@ -1,0 +1,15 @@
+<br/><br/><br/>
+<%= form_tag("/forgot_password/create", :method => "post") do %>
+	<fieldset>
+		<legend>Password Recovery</legend>
+		<div class="clearfix">
+			<%= label_tag(:email, "Email") %>
+			<div class="input">
+				<%= text_field_tag (:email) %>
+			</div>
+  		</div>
+  		<div class="actions">
+			<%= submit_tag("Reset password") %>
+  		</div>
+  	</fieldset>
+<% end %>
