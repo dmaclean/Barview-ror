@@ -2,12 +2,13 @@ class FavoritesController < ApplicationController
   # GET /favorites
   # GET /favorites.json
   def index
-    @favorites = Favorite.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @favorites }
+    # Make sure the request comes from a valid user_id/token pairing.
+    if not MobileToken.is_token_valid(request.env["HTTP_USER_ID"], request.env["HTTP_BV_TOKEN"])
+      render :text => "<error>No token provided.</error>"
+      return
     end
+    
+    render :text => Favorite.generate_xml_for_favorites(request.env["HTTP_USER_ID"])
   end
 
   # GET /favorites/1

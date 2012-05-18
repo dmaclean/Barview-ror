@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   
   has_many :favorites, :dependent => :destroy
   has_many :user_questionnaire_answers, :dependent => :destroy
+  has_many :mobile_tokens, :dependent => :destroy
   
   validate :password_must_be_present
   
@@ -34,6 +35,55 @@ class User < ActiveRecord::Base
     
     def encrypt_password(password, salt)
       Digest::SHA2.hexdigest(password + "wibble" + salt)
+    end
+    
+    ##################################################################################
+    # Performs authentication for mobile users.  Here we take the password that the
+    # user entered and compare it against the decrypted database password (provided
+    # we get a hit on the database for the username).
+    # If the comparison is successful then we package all the user information up
+    # into an XML structure and send it back to the caller.
+    # If the comparison fails then we simply send back an empty <user> XML aggregate.
+    ##################################################################################
+    def mobile_login(email, password)
+      user = authenticate(email, password)
+	  xml = "<user>"
+   
+      if user
+        mobile_token = MobileToken.new
+        mobile_token.user_id = user.id
+        mobile_token.token = Digest::SHA2.hexdigest(user.id.to_s + Time.now().to_s)
+        mobile_token.save
+        
+        xml += generate_mobile_xml(user, mobile_token)
+      end
+
+      xml += "</user>"
+		
+      xml
+    end
+    
+    ################################################################################
+    # Attempts to log out a mobile user by deleting their token from the database.
+    ################################################################################
+    def mobile_logout(token)
+      mobile_token = MobileToken.find_by_token(token)
+      if mobile_token
+        mobile_token.delete
+      end
+    end
+    
+    def generate_mobile_xml(user, mobile_token)
+      xml = "<firstname>#{ user.first_name }</firstname>"
+      xml += "<lastname>#{ user.last_name }</lastname>"
+      xml += "<gender>#{ user.gender }</gender>"
+      xml += "<email>#{ user.email }</email>"
+      xml += "<dob>#{ user.dob }</dob>"
+      xml += "<city>#{ user.city }</city>"
+      xml += "<state>#{ user.state }</state>"
+      xml += "<token>#{ mobile_token.token }</token>"
+      
+      xml
     end
   end
   

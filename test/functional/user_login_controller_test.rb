@@ -35,4 +35,29 @@ class UserLoginControllerTest < ActionController::TestCase
     get :new
     assert_redirected_to userhome_url
   end
+  
+  test "mobile login success" do
+    user = users(:one)
+    request.env['HTTP_IS_MOBILE'] = "true"
+    request.env['HTTP_BV_USERNAME'] = user.email
+    request.env['HTTP_BV_PASSWORD'] = 'secret'
+    user = users(:one)
+    post :create
+    assert_response :success
+    assert response.body =~ /<user>\S+<\/user>/i
+  end
+  
+  test "mobile login failure" do
+    request.env['HTTP_IS_MOBILE'] = "true"
+    user = users(:one)
+    post :create, :email => user.email, :password => 'badpass'
+    assert_response :success
+    assert response.body == "<user></user>"
+  end
+  
+  test "mobile logout" do
+    request.env['HTTP_BV_TOKEN'] = "token1"
+    delete :destroy
+    assert_response :success
+  end
 end

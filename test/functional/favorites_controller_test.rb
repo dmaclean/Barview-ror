@@ -5,10 +5,18 @@ class FavoritesControllerTest < ActionController::TestCase
     @favorite = favorites(:one)
   end
 
-  test "should get index" do
+  test "should get index for mobile user" do
+    request.env['HTTP_USER_ID'] = "dmaclean@agencyport.com"
+    request.env['HTTP_BV_TOKEN'] = 'token1'
     get :index
     assert_response :success
-    assert_not_nil assigns(:favorites)
+    assert response.body =~ /<favorites><favorite><bar_id>1<\/bar_id><address>MyString<\/address><name>MyString<\/name><\/favorite><\/favorites>/i
+  end
+  
+  test "should get index for mobile user without token" do
+    request.env['HTTP_USER_ID'] = "dmaclean@agencyport.com"
+    get :index
+    assert response.body =~ /<error>No token provided.<\/error>/i
   end
 
   test "should get new" do

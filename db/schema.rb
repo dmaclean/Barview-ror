@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510231731) do
+ActiveRecord::Schema.define(:version => 20120515114338) do
 
   create_table "admins", :force => true do |t|
     t.string   "name"
@@ -62,6 +62,13 @@ ActiveRecord::Schema.define(:version => 20120510231731) do
   create_table "favorites", :force => true do |t|
     t.integer  "user_id"
     t.integer  "bar_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "mobile_tokens", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "token"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

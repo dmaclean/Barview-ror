@@ -77,7 +77,7 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(
       :first_name => 'Dan',
       :last_name => 'MacLean',
-      :dob => '1982-10-ab',
+      :dob => '1982-10-21',
       :gender => 'Male',
       :city => 'Medfield',
       :email => 'dan',
@@ -89,5 +89,27 @@ class UserTest < ActiveSupport::TestCase
     before = user.hashed_password
     user.reset_password
     assert user.hashed_password != before and not user.hashed_password.empty?
+  end
+  
+  test "mobile login for good credentials" do
+    xml = User.mobile_login('dmaclean@agencyport.com', 'secret')
+    assert xml =~ /<user><firstname>MyString<\/firstname><lastname>MyString<\/lastname><gender>MyString<\/gender><email>dmaclean@agencyport.com<\/email><dob>2012-04-20<\/dob><city>MyString<\/city><state>MyString<\/state><token>.*?<\/token><\/user>/i
+  end
+  
+  test "mobile login for bad credentials" do
+    xml = User.mobile_login('dmaclean@agencyport.com', 'badpassword')
+    assert_equal xml, "<user></user>"
+  end
+  
+  test "mobile logout for good user" do
+    assert_difference('MobileToken.count', -1) do
+      User.mobile_logout('token1')
+    end
+  end
+  
+  test "mobile logout for invalid user" do
+    assert_difference('MobileToken.count', 0) do
+      User.mobile_logout('badtoken')
+    end
   end
 end

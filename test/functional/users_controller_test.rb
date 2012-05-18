@@ -83,6 +83,7 @@ class UsersControllerTest < ActionController::TestCase
     
     favecount = Favorite.count
     qcount = UserQuestionnaireAnswer.count
+    tokencount = MobileToken.count
   
     assert_difference('User.count', -1) do
       delete :destroy, :id => @user
@@ -90,9 +91,11 @@ class UsersControllerTest < ActionController::TestCase
     
     favecount2 = Favorite.count
     qcount2 = UserQuestionnaireAnswer.count
+    tokencount2 = MobileToken.count
     
     assert favecount > favecount2
     assert qcount > qcount2
+    assert tokencount > tokencount2
 
     assert_redirected_to users_path
   end

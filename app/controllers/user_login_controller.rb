@@ -6,17 +6,41 @@ class UserLoginController < ApplicationController
   end
 
   def create
-    if user = User.authenticate(params[:email], params[:password])
+    # Check if the user is mobile
+    if request.env["HTTP_IS_MOBILE"] == "true"
+      email = request.env["HTTP_BV_USERNAME"]
+      password = request.env["HTTP_BV_PASSWORD"]
+    else
+      email = params[:email]
+      password = params[:password]
+    end
+  
+    if user = User.authenticate(email, password)
       session[:user_id] = user.id
       session[:usertype] = "BARVIEW"
-      redirect_to userhome_url
+      
+      if request.env["HTTP_IS_MOBILE"] == "true"
+        render :text => User.mobile_login(email, password)
+      else
+        redirect_to userhome_url
+      end
+
     else
-      redirect_to userhome_url, :flash => { :error => "Invalid username/password combination" }  
+      if request.env["HTTP_IS_MOBILE"] == "true"
+        render :text => User.mobile_login(email, password)
+      else
+        redirect_to userhome_url, :flash => { :error => "Invalid username/password combination" }  
+      end
     end
   end
 
   def destroy
-    session[:user_id] = nil
-    redirect_to userhome_url, :flash => { :notice => "Logged out" }
+    # If there is a token then we have a mobile logout.
+    if request.env["HTTP_BV_TOKEN"]
+      User.mobile_logout(request.env["HTTP_BV_TOKEN"])
+    else
+      session[:user_id] = nil
+      redirect_to userhome_url, :flash => { :notice => "Logged out" }
+    end
   end
 end
