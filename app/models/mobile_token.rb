@@ -8,6 +8,10 @@ class MobileToken < ActiveRecord::Base
   class << self
     # Determine if the token/email pairing is correct.
     def is_token_valid(email, token)
+      if email == nil or token == nil
+        return false
+      end
+      
       results = MobileToken.find(:all, :joins => :user, :conditions => ["users.email = ? and mobile_tokens.token = ?", email, token])
       return results.any?
     end

@@ -17,4 +17,12 @@ class MobileTokenTest < ActiveSupport::TestCase
   test "is token valid - false - bad id" do
     assert MobileToken.is_token_valid("dmaclean@bademail.com", "token1") == false
   end
+  
+  test "is token valid - false - nil token" do
+    assert MobileToken.is_token_valid("dmaclean@bademail.com", nil) == false
+  end
+  
+  test "is token valid - false - nil id" do
+    assert MobileToken.is_token_valid(nil, "token1") == false
+  end
 end
