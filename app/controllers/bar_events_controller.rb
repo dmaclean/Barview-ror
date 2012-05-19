@@ -8,14 +8,24 @@ class BarEventsController < ApplicationController
   # GET /bar_events
   # GET /bar_events.json
   def index
-    redirect_to_home
-    
-    #@bar_events = BarEvent.all
-
-    #respond_to do |format|
-    #  format.html # index.html.erb
-    #  format.json { render :json => @bar_events }
-    #end
+    # We've got a good mobile user.  Fetch their deals/events
+    if @valid_mobile_token
+      xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><events>"
+      
+      events = BarEvent.get_events_for_favorites(request.env["HTTP_USER_ID"])
+      for e in events do
+        xml += "<event><bar>#{ e.name }</bar><detail>#{ e.detail }</detail></event>"
+      end
+      
+      xml += "</events>"
+      
+      render :text => xml
+      return
+      
+    # Browser-based request, redirect back to home page.
+    else
+      redirect_to_home
+    end
   end
 
   # GET /bar_events/1

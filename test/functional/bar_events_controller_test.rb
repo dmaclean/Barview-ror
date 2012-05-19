@@ -5,10 +5,32 @@ class BarEventsControllerTest < ActionController::TestCase
     @bar_event = bar_events(:one)
   end
 
-  test "should get index" do
+  test "should get index for browser user" do
     get :index
-    #assert_response :success
-    #assert_not_nil assigns(:bar_events)
+    
+    assert_redirected_to '/'
+  end
+  
+  test "should get index for mobile user" do
+    request.env["HTTP_USER_ID"] = "dmaclean@agencyport.com"
+    request.env["HTTP_BV_TOKEN"] = "token1"
+    get :index
+    
+    assert_response :success
+    assert response.body == "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><events><event><bar>MyString</bar><detail>MyText</detail></event></events>"
+  end
+  
+  test "should get index - no USER_ID header" do
+    request.env["HTTP_BV_TOKEN"] = "token1"
+    get :index
+    
+    assert_redirected_to '/'
+  end
+  
+  test "should get index - no BV_TOKEN header" do
+    request.env["HTTP_USER_ID"] = "dmaclean@agencyport.com"
+    
+    get :index
     
     assert_redirected_to '/'
   end
