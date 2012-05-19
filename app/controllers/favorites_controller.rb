@@ -3,7 +3,7 @@ class FavoritesController < ApplicationController
   # GET /favorites.json
   def index
     # Make sure the request comes from a valid user_id/token pairing.
-    if not MobileToken.is_token_valid(request.env["HTTP_USER_ID"], request.env["HTTP_BV_TOKEN"])
+    if not @valid_mobile_token
       render :text => "<error>No token provided.</error>"
       return
     end
