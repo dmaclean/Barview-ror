@@ -41,13 +41,28 @@ class FavoritesController < ApplicationController
   # POST /favorites
   # POST /favorites.json
   def create
+    # Make sure the user is valid.  Browser-based requests should come with a session and
+    # mobile requests should have a token.
+    if not session[:user_id] and not @valid_mobile_token
+      render :text => "Error occurred."
+      return
+    end
+    
+    # This is really ugly, but browser-based requests are going to send the user
+    # id number as USER_ID and mobile devices are going to send the email address.
+    if session[:user_id]
+      user_id = request.env['HTTP_USER_ID']
+    else
+      user = User.find_by_email(request.env['HTTP_USER_ID'])
+      user_id = user.id
+    end
+  
     @favorite = Favorite.new
-    @favorite.user_id = request.env['HTTP_USER_ID']
+    @favorite.user_id = user_id
     @favorite.bar_id = request.env['HTTP_BAR_ID']
 
     respond_to do |format|
       if @favorite.save
-        #format.html { redirect_to @favorite, :notice => 'Favorite was successfully created.' }
         format.html { render :text => @favorite.id }
         format.json { render :json => @favorite, :status => :created, :location => @favorite }
       else
@@ -77,8 +92,8 @@ class FavoritesController < ApplicationController
   # DELETE /favorites/1.json
   def destroy
     # Make sure the user is deleting their own favorite
-    if session[:user_id].to_s != request.env['HTTP_USER_ID']
-      logger.debug { 'The user id (' + session[:user_id].to_s + ') in session does not match the one in the request header (' + request.env['HTTP_USER_ID'] + ').' }
+    if session[:user_id].to_s != request.env['HTTP_USER_ID'] and not @valid_mobile_token
+      logger.debug { 'The user id (#{ session[:user_id] }) in session does not match the one in the request header (' + request.env['HTTP_USER_ID'] + ').' }
       respond_to do |format|
         format.html { render :text => '500' }
         format.json { head :no_content }
@@ -87,10 +102,19 @@ class FavoritesController < ApplicationController
       return
     end
   
+    if @valid_mobile_token
+      user = User.find_by_email(request.env['HTTP_USER_ID'])
+      user_id = user.id
+    else
+      user_id = request.env['HTTP_USER_ID']
+    end
+  
     begin
-      Favorite.delete_all(['user_id = ? and bar_id = ?', request.env['HTTP_USER_ID'], request.env['HTTP_BAR_ID']])
+      logger.debug("Attempting to delete favorite for user_id #{ user_id } and bar_id #{ params[:id] }")
+      Favorite.delete_all(['user_id = ? and bar_id = ?', user_id, params[:id]])
+      logger.debug("Successfully deleted favorite for user_id #{ user_id } and bar_id #{ params[:id] }")
     rescue => ex
-      print "Unable to delete favorite with user_id #{ request.env['HTTP_USER_ID'] } and bar_id #{ request.env['HTTP_BAR_ID'] }.  #{ex.class} - #{ex.message}"
+      logger.debug("Unable to delete favorite with user_id #{ request.env['HTTP_USER_ID'] } and bar_id #{ params[:id] }.  #{ex.class} - #{ex.message}")
       respond_to do |format|
         format.html { render :text => '500' }
         format.json { head :no_content }
