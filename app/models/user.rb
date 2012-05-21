@@ -74,7 +74,8 @@ class User < ActiveRecord::Base
     end
     
     def generate_mobile_xml(user, mobile_token)
-      xml = "<firstname>#{ user.first_name }</firstname>"
+      xml = "<id>#{ user.id }</id>"
+      xml += "<firstname>#{ user.first_name }</firstname>"
       xml += "<lastname>#{ user.last_name }</lastname>"
       xml += "<gender>#{ user.gender }</gender>"
       xml += "<email>#{ user.email }</email>"
@@ -82,6 +83,8 @@ class User < ActiveRecord::Base
       xml += "<city>#{ user.city }</city>"
       xml += "<state>#{ user.state }</state>"
       xml += "<token>#{ mobile_token.token }</token>"
+      
+      logger.debug("Generated mobile xml of #{ xml }")
       
       xml
     end

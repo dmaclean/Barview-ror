@@ -93,7 +93,7 @@ class UserTest < ActiveSupport::TestCase
   
   test "mobile login for good credentials" do
     xml = User.mobile_login('dmaclean@agencyport.com', 'secret')
-    assert xml =~ /<user><firstname>MyString<\/firstname><lastname>MyString<\/lastname><gender>MyString<\/gender><email>dmaclean@agencyport.com<\/email><dob>2012-04-20<\/dob><city>MyString<\/city><state>MyString<\/state><token>.*?<\/token><\/user>/i
+    assert xml =~ /<user><id>1<\/id><firstname>MyString<\/firstname><lastname>MyString<\/lastname><gender>MyString<\/gender><email>dmaclean@agencyport.com<\/email><dob>2012-04-20<\/dob><city>MyString<\/city><state>MyString<\/state><token>.*?<\/token><\/user>/i
   end
   
   test "mobile login for bad credentials" do
