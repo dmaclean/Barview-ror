@@ -18,7 +18,6 @@ class UserLoginController < ApplicationController
     if user = User.authenticate(email, password)
       session[:user_id] = user.id
       session[:usertype] = "BARVIEW"
-      
       if request.env["HTTP_IS_MOBILE"] == "true"
         render :text => User.mobile_login(email, password)
       else
@@ -35,11 +34,12 @@ class UserLoginController < ApplicationController
   end
 
   def destroy
+    session[:user_id] = nil
+  
     # If there is a token then we have a mobile logout.
     if request.env["HTTP_BV_TOKEN"]
       User.mobile_logout(request.env["HTTP_BV_TOKEN"])
     else
-      session[:user_id] = nil
       redirect_to userhome_url, :flash => { :notice => "Logged out" }
     end
   end

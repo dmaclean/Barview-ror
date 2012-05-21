@@ -23,6 +23,7 @@ class UserLoginControllerTest < ActionController::TestCase
   end
 
   test "should logout" do
+    session[:user_id] = 1
     delete :destroy
     assert_equal flash[:notice], 'Logged out'
     assert_equal session[:user_id], nil
@@ -44,7 +45,8 @@ class UserLoginControllerTest < ActionController::TestCase
     user = users(:one)
     post :create
     assert_response :success
-    assert response.body =~ /<user>\S+<\/user>/i
+    assert user.id == session[:user_id]
+    assert response.body =~ /<user><id>1<\/id>\S+<\/user>/i
   end
   
   test "mobile login failure" do
@@ -56,8 +58,13 @@ class UserLoginControllerTest < ActionController::TestCase
   end
   
   test "mobile logout" do
+    session[:user_id] = 1
     request.env['HTTP_BV_TOKEN'] = "token1"
-    delete :destroy
+    
+    assert_difference("MobileToken.count", -1) do
+      delete :destroy
+    end
+    assert_equal session[:user_id], nil
     assert_response :success
   end
 end
