@@ -12,28 +12,26 @@ class BarEventsControllerTest < ActionController::TestCase
   end
   
   test "should get index for mobile user" do
-    request.env["HTTP_USER_ID"] = "dmaclean@agencyport.com"
-    request.env["HTTP_BV_TOKEN"] = "token1"
+    session[:user_id] = 1
     get :index
     
     assert_response :success
     assert response.body == "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><events><event><bar>MyString</bar><detail>MyText</detail></event></events>"
   end
   
-  test "should get index - no USER_ID header" do
-    request.env["HTTP_BV_TOKEN"] = "token1"
+  test "should get index - no USER_ID" do
     get :index
     
     assert_redirected_to '/'
   end
   
-  test "should get index - no BV_TOKEN header" do
-    request.env["HTTP_USER_ID"] = "dmaclean@agencyport.com"
-    
-    get :index
-    
-    assert_redirected_to '/'
-  end
+  #test "should get index - no BV_TOKEN header" do
+  #  request.env["HTTP_USER_ID"] = "dmaclean@agencyport.com"
+  #  
+  #  get :index
+  #  
+  #  assert_redirected_to '/'
+  #end
 
   test "should get new" do
     get :new
@@ -65,7 +63,6 @@ class BarEventsControllerTest < ActionController::TestCase
 
   test "should update bar_event" do
     put :update, :id => @bar_event, :bar_event => { :bar_id => @bar_event.bar_id, :detail => @bar_event.detail }
-    #assert_redirected_to bar_event_path(assigns(:bar_event))
     assert_redirected_to '/'
   end
 

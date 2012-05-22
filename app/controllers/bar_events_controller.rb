@@ -9,16 +9,8 @@ class BarEventsController < ApplicationController
   # GET /bar_events.json
   def index
     # We've got a good mobile user.  Fetch their deals/events
-    if @valid_mobile_token
-      xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><events>"
-      
-      events = BarEvent.get_events_for_favorites(request.env["HTTP_USER_ID"])
-      for e in events do
-        xml += "<event><bar>#{ e.name }</bar><detail>#{ e.detail }</detail></event>"
-      end
-      
-      xml += "</events>"
-      
+    if session[:user_id]
+      xml = BarEvent.get_xml_for_favorites(session[:user_id])
       render :text => xml
       return
       
