@@ -6,18 +6,17 @@ class FavoritesControllerTest < ActionController::TestCase
   end
 
   test "should get index for mobile user" do
-    request.env['HTTP_USER_ID'] = "dmaclean@agencyport.com"
-    request.env['HTTP_BV_TOKEN'] = 'token1'
+    session[:user_id] = 1
     get :index
     assert_response :success
     assert response.body =~ /<favorites><favorite><bar_id>1<\/bar_id><address>MyString<\/address><name>MyString<\/name><\/favorite><\/favorites>/i
   end
   
-  test "should get index for mobile user without token" do
-    request.env['HTTP_USER_ID'] = "dmaclean@agencyport.com"
-    get :index
-    assert response.body =~ /<error>No token provided.<\/error>/i
-  end
+  #test "should get index for mobile user without token" do
+  #  request.env['HTTP_USER_ID'] = "dmaclean@agencyport.com"
+  #  get :index
+  #  assert response.body =~ /<error>Invalid request.<\/error>/i
+  #end
 
   test "should get new" do
     get :new
@@ -26,23 +25,19 @@ class FavoritesControllerTest < ActionController::TestCase
 
   test "should create favorite - browser" do
     session[:user_id] = 1
-    @request.env['USER_ID'] = 1
     @request.env['BAR_ID'] = 2
   
     assert_difference('Favorite.count') do
-      #post :create, :favorite => { :bar_id => @favorite.bar_id, :user_id => @favorite.user_id }
       post :create
     end
 
-    #assert_redirected_to favorite_path(assigns(:favorite))
     assert_response :success
     assert_not_nil response.body =~ /\d+/	# Make sure we are getting back a number
   end
   
   test "should create favorite - mobile" do
-    @request.env['HTTP_USER_ID'] = "dmaclean@agencyport.com"
+    session[:user_id] = 1
     @request.env['HTTP_BAR_ID'] = 2
-    @request.env['HTTP_BV_TOKEN'] = "token1"
     
     assert_difference('Favorite.count', 1) do
       post :create
@@ -53,7 +48,6 @@ class FavoritesControllerTest < ActionController::TestCase
   end
   
   test "should create favorite - fail with no session or token" do
-    @request.env['USER_ID'] = 1
     @request.env['BAR_ID'] = 2
     
     assert_difference('Favorite.count', 0) do
@@ -61,7 +55,7 @@ class FavoritesControllerTest < ActionController::TestCase
     end
     
     assert_response :success
-    assert_not_nil response.body == "Error occurred."
+    assert response.body == "Error occurred."
   end
 
   test "should show favorite" do
@@ -81,7 +75,6 @@ class FavoritesControllerTest < ActionController::TestCase
 
   test "should destroy favorite" do
     session[:user_id] = 2
-    @request.env['HTTP_USER_ID'] = '2'
   
     assert_difference('Favorite.count', -1) do
       delete :destroy, :id => '2'
@@ -93,7 +86,6 @@ class FavoritesControllerTest < ActionController::TestCase
   
   test "should destroy favorite bad bar" do
     session[:user_id] = 1
-    @request.env['HTTP_USER_ID'] = '1'
   
     assert_no_difference('Favorite.count') do
       delete :destroy, :id => '9999'
@@ -104,38 +96,33 @@ class FavoritesControllerTest < ActionController::TestCase
   end
   
   test "should destroy favorite not logged in user" do
-    session[:user_id] = 2
-    @request.env['HTTP_USER_ID'] = '1'
-  
     assert_no_difference('Favorite.count') do
       delete :destroy, :id => '2'
     end
 
     assert_response :success
-    assert response.body == '500'
+    assert response.body == '200'
   end
   
   test "should destroy favorite good mobile user" do
-    @request.env['HTTP_BV_TOKEN'] = 'token1'
-    @request.env['HTTP_USER_ID'] = 'dmaclean@agencyport.com'
+    session[:user_id] = 1
     
     assert_difference('Favorite.count', -1) do
       delete :destroy, :id => '1'
     end
 
     assert_response :success
-    assert response.body =~ /<favorites>.*<\/favorites>/i
+    assert response.body == '200'
   end
   
   test "should destroy favorite bad mobile user" do
-    @request.env['HTTP_BV_TOKEN'] = 'token1'
-    @request.env['HTTP_USER_ID'] = '1'
+    session[:user_id] = 9999
     
     assert_no_difference('Favorite.count') do
       delete :destroy, :id => '2'
     end
 
     assert_response :success
-    assert response.body == '500'
+    assert response.body == '200'
   end
 end
