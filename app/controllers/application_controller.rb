@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  skip_before_filter :verify_authenticity_token, :if =>lambda{ request.env["HTTP_NON_GET_TOKEN"] == "true" }
   
-  before_filter :init_vars, :is_mobile_token_valid?
+  before_filter :init_vars
   
   ##############################################################
   # Convenience method that sends a user back to the homepage.
@@ -19,9 +20,5 @@ class ApplicationController < ActionController::Base
     
     @is_bar_side = request.url =~ /barhome/i
     @no_hero = request.url =~ /(about|adminlogin|bars|forgot_password|mobile_info|users)/i
-  end
-  
-  def is_mobile_token_valid?
-    @valid_mobile_token = MobileToken.is_token_valid(request.env["HTTP_USER_ID"], request.env["HTTP_BV_TOKEN"])
   end
 end
