@@ -6,7 +6,7 @@ class Favorite < ActiveRecord::Base
   
   class << self
     def generate_xml_for_favorites(id)
-      favorites = Favorite.find(:all, :select => "bars.id as id, bars.address as address, bars.name as name", :joins => [:user, :bar], :conditions => ["users.id = ?", id])
+      favorites = Favorite.find(:all, :select => "bars.id as id, bars.address as address, bars.name as name", :joins => [:bar], :conditions => ["favorites.user_id = ?", id])
       
       xml = "<favorites>"
       for f in favorites do
