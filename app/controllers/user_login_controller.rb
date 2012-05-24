@@ -34,13 +34,17 @@ class UserLoginController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
-  
-    # If there is a token then we have a mobile logout.
-    if request.env["HTTP_BV_TOKEN"]
-      User.mobile_logout(request.env["HTTP_BV_TOKEN"])
-    else
-      redirect_to userhome_url, :flash => { :notice => "Logged out" }
-    end
+    if session[:user_id]
+      logger.debug("Found a session for #{ session[:user_id] }.  Ready to sign them out.")
+	  session[:user_id] = nil
+	  
+	  # If there is a token then we have a mobile logout.
+	  if request.env["HTTP_NON_GET_TOKEN"]
+	    render :text => ""
+	  else
+	    logger.debug("No NON_GET_TOKEN, looks like the request came from a browser")
+		redirect_to userhome_url, :flash => { :notice => "Logged out" }
+	  end
+	end
   end
 end

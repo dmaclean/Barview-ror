@@ -59,12 +59,12 @@ class UserLoginControllerTest < ActionController::TestCase
   
   test "mobile logout" do
     session[:user_id] = 1
-    request.env['HTTP_BV_TOKEN'] = "token1"
+    request.env['HTTP_NON_GET_TOKEN'] = "true"
     
-    assert_difference("MobileToken.count", -1) do
-      delete :destroy
-    end
+    delete :destroy
+    
     assert_equal session[:user_id], nil
     assert_response :success
+    assert response.body == ""
   end
 end
