@@ -23,19 +23,7 @@ class FavoritesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create favorite - browser" do
-    session[:user_id] = 1
-    @request.env['BAR_ID'] = 2
-  
-    assert_difference('Favorite.count') do
-      post :create
-    end
-
-    assert_response :success
-    assert_not_nil response.body =~ /\d+/	# Make sure we are getting back a number
-  end
-  
-  test "should create favorite - mobile" do
+  test "should create favorite" do
     session[:user_id] = 1
     @request.env['HTTP_BAR_ID'] = 2
     
@@ -44,7 +32,7 @@ class FavoritesControllerTest < ActionController::TestCase
     end
     
     assert_response :success
-    assert_not_nil response.body =~ /\d+/	# Make sure we are getting back a number
+    assert response.body =~ /<favorites>(<favorite>.*?<\/favorite>)+<\/favorites>/	# Make sure we are getting back a number
   end
   
   test "should create favorite - fail with no session or token" do
@@ -55,7 +43,7 @@ class FavoritesControllerTest < ActionController::TestCase
     end
     
     assert_response :success
-    assert response.body == "Error occurred."
+    assert response.body == 'Error occurred.'
   end
 
   test "should show favorite" do
@@ -81,7 +69,7 @@ class FavoritesControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert response.body == '200'
+    assert response.body =~ /<favorites>(<favorite>.*?<\/favorite>)*<\/favorites>/
   end
   
   test "should destroy favorite bad bar" do
@@ -92,7 +80,7 @@ class FavoritesControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert response.body == '200'
+    assert response.body =~ /<favorites>(<favorite>.*?<\/favorite>)*<\/favorites>/
   end
   
   test "should destroy favorite not logged in user" do
@@ -101,7 +89,7 @@ class FavoritesControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert response.body == '200'
+    assert response.body == '<favorites></favorites>'
   end
   
   test "should destroy favorite good mobile user" do
@@ -112,7 +100,7 @@ class FavoritesControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert response.body == '200'
+    assert response.body =~ /<favorites>(<favorite>.*?<\/favorite>)*<\/favorites>/
   end
   
   test "should destroy favorite bad mobile user" do
@@ -123,6 +111,6 @@ class FavoritesControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert response.body == '200'
+    assert response.body == '<favorites></favorites>'
   end
 end

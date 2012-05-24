@@ -54,7 +54,7 @@ class FavoritesController < ApplicationController
 
     respond_to do |format|
       if @favorite.save
-        format.html { render :text => @favorite.id }
+        format.html { render :text => Favorite.generate_xml_for_favorites(session[:user_id]) }
         format.json { render :json => @favorite, :status => :created, :location => @favorite }
       else
         format.html { render :action => "new" }
@@ -89,7 +89,7 @@ class FavoritesController < ApplicationController
     rescue => ex
       logger.debug("Unable to delete favorite with user_id #{ session[:user_id] } and bar_id #{ params[:id] }.  #{ex.class} - #{ex.message}")
       respond_to do |format|
-        format.html { render :text => '500' }
+        format.html { render :text => (session[:user_id]) ? Favorite.generate_xml_for_favorites(session[:user_id]) : '500' }
         format.json { head :no_content }
       end
       
@@ -97,7 +97,7 @@ class FavoritesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :text => '200' }
+      format.html { render :text => Favorite.generate_xml_for_favorites(session[:user_id]) }
       format.json { head :no_content }
     end
   end
