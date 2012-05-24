@@ -66,12 +66,12 @@ class User < ActiveRecord::Base
     ################################################################################
     # Attempts to log out a mobile user by deleting their token from the database.
     ################################################################################
-    def mobile_logout(token)
-      mobile_token = MobileToken.find_by_token(token)
-      if mobile_token
-        mobile_token.delete
-      end
-    end
+    #def mobile_logout(token)
+    #  mobile_token = MobileToken.find_by_token(token)
+    #  if mobile_token
+    #    mobile_token.delete
+    #  end
+    #end
     
     def generate_mobile_xml(user, mobile_token)
       xml = "<id>#{ user.id }</id>"

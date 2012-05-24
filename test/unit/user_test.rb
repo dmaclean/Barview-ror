@@ -101,15 +101,15 @@ class UserTest < ActiveSupport::TestCase
     assert_equal xml, "<user></user>"
   end
   
-  test "mobile logout for good user" do
-    assert_difference('MobileToken.count', -1) do
-      User.mobile_logout('token1')
-    end
-  end
+  #test "mobile logout for good user" do
+  #  assert_difference('MobileToken.count', -1) do
+  #    User.mobile_logout('token1')
+  #  end
+  #end
   
-  test "mobile logout for invalid user" do
-    assert_difference('MobileToken.count', 0) do
-      User.mobile_logout('badtoken')
-    end
-  end
+  #test "mobile logout for invalid user" do
+  #  assert_difference('MobileToken.count', 0) do
+  #    User.mobile_logout('badtoken')
+  #  end
+  #end
 end
