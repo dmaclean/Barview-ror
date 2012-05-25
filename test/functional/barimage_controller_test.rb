@@ -975,6 +975,18 @@ NRLqsJ6kCltNtu68S14G2yuubfkN7hSBhgydDcIUgbCjs7DDCEP/2Q==
 '
   end
   
+  test "add bar image request for GET" do
+    session[:user_id] = 1
+    
+    assert_difference("BarImageRequest.count", 1) do
+      get :show, :id => 2, :format => "html"
+    end
+    
+    assert_response :success
+    assert @response.body != nil and @response.body != ''
+    
+  end
+  
   test "do put for new image" do
     @request.env['RAW_POST_DATA'] = 'SOME CONTENT'
     put :update, :id => 100

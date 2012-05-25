@@ -45,10 +45,9 @@ class BarimageController < ApplicationController
     begin
       @img = Barimage.find_by_bar_id!(params[:id])
       
-      user_id = request.env['HTTP_USER_ID']
-      if user_id != nil
+      if session[:user_id]
   	    bir = BarImageRequest.new
-	    bir.user_id = user_id
+	    bir.user_id = session[:user_id]
 	    bir.bar_id = params[:id]
 	    bir.save
       end
