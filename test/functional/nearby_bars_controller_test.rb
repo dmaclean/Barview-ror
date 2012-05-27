@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class NearbyBarsControllerTest < ActionController::TestCase
-  test "should find one bar" do
+  test "should find two bars" do
     request.env['HTTP_LATITUDE'] = '1.475'
     request.env['HTTP_LONGITUDE'] = '1.475'
     

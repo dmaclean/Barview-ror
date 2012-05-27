@@ -21,7 +21,7 @@ class NearbyBarsController < ApplicationController
 	
 	xml = '<?xml version="1.0" encoding="UTF-8" ?><nearbybars>';
 
-	bars = Bar.where(["lat <= ? and lat >= ? and lng <= ? and lng >= ?", lat_high, lat_low, lng_high, lng_low])
+	bars = Bar.where(["lat <= ? and lat >= ? and lng <= ? and lng >= ?", lat_high, lat_low, lng_high, lng_low]).order("id ASC")
 
     for b in bars do
       xml += "<bar>"
