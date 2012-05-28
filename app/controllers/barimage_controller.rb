@@ -5,10 +5,10 @@ class BarimageController < ApplicationController
     @img = get_barimage_object
     
     respond_to do |format|
-      format.html { render :text => Base64.encode64(open('public/' + @img.image, 'r').read) }
+      format.html { render :text => Base64.encode64(@img.read_file) }
       format.json { render :json => @img }
       format.xml { render :text => render_bv_xml(@img) }
-      format.jpeg { send_data(open('public/' + @img.image, 'r').read, :type => 'image/jpeg', :disposition => 'inline') }
+      format.jpeg { send_data(@img.read_file, :type => 'image/jpeg', :disposition => 'inline') }
     end
   end
   
@@ -21,7 +21,7 @@ class BarimageController < ApplicationController
       if @img
         @img.write_file(data)
       else
-        @img = Barimage.new(:image => "broadcast_images/#{ params[:id] }.jpg")
+        @img = Barimage.new(:image => "#{ params[:id] }.jpg")
         @img.bar_id = params[:id]
         @img.save
         @img.write_file(data)
@@ -36,7 +36,7 @@ class BarimageController < ApplicationController
   private
   def render_bv_xml(img)
     xml = '<?xml version="1.0" encoding="UTF-8" ?><barimage><bar_id>' + img.bar_id.to_s + '</bar_id>'
-    xml += '<image>' + Base64.encode64(open('public/' + @img.image, 'r').read) + '</image></barimage>'
+    xml += '<image>' + Base64.encode64(img.read_file) + '</image></barimage>'
     
     xml
   end
@@ -54,7 +54,7 @@ class BarimageController < ApplicationController
     rescue
       @img = Barimage.new
       @img.bar_id = -1
-      @img.image = 'broadcast_images/barview.jpg'
+      @img.image = 'barview.jpg'
     end
     
     @img
