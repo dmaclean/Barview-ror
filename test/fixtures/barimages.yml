@@ -3,9 +3,9 @@
 one:
   id: 1
   bar_id: 1
-  image: broadcast_images/1.jpeg
+  image: 1.jpeg
 
 two:
   id: 2
   bar_id: 2
-  image: broadcast_images/2.jpeg
+  image: 2.jpeg
