@@ -8,7 +8,12 @@ class BarImageRequest < ActiveRecord::Base
   class << self
 	  def get_realtime_viewers(bar_id, sec)
 		# Barview users
-		results = BarImageRequest.find(:all, :select => 'distinct users.first_name as first_name, users.last_name as last_name', :joins => :user, :conditions => ["bar_image_requests.bar_id = ? and bar_image_requests.created_at > datetime('now', '-? seconds')", bar_id, sec])
+		
+		# sqlite compatible
+		#results = BarImageRequest.find(:all, :select => 'distinct users.first_name as first_name, users.last_name as last_name', :joins => :user, :conditions => ["bar_image_requests.bar_id = ? and bar_image_requests.created_at > datetime('now', '-? seconds')", bar_id, sec])
+		
+		# PostgreSQL compatible
+		results = BarImageRequest.find(:all, :select => 'distinct users.first_name as first_name, users.last_name as last_name', :joins => :user, :conditions => ["bar_image_requests.bar_id = ? and bar_image_requests.created_at > (current_date - interval '? seconds')", bar_id, sec])
 		logger.debug { results.inspect }
 		
 		users = ''
