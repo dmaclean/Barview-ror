@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html  xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<title>bar-view.com</title> 
 	
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "jquery" %>
   <%= javascript_include_tag "jquery.fancybox" %>
 
   <%= stylesheet_link_tag "http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css" %>
@@ -27,12 +26,7 @@
 					<% end %>
 					<li><a href="<%= @base_url %>/about/index">About us</a></li>
 				</ul>
-			<!--	<?php echo form_open('search/submit'); ?>
-					<?php 
-						$search_atts = array('id' => 'search', 'name' => 'search', 'maxlength' => '100', 'placeholder' => 'Search bars');
-						echo form_input($search_atts); 
-					?>
-				<?php echo form_close(); ?>-->
+
 				<ul class="nav secondary-nav">
 					<% if session[:bar_id] %>
 						<li><!--<a href="<%= @base_url %>/logout">Log out</a>-->
@@ -96,7 +90,36 @@
 <% elsif session[:admin_id] %>
   <li><%= link_to("Log out", @base_url + "/adminlogout", :method => :delete)%></li>
 
+<!--
+	USER
+-->
 <% else %>
+<div id="fb-root"></div>
+<script>
+ window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '<%= Facebook::APP_ID %>', // App ID
+      //channelUrl : 'dev.bar-view.com/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true,  // parse XFBML
+      oauth 	 : true
+    });
+    
+
+    // Additional initialization code here
+  };
+
+  // Load the SDK Asynchronously
+  (function() {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol
+            + '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    }());
+</script>
+
+
 
 	<div id="base_url" style="display:none"><%= @base_url %></div>
 	<div id="show_questionnaire" style="display:none">
@@ -244,7 +267,7 @@
 							$callback_url = base_url(); 
 							$fb_array  = array('next' => $callback_url, 'scope' => 'email,user_birthday,user_location', 'cancel_url' => $callback_url);
 						?>-->
-						<a href="<?php echo $facebook->getLoginUrl($fb_array); ?>"><img src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif"></a>
+						<a href="#" onclick="FB.login(fb_login, {scope: 'email,user_birthday,user_location '})"><img src="fblogo.jpg"></a>
 					</div>
 				</div>
 			</div>
