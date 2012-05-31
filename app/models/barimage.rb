@@ -27,8 +27,8 @@ class Barimage < ActiveRecord::Base
   def s3init
     if not AWS::S3::Base.connected?
       AWS::S3::Base.establish_connection!(
-        :access_key_id     => 'AKIAJJLWIEOFCWR5T2KQ',
-        :secret_access_key => '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'
+        :access_key_id     => ENV['S3_KEY'],
+        :secret_access_key => ENV['S3_SECRET']
       )
     end
     
