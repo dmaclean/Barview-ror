@@ -64,4 +64,13 @@ BarviewRor::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+:address => 'smtpout.secureserver.net',
+:domain  => 'www.bar-view.com',
+:port      => 80,
+:user_name => 'support@bar-view.com',
+:password => 'HeSX@nP',
+:authentication => :plain
+}
 end
