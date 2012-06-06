@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   skip_before_filter :verify_authenticity_token, :if =>lambda{ request.env["HTTP_NON_GET_TOKEN"] == "true" }
   
-  before_filter :init_vars
+  before_filter :init_vars, :parse_fb_tokens
   
   ##############################################################
   # Convenience method that sends a user back to the homepage.
@@ -12,6 +12,23 @@ class ApplicationController < ActionController::Base
   end
   
   private
+  def parse_fb_tokens
+    # We don't care about Facebook for bar users.
+    if not session[:bar_id]
+      oauth = Koala::Facebook::OAuth.new(ENV["FB_APP_ID"], ENV["FB_SECRET_KEY"])
+      info = oauth.get_user_info_from_cookies(cookies)
+      
+      # info isn't nil, looks like the FB user is signed in.
+      if info
+        session[:access_token] = info[:access_token]
+        logger.debug( "Facebook user access token is ${ session[:access_token] }" )
+      end
+    end
+  end
+  
+  #############################################################################
+  # Provides an opportunity to initialize some helpful site-global variables.
+  #############################################################################
   def init_vars
     @base_url = 'http://' + request.host
     if request.port != 80
