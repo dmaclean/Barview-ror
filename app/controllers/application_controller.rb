@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
       # info isn't nil, looks like the FB user is signed in.
       if info
         session[:access_token] = info[:access_token]
+        flash[:notice] = "Facebook user access token is #{ session[:access_token] }"
         logger.debug( "Facebook user access token is ${ session[:access_token] }" )
       end
     end
