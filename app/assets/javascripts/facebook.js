@@ -8,5 +8,5 @@ function fb_login(response) {
      console.log('User cancelled login or did not fully authorize.');
    }
    
-   window.location.reload();
+   window.location.replace('http://dev.bar-view.com');
  }
