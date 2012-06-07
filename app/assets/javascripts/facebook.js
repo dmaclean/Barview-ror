@@ -10,3 +10,7 @@ function fb_login(response) {
    
    window.location.replace('http://dev.bar-view.com');
  }
+ 
+ function fb_logout(response) {
+   window.location.replace('http://dev.bar-view.com');
+ }

@@ -156,11 +156,7 @@
 						<li><a class="user_login" href="#data">Login</a></li>
 					<% elsif session[:usertype] == "FACEBOOK" %>
 						<li>
-							<%
-								callback_url = @base_url + '/userlogout';
-								fb_array = ['next' => callback_url];
-							%>
-							<a href="<?php echo $facebook->getLogoutUrl($fb_array); ?>">
+							<a href="#" onclick="fb_logout">
 								<img 	src="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif" 
 										alt="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif"/>
 							</a>
