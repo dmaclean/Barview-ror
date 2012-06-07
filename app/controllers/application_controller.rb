@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
       if info
         session[:user_id] = info["user_id"]
         session[:access_token] = info["access_token"]
+        session[:usertype] = "FACEBOOK"
         logger.debug( "Found Facebook user with access token ${ session[:access_token] } and user_id #{ session[:user_id] }" )
 
       # If there is no user info from the Facebook SDK but we already have an
@@ -33,6 +34,7 @@ class ApplicationController < ActionController::Base
         logger.debug( "Invalidating session for Facebook user with access token ${ session[:access_token] } and user_id #{ session[:user_id] }" )
         session[:user_id] = nil
         session[:access_token] = nil
+        session[:usertype] = nil
       end
     end
   end
