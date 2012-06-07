@@ -12,5 +12,6 @@ function fb_login(response) {
  }
  
  function fb_logout(response) {
+   FB.Auth.setAuthResponse(null, 'unknown');
    window.location.replace('http://dev.bar-view.com');
  }
