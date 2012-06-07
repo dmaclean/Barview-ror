@@ -13,16 +13,26 @@ class ApplicationController < ActionController::Base
   
   private
   def parse_fb_tokens
-    # We don't care about Facebook for bar users.
+    # We don't care about Facebook for bar users, or if we've already processed the
+    # access token for a non-bar user.
     if not session[:bar_id]
       oauth = Koala::Facebook::OAuth.new(ENV["FB_APP_ID"], ENV["FB_SECRET_KEY"])
       info = oauth.get_user_info_from_cookies(cookies)
       
-      # info isn't nil, looks like the FB user is signed in.
+      # info isn't nil so it looks like the FB user is signed in.  Let's grab their
+      # access token and user_id and store them in the session.
       if info
+        session[:user_id] = info["user_id"]
         session[:access_token] = info["access_token"]
-        flash[:notice] = "Facebook user access token is #{ session[:access_token] }"
-        logger.debug( "Facebook user access token is ${ session[:access_token] }" )
+        logger.debug( "Found Facebook user with access token ${ session[:access_token] } and user_id #{ session[:user_id] }" )
+
+      # If there is no user info from the Facebook SDK but we already have an
+      # access token and user_id in session then the cookies have expired.  
+      # Let's invalidate the session.
+      elsif not info and session[:access_token] and session[:user_id]
+        logger.debug( "Invalidating session for Facebook user with access token ${ session[:access_token] } and user_id #{ session[:user_id] }" )
+        session[:user_id] = nil
+        session[:access_token] = nil
       end
     end
   end
