@@ -156,7 +156,7 @@
 						<li><a class="user_login" href="#data">Login</a></li>
 					<% elsif session[:usertype] == "FACEBOOK" %>
 						<li>
-							<a href="#" onclick="fb_logout">
+							<a href="#" onclick="FB.logout(fb_logout)">
 								<img 	src="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif" 
 										alt="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif"/>
 							</a>
