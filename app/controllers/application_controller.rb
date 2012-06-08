@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
     if not session[:bar_id]
       oauth = Koala::Facebook::OAuth.new(ENV["FB_APP_ID"], ENV["FB_SECRET_KEY"])
       info = oauth.get_user_info_from_cookies(cookies)
+      logger.info("Koala info: #{ info.inspect }")
       
       # info isn't nil so it looks like the FB user is signed in.  Let's grab their
       # access token and user_id and store them in the session.
