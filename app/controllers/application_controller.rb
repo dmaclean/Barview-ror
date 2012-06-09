@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   skip_before_filter :verify_authenticity_token, :if =>lambda{ request.env["HTTP_NON_GET_TOKEN"] == "true" }
   
-  before_filter :init_vars, :parse_fb_tokens
+  before_filter :init_vars
   
   ##############################################################
   # Convenience method that sends a user back to the homepage.
@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   
   private
   def parse_fb_tokens
+    
+    
     # We don't care about Facebook for bar users, or if we've already processed the
     # access token for a non-bar user.
     if not session[:bar_id]
@@ -31,11 +33,11 @@ class ApplicationController < ActionController::Base
       # If there is no user info from the Facebook SDK but we already have an
       # access token and user_id in session then the cookies have expired.  
       # Let's invalidate the session.
-      elsif not info and session[:access_token] and session[:user_id]
-        logger.info( "Invalidating session for Facebook user with access token #{ session[:access_token] } and user_id #{ session[:user_id] }" )
-        session[:user_id] = nil
-        session[:access_token] = nil
-        session[:usertype] = nil
+      #elsif not info and session[:access_token] and session[:user_id]
+      #  logger.info( "Invalidating session for Facebook user with access token #{ session[:access_token] } and user_id #{ session[:user_id] }" )
+      #  session[:user_id] = nil
+      #  session[:access_token] = nil
+      #  session[:usertype] = nil
       end
     end
   end
