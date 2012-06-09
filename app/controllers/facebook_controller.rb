@@ -25,10 +25,9 @@ class FacebookController < ApplicationController
 	session['access_token'] = session['oauth'].get_access_token(params[:code])
 	session[:usertype] = "FACEBOOK"
 	
-	info = session[:oauth].get_user_info_from_cookies(cookies)
-	if info
-	  session[:user_id] = info["user_id"]
-	end
+	graph = Koala::Facebook::API.new(session[:access_token])
+	userdata = graph.get_object("me")
+	logger.info("Graph data for user: #{ userdata.inspect }")
 	
 	redirect_to_home
   end
