@@ -25,7 +25,7 @@ class FacebookController < ApplicationController
 	session['access_token'] = session['oauth'].get_access_token(params[:code])
 	session[:usertype] = "FACEBOOK"
 	
-	info = oauth.get_user_info_from_cookies(cookies)
+	info = session[:oauth].get_user_info_from_cookies(cookies)
 	if info
 	  session[:user_id] = info["user_id"]
 	end
