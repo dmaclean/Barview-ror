@@ -1,4 +1,8 @@
 BarviewRor::Application.routes.draw do
+  get "facebook/create"
+  get "facebook/callback"
+  delete "facebook/destroy"
+
   get "forgot_password/index"
 
   post "forgot_password/create"

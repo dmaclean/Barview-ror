@@ -96,7 +96,7 @@
 <script>
  window.fbAsyncInit = function() {
     FB.init({
-      appId      : '<%= Facebook::APP_ID %>', // App ID
+      appId      : '<%= ENV["FB_APP_ID"] %>', // App ID
       //channelUrl : 'dev.bar-view.com/channel.html', // Channel File
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session
@@ -156,10 +156,11 @@
 						<li><a class="user_login" href="#data">Login</a></li>
 					<% elsif session[:usertype] == "FACEBOOK" %>
 						<li>
-							<a href="#" onclick="FB.logout(fb_logout)">
-								<img 	src="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif" 
+							<!--<a href="#" onclick="FB.logout(fb_logout)">-->
+							<%= link_to("Log out", @base_url + "/facebook/destroy", :method => :delete)%>
+							<!--	<img 	src="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif" 
 										alt="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif"/>
-							</a>
+							</a>-->
 						</li>
 					<!-- BARVIEW logout -->
 					<% elsif session[:usertype] == "BARVIEW" %>
@@ -257,11 +258,7 @@
 					</div>
 					<div class="span6">
 						<h3>Use an existing account:</h3>
-						<!--<?php 
-							$callback_url = base_url(); 
-							$fb_array  = array('next' => $callback_url, 'scope' => 'email,user_birthday,user_location', 'cancel_url' => $callback_url);
-						?>-->
-						<a href="#" onclick="FB.login(fb_login, {scope: 'email,user_birthday,user_location '})"><img src="fblogo.jpg"></a>
+						<a href="<%= @base_url %>/facebook/create"><img src="fblogo.jpg"></a>
 					</div>
 				</div>
 			</div>
