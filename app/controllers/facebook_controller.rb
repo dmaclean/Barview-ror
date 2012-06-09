@@ -13,6 +13,8 @@ class FacebookController < ApplicationController
   def destroy
     session['oauth'] = nil
     session['access_token'] = nil
+    session[:usertype] = nil
+    session[:user_id] = nil
     redirect_to_home
   end
   
@@ -25,9 +27,12 @@ class FacebookController < ApplicationController
 	session['access_token'] = session['oauth'].get_access_token(params[:code])
 	session[:usertype] = "FACEBOOK"
 	
+	# Poll the graph and get the user id
 	graph = Koala::Facebook::API.new(session[:access_token])
 	userdata = graph.get_object("me")
 	logger.info("Graph data for user: #{ userdata.inspect }")
+	
+	session[:user_id] = userdata["id"]
 	
 	redirect_to_home
   end
