@@ -102,8 +102,8 @@ class BarTest < ActiveSupport::TestCase
     
     bar.fetch_coordinates
     
-    assert bar.lat == 42.1709272
-    assert bar.lng == -71.3008238
+    assert bar.lat == 42.1709197
+    assert bar.lng == -71.300831
   end
   
   test "successful login" do
