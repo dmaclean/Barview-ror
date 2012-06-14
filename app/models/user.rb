@@ -100,16 +100,16 @@ class User < ActiveRecord::Base
   def create_or_update_facebook_data(fb_data)
     # Determine if the facebook user already exists in our database.
     begin
-      fbuser = FbUser.find_by_fb_id(fb_data[:id])
+      fbuser = FbUser.find_by_fb_id(fb_data["id"])
         
       user = User.find(fbuser.user_id)
-      user.first_name = fb_data[:first_name]
-      user.last_name = fb_data[:last_name]
-      user.gender = fb_data[:gender].capitalize
-      user.email = "fb_#{ fb_data[:email] }"
-      user.dob = self.parse_fb_birthdate(fb_data[:birthday])
-      user.city = fb_data[:location][:name].split(",")[0].strip
-      user.state = user.get_state_abbreviation(fb_data[:location][:name].split(",")[1].strip)
+      user.first_name = fb_data["first_name"]
+      user.last_name = fb_data["last_name"]
+      user.gender = fb_data["gender"].capitalize
+      user.email = "fb_#{ fb_data["email"] }"
+      user.dob = self.parse_fb_birthdate(fb_data["birthday"])
+      user.city = fb_data["location"]["name"].split(",")[0].strip
+      user.state = user.get_state_abbreviation(fb_data["location"]["name"].split(",")[1].strip)
        
       # Save user
       if not user.save
@@ -122,25 +122,25 @@ class User < ActiveRecord::Base
     rescue
       # We're in the rescue block, so we didn't find the user (this is a new user).
       user = User.new
-      user.first_name = fb_data[:first_name]
-      user.last_name = fb_data[:last_name]
-      user.gender = fb_data[:gender].capitalize
-      user.email = "fb_#{ fb_data[:email] }"
-      user.dob = self.parse_fb_birthdate(fb_data[:birthday])
-      user.city = fb_data[:location][:name].split(",")[0].strip
-      user.state = user.get_state_abbreviation(fb_data[:location][:name].split(",")[1].strip)
+      user.first_name = fb_data["first_name"]
+      user.last_name = fb_data["last_name"]
+      user.gender = fb_data["gender"].capitalize
+      user.email = "fb_#{ fb_data["email"] }"
+      user.dob = self.parse_fb_birthdate(fb_data["birthday"])
+      user.city = fb_data["location"]["name"].split(",")[0].strip
+      user.state = user.get_state_abbreviation(fb_data["location"]["name"].split(",")[1].strip)
       user.password = "fb_user"
         
       # Save user
       if not user.save
-        print "Could not persist new user #{ user.first_name } #{ user.last_name } with facebook id #{ fb_data[:id] }"
+        print "Could not persist new user #{ user.first_name } #{ user.last_name } with facebook id #{ fb_data["id"] }"
         user.errors.each{|attr,msg| puts "#{attr} - #{msg}" }
-        logger.error("Could not persist new user #{ user.first_name } #{ user.last_name } with facebook id #{ fb_data[:id] }")
+        logger.error("Could not persist new user #{ user.first_name } #{ user.last_name } with facebook id #{ fb_data["id"] }")
         return
       end
         
       fbuser = FbUser.new
-      fbuser.fb_id = fb_data[:id]
+      fbuser.fb_id = fb_data["id"]
       fbuser.user_id = user.id
         
       # Save fb/user association

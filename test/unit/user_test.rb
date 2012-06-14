@@ -109,20 +109,20 @@ class UserTest < ActiveSupport::TestCase
     # "verified"=>true, "updated_time"=>"2011-12-05T17:39:47+0000"}
   
     data = Hash.new
-    data[:id] = "668512494"
-    data[:name] = "Dan MacLean"
-    data[:first_name] = "Dan"
-    data[:last_name] = "MacLean"
-    data[:link] = "http://www.facebook.com/daniel.maclean"
-    data[:username] = "daniel.maclean"
-    data[:birthday] = "10/21/1982"
-    data[:location] = { :id, 113517895325215, :name, "Medfield, Massachusetts" }
-    data[:gender] = "male"
-    data[:email] = "dmaclean82@gmail.com"
-    data[:timezone] = -4
-    data[:locale] = "en_US"
-    data[:verified] = true
-    data[:updated_time] = "2011-12-05T17:39:47+0000"
+    data["id"] = "668512494"
+    data["name"] = "Dan MacLean"
+    data["first_name"] = "Dan"
+    data["last_name"] = "MacLean"
+    data["link"] = "http://www.facebook.com/daniel.maclean"
+    data["username"] = "daniel.maclean"
+    data["birthday"] = "10/21/1982"
+    data["location"] = { "id", 113517895325215, "name", "Medfield, Massachusetts" }
+    data["gender"] = "male"
+    data["email"] = "dan@bar-view.com"
+    data["timezone"] = -4
+    data["locale"] = "en_US"
+    data["verified"] = true
+    data["updated_time"] = "2011-12-05T17:39:47+0000"
   
     fbusercount = FbUser.count
     usercount = User.count
@@ -136,21 +136,21 @@ class UserTest < ActiveSupport::TestCase
     assert fbusercount2 > fbusercount
     
     begin
-      fbuser = FbUser.find_by_fb_id(data[:id])
+      fbuser = FbUser.find_by_fb_id(data["id"])
     rescue
-      flunk "Could not find FbUser with fb_id of #{ data[:id] }"
+      flunk "Could not find FbUser with fb_id of #{ data["id"] }"
     end
     
     # Check for data in the users table
     usercount2 = User.count
     assert usercount2 > usercount
     
-    user_id = FbUser.find_by_fb_id(data[:id]).user_id
+    user_id = FbUser.find_by_fb_id(data["id"]).user_id
     user = User.find(user_id)
     
     assert user.city == "Medfield"
     assert user.dob == Date.parse("1982-10-21")
-    assert user.email == "fb_dmaclean82@gmail.com"
+    assert user.email == "fb_dan@bar-view.com"
     assert user.first_name == "Dan"
     assert user.last_name == "MacLean"
     assert user.gender == "Male"
@@ -166,20 +166,20 @@ class UserTest < ActiveSupport::TestCase
     
     # Create original
     data = Hash.new
-    data[:id] = "5"
-    data[:name] = "Dan MacLean"
-    data[:first_name] = "Dan"
-    data[:last_name] = "MacLean"
-    data[:link] = "http://www.facebook.com/daniel.maclean"
-    data[:username] = "daniel.maclean"
-    data[:birthday] = "10/21/1982"
-    data[:location] = { :id, 113517895325215, :name, "Medfield, Massachusetts" }
-    data[:gender] = "male"
-    data[:email] = "dmaclean82@gmail.com"
-    data[:timezone] = -4
-    data[:locale] = "en_US"
-    data[:verified] = true
-    data[:updated_time] = "2011-12-05T17:39:47+0000"
+    data["id"] = "5"
+    data["name"] = "Dan MacLean"
+    data["first_name"] = "Dan"
+    data["last_name"] = "MacLean"
+    data["link"] = "http://www.facebook.com/daniel.maclean"
+    data["username"] = "daniel.maclean"
+    data["birthday"] = "10/21/1982"
+    data["location"] = { "id", 113517895325215, "name", "Medfield, Massachusetts" }
+    data["gender"] = "male"
+    data["email"] = "dmaclean82@gmail.com"
+    data["timezone"] = -4
+    data["locale"] = "en_US"
+    data["verified"] = true
+    data["updated_time"] = "2011-12-05T17:39:47+0000"
     
     # Make add/update call
     user = User.new
@@ -187,20 +187,20 @@ class UserTest < ActiveSupport::TestCase
   
     # Update
     data = Hash.new
-    data[:id] = "5"
-    data[:name] = "Danno Mac"
-    data[:first_name] = "Danno"
-    data[:last_name] = "Mac"
-    data[:link] = "http://www.facebook.com/daniel.maclean"
-    data[:username] = "daniel.maclean"
-    data[:birthday] = "08/22/1983"
-    data[:location] = { :id, 113517895325215, :name, "Nashville, Tennessee" }
-    data[:gender] = "female"
-    data[:email] = "dmaclean82@gmail.com"
-    data[:timezone] = -4
-    data[:locale] = "en_US"
-    data[:verified] = true
-    data[:updated_time] = "2011-12-05T17:39:47+0000"
+    data["id"] = "5"
+    data["name"] = "Danno Mac"
+    data["first_name"] = "Danno"
+    data["last_name"] = "Mac"
+    data["link"] = "http://www.facebook.com/daniel.maclean"
+    data["username"] = "daniel.maclean"
+    data["birthday"] = "08/22/1983"
+    data["location"] = { "id", 113517895325215, "name", "Nashville, Tennessee" }
+    data["gender"] = "female"
+    data["email"] = "dmaclean82@gmail.com"
+    data["timezone"] = -4
+    data["locale"] = "en_US"
+    data["verified"] = true
+    data["updated_time"] = "2011-12-05T17:39:47+0000"
   
     fbusercount = FbUser.count
     usercount = User.count
@@ -213,16 +213,16 @@ class UserTest < ActiveSupport::TestCase
     assert fbusercount2 == fbusercount
     
     begin
-      fbuser = FbUser.find_by_fb_id(data[:id])
+      fbuser = FbUser.find_by_fb_id(data["id"])
     rescue
-      flunk "Could not find FbUser with fb_id of #{ data[:id] }"
+      flunk "Could not find FbUser with fb_id of #{ data["id"] }"
     end
     
     # Check for data in the users table
     usercount2 = User.count
     assert usercount2 == usercount
     
-    user_id = FbUser.find_by_fb_id(data[:id]).user_id
+    user_id = FbUser.find_by_fb_id(data["id"]).user_id
     user = User.find(user_id)
     
     assert user.city == "Nashville"
