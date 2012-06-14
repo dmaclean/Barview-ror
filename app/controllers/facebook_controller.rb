@@ -20,19 +20,25 @@ class FacebookController < ApplicationController
   
   # Callback on successful Facebook login
   def callback
-    logger.info("in callback - #{ session['oauth'] }")
-    logger.info("params - #{ params.inspect }")
-    
     #get the access token from facebook with your code
-	session['access_token'] = session['oauth'].get_access_token(params[:code])
-	session[:usertype] = "FACEBOOK"
+	#session['access_token'] = session['oauth'].get_access_token(params[:code])
+	#session[:usertype] = "FACEBOOK"
 	
 	# Poll the graph and get the user id
-	graph = Koala::Facebook::API.new(session[:access_token])
-	userdata = graph.get_object("me")
-	logger.info("Graph data for user: #{ userdata.inspect }")
+	#graph = Koala::Facebook::API.new(session[:access_token])
+	#userdata = graph.get_object("me")
+	#logger.info("Graph data for user: #{ userdata.inspect }")
 	
-	session[:user_id] = userdata["id"]
+	#User.create_or_update_facebook_data(userdata)
+	#begin
+	#  fbuser = FbUser.find_by_fb_id(userdata["id"])
+	#  session[:user_id] = fb
+	#rescue
+	#  logger.error("Unable to find facebook user #{ userdata['id'] }")
+	#end
+	
+	user = User.new
+	user.log_fb_user_in(session, params[:code])
 	
 	redirect_to_home
   end
