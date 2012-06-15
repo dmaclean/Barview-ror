@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
       # Save fb/user association
       if not fbuser.save
         print "Could not persist new fb user with fb id #{ fbuser.fb_id } and user id #{ fbuser.user_id }"
-        fbuser.errors.each{|attr,msg| puts "#{attr} - #{msg}" }
+        fbuser.errors.each{|attr,msg| puts "#{attr} - #{msg}\n" }
         logger.error("Could not persist new fb user with fb id #{ fbuser.fb_id } and user id #{ fbuser.user_id }")
         return
       end
