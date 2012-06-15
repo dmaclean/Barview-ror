@@ -19,6 +19,7 @@ q1.save
 
 q2 = UserQuestionnaireQuestion.new
 q2.question = "What is your favorite type of drink?"
+q2.save
 
 ##################################
 # Questionnaire question options
