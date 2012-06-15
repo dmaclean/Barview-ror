@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
     self.create_or_update_facebook_data(userdata)
 	begin
 	  fbuser = FbUser.find_by_fb_id(userdata["id"])
-	  session[:user_id] = fb
+	  session[:user_id] = fbuser.user_id
 	rescue
 	  logger.error("Unable to find facebook user #{ userdata['id'] }")
 	end
