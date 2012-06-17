@@ -13,7 +13,7 @@ class UserQuestionnaireController < ApplicationController
     answers = Hash.new
     for k,v in params do
       if k.index('q') == 0
-        answers[k[1]] = v
+        answers[k.slice(1..k.size)] = v["0"]
       end
     end
     
