@@ -252,3 +252,19 @@ function getRealtimeUsers(base_url, bar_id, bar_name, seconds_back, token) {
 				}
 	});
 }
+
+/**
+ * Makes sure that the Terms of Use box has been checked by the bar and submit the form.  If
+ * the user neglects to do so, pop up an alert that stops them.  This should be attached to the
+ * onclick event of the submit button.
+ */
+function validateTOSAcceptance() {
+	// The TOS has been checked.  Submit the form.
+	if ($('#tos').is(":checked")) {
+		$('.new_bar').submit();
+	}
+	// The TOS was NOT checked.  Show an alert to let them know they can't continue.
+	else {
+		alert("You must accept the Terms of Use to register.");
+	}
+}
