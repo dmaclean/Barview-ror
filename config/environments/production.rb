@@ -60,6 +60,12 @@ BarviewRor::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  # Style the forms so on errors we don't get the big obnoxious red block
+  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+    errors = Array(instance.error_message).join(',')
+    %(#{html_tag}).html_safe
+  end
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)

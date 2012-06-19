@@ -35,6 +35,12 @@ BarviewRor::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   
+  # Style the forms so on errors we don't get the big obnoxious red block
+  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+    errors = Array(instance.error_message).join(',')
+    %(#{html_tag}).html_safe
+  end
+  
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
 :address => 'smtpout.secureserver.net',

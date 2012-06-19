@@ -34,4 +34,10 @@ BarviewRor::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  
+  # Style the forms so on errors we don't get the big obnoxious red block
+  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+    errors = Array(instance.error_message).join(',')
+    %(#{html_tag}).html_safe
+  end
 end
