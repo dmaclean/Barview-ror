@@ -2,14 +2,10 @@
   	<div class="span12">
 <%= form_for(@bar) do |f| %>
   <% if @bar.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bar.errors.count, "error") %> prohibited this bar from being saved:</h2>
-
-      <ul>
-      <% @bar.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <div id="error_explanation" class="alert-message error">
+		<% @bar.errors.full_messages.each do |msg| %>
+        	<p><strong><%= msg %></strong></p>
+     	<% end %>
     </div>
   <% end %>
 
@@ -127,13 +123,12 @@
     </div>
   </div>
   <div class="clearfix">
-    <label for="terms">I have read and agree to the <a href="<%= @base_url %>/tos.html">Terms of Use</a>: </label>
+    <label for="terms">I have read and agree to the <a target="_blank" href="<%= @base_url %>/tos.html">Terms of Use</a>: </label>
     <div class="input">
       <%= check_box_tag 'tos', 'yes', false, :class => 'accept_tos' %>
     </div>
   </div>
   <div class="actions">
-    <!--<%= f.button "Sign up!", { :onclick => 'validateTOSAcceptance();', :class => 'btn primary' } %>-->
     <%=button_tag "Sign up!",  :type => 'button', :class => 'btn primary', :onclick => 'validateTOSAcceptance();' %>
   </div>
   </fieldset>

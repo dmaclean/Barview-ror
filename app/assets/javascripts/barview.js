@@ -261,7 +261,7 @@ function getRealtimeUsers(base_url, bar_id, bar_name, seconds_back, token) {
 function validateTOSAcceptance() {
 	// The TOS has been checked.  Submit the form.
 	if ($('#tos').is(":checked")) {
-		$('.new_bar').submit();
+		$('[id^=new]').submit();
 	}
 	// The TOS was NOT checked.  Show an alert to let them know they can't continue.
 	else {
