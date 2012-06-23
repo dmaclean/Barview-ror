@@ -1,4 +1,6 @@
 BarviewRor::Application.routes.draw do
+  post "fb_update/create"
+
   get "facebook/create"
   get "facebook/callback"
   delete "facebook/destroy"
