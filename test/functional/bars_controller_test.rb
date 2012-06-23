@@ -146,7 +146,7 @@ class BarsControllerTest < ActionController::TestCase
   
   # When the user is not logged in we send them to the homepage.
   test "detail user not logged in" do
-    get :show
+    get :show, :id => 2
     assert_redirected_to '/userhome'
   end
   
