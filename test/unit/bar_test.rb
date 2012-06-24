@@ -51,6 +51,29 @@ class BarTest < ActiveSupport::TestCase
     assert bar.valid?
   end
   
+  test "no duplicate usernames" do
+    bar = Bar.new(
+      :address => '10 Juniper Lane',
+      :city => 'Medfield',
+      :email => 'dan@bar-view.com',
+      :lat => 1.5,
+      :lng => 1.5,
+      :name => 'MyString',
+      :reference => 'hello',
+      :state => 'MA',
+      :username => 'username1',		# first bar in bars.yml has this username
+      :verified => 0,
+      :zip => '02052'
+    )
+    bar.password = 'password'
+    assert bar.invalid?
+    assert_equal "has already been taken", 
+    		bar.errors[:username].join('; ')
+    
+    bar.username = 'unique_username'
+    assert bar.valid?
+  end
+  
   test "Email must be in correct format" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
