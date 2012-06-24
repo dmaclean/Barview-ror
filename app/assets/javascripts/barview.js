@@ -170,13 +170,12 @@ function removeFromFavorites(base_url, bar_id, user_id, token) {
  * for a bar.  If successful, the event text will be listed in the list of events along with
  * a delete link.
  */
-function addEvent(base_url, event_detail, bar_id, bar_name, session_id, token) {
+function addEvent(base_url, event_detail, bar_id, session_id, token) {
 	$.ajax({
 		type: 'POST',
 		url: base_url + '/bar_events',
 		data: {'detail' : $('#event_text').val(), 'bar_id' : bar_id},
 		beforeSend: function(xhr) {
-						xhr.setRequestHeader('BAR_NAME', bar_name);
 						xhr.setRequestHeader('SESSION_ID', session_id);
 						xhr.setRequestHeader('BAR_ID', bar_id);
 						xhr.setRequestHeader('X-CSRF-Token', token);
@@ -185,8 +184,8 @@ function addEvent(base_url, event_detail, bar_id, bar_name, session_id, token) {
 					var newlistitem = '<dt id="event_' + data + '">' + event_detail + '</dt><dd><a class="btn small danger" id="event_' + data + '_a" >delete</a></dd>';
 					//$('#bar_events_list').append(newlistitem).fadeIn();
 					$(newlistitem).hide().appendTo('#bar_events_list').fadeIn();
-					$('#event_' + data + '_a').click( {'base_url' : base_url, 'event_id' : data, 'bar_id' : bar_id, 'bar_name' : bar_name, 'session_id' : session_id, 'token' : token}, function(e) {
-							deleteEvent(e.data.base_url, e.data.event_id, e.data.bar_id, e.data.bar_name, e.data.session_id, e.data.token);
+					$('#event_' + data + '_a').click( {'base_url' : base_url, 'event_id' : data, 'bar_id' : bar_id, 'session_id' : session_id, 'token' : token}, function(e) {
+							deleteEvent(e.data.base_url, e.data.event_id, e.data.bar_id, e.data.session_id, e.data.token);
 						}
 					);
 				},
@@ -200,13 +199,12 @@ function addEvent(base_url, event_detail, bar_id, bar_name, session_id, token) {
  * An AJAX call that makes a DELETE request to the REST interface to delete an event/deal
  * for a bar.  If successful, the event will be delete from the database and the list on the page.
  */
-function deleteEvent(base_url, event_id, bar_id, bar_name, session_id, token) {
+function deleteEvent(base_url, event_id, bar_id, session_id, token) {
 	$.ajax({
 		type: 'DELETE',
 		url: base_url + '/bar_events/' + event_id,
 		beforeSend: function(xhr) {
 						xhr.setRequestHeader('BAR_ID', bar_id);
-						xhr.setRequestHeader('BAR_NAME', bar_name);
 						xhr.setRequestHeader('SESSION_ID', session_id);
 						xhr.setRequestHeader('X-CSRF-Token', token);
 					},

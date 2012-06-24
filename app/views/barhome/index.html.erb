@@ -74,7 +74,7 @@
 				    @events.each do |e| 
 				%>
 					<dt id="event_<%= e.id %>"><%= e.detail%></dt>
-					<dd id="event_<%= e.id %>_a"><a class="btn small danger"  onclick="deleteEvent('http://<%= request.env['HTTP_HOST']%>', <%= e.id %>, <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>', '<%= form_authenticity_token.to_s %>');">delete</a></dd>
+					<dd id="event_<%= e.id %>_a"><a class="btn small danger"  onclick="deleteEvent('http://<%= request.env['HTTP_HOST']%>', <%= e.id %>, <%= @bar.id %>, '<%= session[:session_id] %>', '<%= form_authenticity_token.to_s %>');">delete</a></dd>
 				<% 
 				    end 
 			      end 
@@ -83,7 +83,7 @@
 			<div class="bar_events_edit">
 				<textarea id="event_text" name="event_text" rows="5"></textarea><br/>
 				<button class="btn primary" type="button" id="submit" name="submit" value="Add new event or deal." 
-								onclick="addEvent('http://<%= request.env['HTTP_HOST']%>', $('#event_text').val(), <%= @bar.id %>, '<%= @bar.name %>', '<%= session[:session_id] %>', '<%= form_authenticity_token.to_s %>');">Add new event or deal.</button>
+								onclick="addEvent('http://<%= request.env['HTTP_HOST']%>', $('#event_text').val(), <%= @bar.id %>, '<%= session[:session_id] %>', '<%= form_authenticity_token.to_s %>');">Add new event or deal.</button>
 			</div>
 		</div>
 	</div>
