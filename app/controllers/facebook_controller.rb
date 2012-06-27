@@ -15,7 +15,12 @@ class FacebookController < ApplicationController
     session['access_token'] = nil
     session[:usertype] = nil
     session[:user_id] = nil
-    redirect_to_home
+    
+    if request.env['HTTP_IS_MOBILE'] == 'true'
+      render :text => "OK"
+    else
+      redirect_to_home
+    end
   end
   
   # Callback on successful Facebook login
