@@ -4,18 +4,42 @@
 <br/><br/><br/>
 <% if not @logged_in %>
 	<div class="row">
+		<div class="span8">
+			<h1>Welcome to Bar-view.com!</h1>
+		</div>
+	</div>
+	<div class="row">
 		<div id="welcome" class="span8">
-			<h1>Welcome to Bar-view.com.</h1>
 			<p>
+			<h3>Bar-view users can view your bar in real time!</h3>
 			Bar-view.com is a service that allows bars to provide a real-time video 
 			stream of what's happening at their establishment to Barview users.
 			</p>
+			<p>
+			<h3>Post deals and events for Bar-view users to see!</h3>
+			As a bar signed up with Bar-view.com you can post any deals or events you're advertising
+			on Bar-view.  These will be shown to users on the website and on the Bar-view mobile apps.
+			Also, posting these deals and events is free.
+			</p>
+			<p>
+			<h3>Get a webcam, sign up, and start streaming!</h3>
+			Using the bar-view.com broadcasting service requires a webcam to be connected to your computer.  If
+			you don't already have a webcam then you can find several models at <a href="http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=wireless+webcam&x=0&y=0">amazon.com</a>.
+			</p>
+			<p>
+			<h3><a href="<%= @base_url %>/bars/new">Click here to register</a></h3>
+			If you are a bar owner and would like to sign up for Bar-view.com then 
+			click <a href="<%= @base_url %>/bars/new">here to register</a>.  If
+			you have already signed up then click the "Login" link to log in and begin streaming.
+			</p>
+		</div>
+		<div id="youtube" class="span8">
+			<iframe width="560" height="315" src="http://www.youtube.com/embed/wcvA2OdZ5QU" frameborder="0" allowfullscreen></iframe>
 		</div>
 	</div>
 			
-	<div class="row">
+	<!--<div class="row">
 		<div id="webcam_desc" class="span8">
-			<!--Barview.com bars-->
 			<p>
 			Using the bar-view.com broadcasting service requires a webcam to be connected to your computer.  If
 			you don't already have a webcam then you can find several models at <a href="http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=wireless+webcam&x=0&y=0">amazon.com</a>.
@@ -30,7 +54,7 @@
 			you have already signed up then click the "Login" link to log in and begin streaming.
 			</p>
 		</div>
-	</div>
+	</div>-->
 	
 <!--
   BAR OWNER IS LOGGED IN - SHOW THE VIDEO FEED
