@@ -89,7 +89,7 @@
 			<h1>Current Deals</h1>
 			<dl>
 				<% if not @has_favorites %>
-					You don't have any favorite bars yet, so we'll show you some events and deals for random bars.
+					<p>You don't have any favorite bars yet, so we'll show you some events and deals for random bars.</p>
 				<% end %>
 				<% for n,e in @events %>
 				  <dt><%= n %></dt>
