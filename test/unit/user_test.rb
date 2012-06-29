@@ -101,6 +101,14 @@ class UserTest < ActiveSupport::TestCase
     assert_equal xml, "<user></user>"
   end
   
+  test "fetch non favorites" do
+    user = User.find(1)
+    events = user.fetch_non_favorite_bar_events
+    assert events['MyString'] != nil
+    assert events['MyString'].count == 1
+    assert events['MyString'][0] == 'MyText2'
+  end
+  
   test "create new facebook user" do
     # {"id"=>"668512494", "name"=>"Dan MacLean", "first_name"=>"Dan", "last_name"=>"MacLean", 
     # "link"=>"http://www.facebook.com/daniel.maclean", "username"=>"daniel.maclean", 

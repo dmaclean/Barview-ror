@@ -8,6 +8,8 @@ class UserHomeController < ApplicationController
     
     # We have a logged-in user
     if session[:user_id]
+      user = User.find(session[:user_id])
+    
       @bars = Bar.joins(:favorites).where('favorites.user_id' => session[:user_id], :verified => 1)
       
       # Determine if we should show the questionnaire for the user.  If so, then
@@ -22,7 +24,7 @@ class UserHomeController < ApplicationController
         @events = get_all_events
       else
         @nonfaves = Bar.all(:limit => 5 - @bars.length, :conditions => ['id not in (select bar_id from favorites where user_id = ?) and verified = 1', [session[:user_id]] ])
-        @nonfave_events = get_all_events
+        @nonfave_events = user.fetch_non_favorite_bar_events
 		@events = get_events_for_favorites
         @has_favorites = true
       end

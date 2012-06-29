@@ -42,7 +42,7 @@ class UserHomeControllerTest < ActionController::TestCase
   end
   
   test "show questionnaire" do
-    session[:user_id] = 999
+    session[:user_id] = 2
     get :index
     
     assert_response :success

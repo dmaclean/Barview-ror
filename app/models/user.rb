@@ -91,6 +91,20 @@ class User < ActiveRecord::Base
     end
   end  # End of static methods
   
+  def fetch_non_favorite_bar_events()
+    events = Hash.new
+    temp = Bar.find(:all, :select => 'bars.name, bar_events.detail', :joins => :bar_event, :conditions => ['bars.id not in (select bar_id from favorites where user_id = ?) and verified = 1', [self.id] ])
+    for t in temp do
+	  if events.key?(t.name)
+	    events[t.name] << t.detail
+	  else
+	    events[t.name] = [t.detail]
+	  end
+	end
+	
+	events
+  end
+  
   def parse_fb_birthdate(birthdate)
     date_pieces = birthdate.split("/")
     "#{ date_pieces[2] }-#{ date_pieces[0] }-#{ date_pieces[1] }"
