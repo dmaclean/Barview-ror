@@ -8,7 +8,9 @@ class BarhomeControllerTest < ActionController::TestCase
 
   test "bar is not logged in" do
     get :index
-    assert_select '#welcome h1', 'Welcome to Bar-view.com.'
+    assert_select '#welcome h1', 'Welcome to Bar-view.com!'
+	assert_select '#intro_desc', :minimum => 1
+	assert_select '#post_deals', :minimum => 1
 	assert_select '#webcam_desc', :minimum => 1
 	assert_select '#signup_desc', :minimum => 1
   end
