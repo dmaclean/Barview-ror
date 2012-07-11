@@ -116,10 +116,17 @@
 	    <%= f.text_field :email, :class => 'input-xlarge' %>
     </div>
   </div>
+  <div class="alert-message info">
+  	<strong>What's the business reference all about?</strong><br/><br/>
+  	Well, we need you to provide some external URL reference for your bar, such as <a href="http://www.yelp.com" target="_blank">Yelp!</a>, so
+  	we can verify that your bar really exists.  Once we get your signup request we'll check out the reference, find a
+  	phone number, then call your bar to verify that you actually are the one signing up for Barview.  Once we get your confirmation
+  	then you'll be approved and ready to stream!
+  </div>
   <div class="clearfix">
-    <%= f.label :reference %>
+    <label for="reference">Business Reference URL (yelp.com, etc.): </label>
     <div class="input">
-	    <%= f.text_area :reference %>
+	    <%= f.text_field :reference, :class => 'input-xlarge' %>
     </div>
   </div>
   <div class="clearfix">
