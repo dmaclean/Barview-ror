@@ -5,7 +5,7 @@ class MobileInfoControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     
-    assert_select '#android_desc', 'We are hoping to have the Bar-view Android app available on the Android Market any day now.'
+    assert_select '#android_desc', 'The Bar-view Android app is now available on the Android Market.  Just search for \'Barview\' in the Market or scan the QR code below with an app like QR Droid.'
     assert_select '#iphone_desc', 'The Bar-view iPhone app is currently in development and we hope to make it available to you in the coming weeks.'
     assert_select '.hero-unit', 0
   end
