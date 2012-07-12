@@ -43,7 +43,7 @@ class AdminsController < ApplicationController
     admin = Admin.authenticate(params[:name], params[:password])
     if admin
       session[:admin_id] = admin.id
-      redirect_to '/'
+      redirect_to '/bars'
     else
       redirect_to '/', :flash => { :error => "Admin login failed." }
     end

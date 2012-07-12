@@ -19,7 +19,7 @@ class AdminsControllerTest < ActionController::TestCase
   test "successful login" do
     post :create, :name => 'admin', :password => 'getatme'
     assert_not_nil session[:admin_id]
-    assert_redirected_to '/'
+    assert_redirected_to '/bars'
     
     #assert_difference('Admin.count') do
     #  post :create, :admin => { :hashed_password => @admin.hashed_password, :name => @admin.name, :salt => @admin.salt }
