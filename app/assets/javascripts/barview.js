@@ -239,8 +239,15 @@ function getRealtimeUsers(base_url, bar_id, bar_name, seconds_back, token) {
 						$('#realtime').append('<div>No viewers currently</div>');
 					}
 					else {
-						for(i in items)
-							$('#realtime').append('<li>' + items[i] + '</li>');
+						for(i in items) {
+							var name = items[i].substring(0, items[i].indexOf('('));
+							var is_fb = items[i].indexOf('fb_') != -1;
+							
+							if(is_fb)
+								$('#realtime').append('<li><img src="facebook_realtime.jpg"/>' + name + '</li>');
+							else
+								$('#realtime').append('<li><img src="barview_realtime.jpg"/>' + name + '</li>');
+						}
 					}
 				},
 		error: function(jqXHR, textStatus, errorThrown) {
@@ -264,5 +271,15 @@ function validateTOSAcceptance() {
 	// The TOS was NOT checked.  Show an alert to let them know they can't continue.
 	else {
 		alert("You must accept the Terms of Use to register.");
+	}
+}
+
+/**
+ * Makes sure that when the search bar is clicked on the "Search bars" default text
+ * is cleared out so the user doesn't have to remove it themself.
+ */
+function clearSearchText() {
+	if($('#search').val() == 'Search bars') {
+		$('#search').val("");
 	}
 }

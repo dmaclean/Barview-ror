@@ -148,7 +148,7 @@
 					<li><a href="<%= @base_url %>/about/index">About us</a></li>
 				</ul>
 				<%= form_tag("/search/index", :method => "get") do %>
-					<input type="text" id="search" name="search" maxlength="100" value="Search bars" />
+					<input type="text" id="search" name="search" maxlength="100" value="Search bars" onclick="clearSearchText();" />
 				<% end %>
 				<ul class="nav secondary-nav">
 					<% if not session[:user_id] %>
