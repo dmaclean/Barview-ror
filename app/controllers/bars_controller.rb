@@ -22,7 +22,7 @@ class BarsController < ApplicationController
       end
     end
     
-    @bars = Bar.order(:name)
+    @bars = Bar.order(:verified)
 
     respond_to do |format|
       format.html # index.html.erb
