@@ -64,7 +64,7 @@ class BarsControllerTest < ActionController::TestCase
       post :create, :bar => @new
     end
 
-    assert_redirected_to bars_path
+    assert_redirected_to '/barhome'
   end
 
   test "should show bar" do

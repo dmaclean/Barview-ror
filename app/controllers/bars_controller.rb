@@ -98,7 +98,7 @@ class BarsController < ApplicationController
         BvMailer.bar_registration_email(@bar).deliver
         BvMailer.support_alert_email(@bar).deliver
       
-        format.html { redirect_to bars_url, :notice => "Bar #{@bar.name} was successfully created." }
+        format.html { redirect_to '/barhome', :notice => "Bar #{@bar.name} was successfully created.  You should get an email soon from us." }
         format.json { render :json => @bar, :status => :created, :location => @bar }
       else
         format.html { render :action => "new" }
