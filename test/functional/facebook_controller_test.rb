@@ -3,7 +3,7 @@ require 'test_helper'
 class FacebookControllerTest < ActionController::TestCase
   test "should get create" do
     get :create
-    assert_response :success
+    response.code == "302"
   end
 
   test "should get destroy browser" do
