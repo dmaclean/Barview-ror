@@ -104,9 +104,9 @@ class UserTest < ActiveSupport::TestCase
   test "fetch non favorites" do
     user = User.find(1)
     events = user.fetch_non_favorite_bar_events
-    assert events['MyString'] != nil
-    assert events['MyString'].count == 1
-    assert events['MyString'][0] == 'MyText2'
+    assert events['MacLean Bar'] != nil
+    assert events['MacLean Bar'].count == 1
+    assert events['MacLean Bar'][0] == 'I hate testing'
   end
   
   test "create new facebook user" do

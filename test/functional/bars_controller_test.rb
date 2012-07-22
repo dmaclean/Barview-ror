@@ -127,14 +127,14 @@ class BarsControllerTest < ActionController::TestCase
   
   test "detail for non-favorite" do
     session[:user_id] = 1
-    get :show, :id => 2
+    get :show, :id => 4
     
     assert_response :success
-    assert_select '#name_h1', 'MyString'
-    assert_select '#address_content', :text => %r'MyString2\s+MyString, MyString 98765'
-    assert_select '#2', 1
-    assert_select '#2_favorite', 'Add to favorites'
-    assert_select '.detail_deal', 'MyText2'
+    assert_select '#name_h1', 'MacLean Bar'
+    assert_select '#address_content', :text => %r'51 Sleeper St\s+Boston, MA 12210'
+    assert_select '#4', 1
+    assert_select '#4_favorite', 'Add to favorites'
+    assert_select '.detail_deal', 'I hate testing'
   end
   
   test "detail for non-existent bar" do

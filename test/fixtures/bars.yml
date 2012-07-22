@@ -33,6 +33,22 @@ two:
   email: dan@bar-view.com
   reference: MyText
   verified: 1
+  
+maclean_bar:
+  id: 4
+  name: MacLean Bar
+  address: 51 Sleeper St
+  city: Boston
+  state: MA
+  zip: 12210
+  lat: 42.550
+  lng: -71.155
+  username: macleanbar
+  hashed_password: <%= Bar.encrypt_password('macleanbar', SALT) %>
+  salt: <%= SALT %>
+  email: dan@bar-view.com
+  reference: www.bar-view.com
+  verified: 1
 
 unverified:
   id: 3

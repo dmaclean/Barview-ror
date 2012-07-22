@@ -9,7 +9,7 @@ class FavoritesControllerTest < ActionController::TestCase
     session[:user_id] = 1
     get :index
     assert_response :success
-    assert response.body =~ /<favorites><favorite><bar_id>1<\/bar_id><address>MyString<\/address><name>MyString<\/name><\/favorite><\/favorites>/i
+    assert response.body =~ /<favorites><favorite><bar_id>1<\/bar_id><address>MyString<\/address><name>MyString<\/name><\/favorite><favorite><bar_id>2<\/bar_id><address>MyString2<\/address><name>MyString<\/name><\/favorite><\/favorites>/i
   end
   
   #test "should get index for mobile user without token" do

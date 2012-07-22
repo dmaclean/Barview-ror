@@ -4,6 +4,10 @@ one:
   user_id: 1
   bar_id: 1
 
+one_two:
+  user_id: 1
+  bar_id: 2
+
 two:
   user_id: 2
   bar_id: 2

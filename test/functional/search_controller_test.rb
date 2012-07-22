@@ -17,7 +17,16 @@ class SearchControllerTest < ActionController::TestCase
     assert_select '.row', :minimum => 3
     assert_select '.user_login', 0
     assert_select '#1_favorite', 'Remove from favorites'
-    assert_select '#2_favorite', 'Add to favorites'
+    assert_select '#2_favorite', 'Remove from favorites'
+  end
+  
+  test "should get index logged in non favorite" do
+    session[:user_id] = 1
+    get :index, :search => 'MacLean'
+    assert_response :success
+    assert_select '.row', :minimum => 3
+    assert_select '.user_login', 0
+    assert_select '#4_favorite', 'Add to favorites'
   end
   
   test "lowercase test" do

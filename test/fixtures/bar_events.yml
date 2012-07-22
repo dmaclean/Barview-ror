@@ -11,3 +11,7 @@ two:
 unverified_event:
   bar_id: 3
   detail: Unverified event
+  
+maclean_bar_event:
+  bar_id: 4
+  detail: I hate testing
