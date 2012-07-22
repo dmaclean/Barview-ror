@@ -44,7 +44,7 @@ $(document).ready(function(){
 	
 	// Refresh images on the search page every 5 seconds.
 	if(onSearchPage())
-		timer = setInterval(refreshSearchImages, 10000);
+		timer = setInterval(refreshSearchImages, 2000);
  
  
 	/////////////////////////////
