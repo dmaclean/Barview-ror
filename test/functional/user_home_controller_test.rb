@@ -8,9 +8,17 @@ class UserHomeControllerTest < ActionController::TestCase
     assert_select '#feeds_h1', 'Feeds from your favorites'
     assert_select '#fave_col' do |cols|
       assert_select 'ul' do 
-        assert_select 'li', 1
+        assert_select 'li', 2
       end
     end
+    assert_response :success
+  end
+  
+  test "Issue 24 - Nonfavorites images loading with image of last favorite bar." do
+    session[:user_id] = 1
+    get :index
+    assert_match /2\.jpeg/i, response.body
+    
     assert_response :success
   end
   

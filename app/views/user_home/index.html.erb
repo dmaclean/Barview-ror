@@ -74,7 +74,7 @@
 				%>
 						<li>
 							<div><h4><%= n.name %></h4><%= location %></div>
-							<div><img id="<%= n.id %>" class="bar_image" src="<%= @base_url %>/barimage/<%= b.id %>.jpeg?<%= rand(100000) %>"/></div>
+							<div><img id="<%= n.id %>" class="bar_image" src="<%= @base_url %>/barimage/<%= n.id %>.jpeg?<%= rand(100000) %>"/></div>
 							<div><a class="btn success" id="<%= n.id %>_favorite" onclick="addToFavorites('<%= @base_url %>', <%= n.id %>, '<%= session[:user_id] %>', '<%= form_authenticity_token.to_s %>');">Add to favorites</a></div>
 						</li>
 						<br/><br/><br/>
