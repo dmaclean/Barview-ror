@@ -1,9 +1,10 @@
 <!-- User is logged in -->
 <% if session[:user_id] %>
 	<div class="container">
+		<br/><br/><br/>
 		<div class="row">
 			<div class="home_header">
-				<h1 id="name_h1"><%= @bar.name %></h1>
+				<h1 id="name_h1"><div style="text-align:center"><%= @bar.name %></div></h1>
 			</div>
 			<div class="span4 columns">
 				<h2 id="address_h2">Address</h2>
@@ -14,7 +15,7 @@
 			</div>
 			
 			<div class="span6 columns">
-				<h2>Current Feed</h2>
+				<h2><div style="text-align:center">Current Feed</div></h2>
 				<div><img id="<%= @bar.id %>" class="bar_image" src="<%= @base_url %>/barimage/<%= @bar.id %>.jpeg?<%= rand(100000) %>"/></div>
 				<% if session[:user_id] %>					
 					<% if not @favorite.empty? %>
@@ -26,7 +27,7 @@
 			</div>
 			
 			<div class="span6 columns">
-				<h2>Current Deals</h2>
+				<h2><div style="text-align:center">Current Deals</div></h2>
 				<% if not @events.empty? 
 					for e in @events do  %>
 						<p class='detail_deal'><%= e.detail %></p>
