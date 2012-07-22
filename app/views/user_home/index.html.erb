@@ -33,11 +33,13 @@
 	
 		<div class="span6 columns">
 			<h1 id="feeds_h1">
-			<% if session[:user_id] and @has_favorites %>
-				Live Feeds from Faves
-			<% else %>
-				Current Feeds
-			<% end %>
+				<div style="text-align:center">
+					<% if session[:user_id] and @has_favorites %>
+						Live Feeds from Faves
+					<% else %>
+						Current Feeds
+					<% end %>
+				</div>
 			</h1>
 			<ul class="unstyled" id="feeds_list">
 				<% if not @has_favorites %>
@@ -86,7 +88,7 @@
 		
 		<!-- (Current deals) -->
 		<div class="span6 columns">
-			<h1>Current Deals</h1>
+			<h1><div style="text-align:center">Current Deals</div></h1>
 			<dl>
 				<% if not @has_favorites %>
 					<p>You don't have any favorite bars yet, so we'll show you some events and deals for random bars.</p>
