@@ -102,4 +102,10 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_redirected_to users_path
   end
+  
+  test "Show and Back links are gone" do
+    get :edit, :id => 1
+    assert_no_match /Show/, response.body
+    assert_no_match /Back/, response.body
+  end
 end
