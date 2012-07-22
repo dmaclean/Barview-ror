@@ -5,7 +5,7 @@ class UserHomeControllerTest < ActionController::TestCase
     session[:user_id ] = 1
     get :index
     assert_select '#fave_h1', 'My Favorites'
-    assert_select '#feeds_h1', 'Feeds from your favorites'
+    assert_select '#feeds_h1', 'Live Feeds from Faves'
     assert_select '#fave_col' do |cols|
       assert_select 'ul' do 
         assert_select 'li', 2
