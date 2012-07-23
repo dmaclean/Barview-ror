@@ -64,6 +64,7 @@ class BarsController < ApplicationController
   # GET /bars/new.json
   def new
     @bar = Bar.new
+    @button_text = "Sign up!"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -74,6 +75,7 @@ class BarsController < ApplicationController
   # GET /bars/1/edit
   def edit
     @bar = Bar.find(params[:id])
+    @button_text = "Update info"
   end
 
   # POST /bars

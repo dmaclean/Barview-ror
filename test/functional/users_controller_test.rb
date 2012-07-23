@@ -42,6 +42,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should get new" do
     get :new
+    assert_match /Sign up!/, response.body
     assert_response :success
   end
 
@@ -61,6 +62,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should get edit" do
     get :edit, :id => @user
+    assert_match /Update info/, response.body
     assert_response :success
   end
 

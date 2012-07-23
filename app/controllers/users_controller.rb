@@ -31,6 +31,7 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
+    @button_text = "Sign up!"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +42,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    @button_text = "Update info"
   end
 
   # POST /users
