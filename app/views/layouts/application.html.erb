@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<% if @is_bar_side %>
+<% if @is_bar_side or session[:bar_id] %>
 	<div class="topbar">
 		<div class="fill">
 			<div class="container">
@@ -153,7 +153,7 @@
 				<% end %>
 				<ul class="nav secondary-nav">
 					<% if not session[:user_id] %>
-						<li><a href="<%= @base_url %>/barhome">Bars</a></li>
+						<li><a href="<%= @base_url %>/barhome">Bar Owners</a></li>
 						<li><a class="user_login" href="#data">Login</a></li>
 					<% elsif session[:usertype] == "FACEBOOK" %>
 						<li>
