@@ -118,14 +118,20 @@
 					<%= select("user", "gender", %w{Male Female}, {:prompt => 'Select One'}) %>
 				</div>
 	  		</div>
+	  		<% if @show_tos %>
 	  		<div class="clearfix">
     			<label for="terms">I have read and agree to the <a target="_blank" href="<%= @base_url %>/tos.html">Terms of Use</a>: </label>
     			<div class="input">
       				<%= check_box_tag 'tos', 'yes', false, :class => 'accept_tos' %>
     			</div>
   			</div>
+  			<% end %>
 	 		<div class="actions">
+	 			<% if @show_tos %>
 				<%=button_tag @button_text,  :type => 'button', :class => 'btn primary', :onclick => 'validateTOSAcceptance();' %>
+				<% else %>
+				<%=submit_tag @button_text, :class => 'btn primary' %>
+				<% end %>
 	  		</div>
 	  	</fieldset>
 	</div> <!-- span8 -->

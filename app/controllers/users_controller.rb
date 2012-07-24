@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @button_text = "Sign up!"
+    @show_tos = true
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,6 +44,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @button_text = "Update info"
+    @show_tos = false
   end
 
   # POST /users
@@ -67,6 +69,8 @@ class UsersController < ApplicationController
         format.html { redirect_to '/userhome', :notice => 'Your account was successfully created.  You should see an email from us soon.' }
         #format.json { render :json => @user, :status => :created, :location => @user }
       else
+        @button_text = 'Sign up!'
+        @show_tos = true
         format.html { render :action => "new" }
         #format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
@@ -93,6 +97,8 @@ class UsersController < ApplicationController
         format.html { redirect_to '/', :notice => "#{params[:user][:first_name]} #{params[:user][:last_name]} was successfully updated." }
         format.json { head :no_content }
       else
+        @button_text = 'Update info'
+        @show_tos = false
         format.html { render :action => "edit" }
         format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
