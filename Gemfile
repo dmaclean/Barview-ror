@@ -42,4 +42,8 @@ gem 'jquery-rails'
 # Koala facebook gem
 gem 'koala'
 
+# Amazon AWS S3 library
 gem 'aws-s3'
+
+# Ruby profiler
+gem 'ruby-prof'
