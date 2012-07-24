@@ -6,6 +6,7 @@ one:
   id: 1
   name: MyString
   address: MyString
+  bar_type: Pub
   city: MyString
   state: MyString
   zip: 01234
@@ -22,6 +23,7 @@ two:
   id: 2
   name: MyString
   address: MyString2
+  bar_type: Pub
   city: MyString
   state: MyString
   zip: 98765
@@ -38,6 +40,7 @@ maclean_bar:
   id: 4
   name: MacLean Bar
   address: 51 Sleeper St
+  bar_type: Night Club
   city: Boston
   state: MA
   zip: 12210
@@ -54,6 +57,7 @@ unverified:
   id: 3
   name: Unverified Bar
   address: 10 Juniper Lane
+  bar_type: Pub
   city: Medfield
   state: MA
   zip: 12345

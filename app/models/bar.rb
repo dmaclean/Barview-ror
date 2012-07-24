@@ -1,8 +1,8 @@
 require 'digest/sha2'
 
 class Bar < ActiveRecord::Base
-  attr_accessible :address, :city, :email, :lat, :lng, :name, :reference, :state, :username, :verified, :zip
-  validates :address, :city, :email, :lat, :lng, :name, :reference, :state, :username, :zip, :presence => true
+  attr_accessible :address, :bar_type, :city, :email, :lat, :lng, :name, :reference, :state, :username, :verified, :zip
+  validates :address, :bar_type, :city, :email, :lat, :lng, :name, :reference, :state, :username, :zip, :presence => true
   validates :password, :confirmation => true
   validates :username, :uniqueness => true
   validates :zip, :format => { 

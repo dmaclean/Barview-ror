@@ -118,6 +118,12 @@
 	    <%= f.text_field :email, :class => 'input-xlarge' %>
     </div>
   </div>
+  <div class="clearfix">
+  	<%= f.label :bar_type %>
+  	<div class="input">
+  		<%= f.select :bar_type, ['Pub','Sports Bar','Night Club','Wine Bar','Cocktail Lounge','College Bar','Specialty'], :include_blank => true %>
+  	</div>
+  </div>
   <div class="alert-message info">
   	<strong>What's the business reference all about?</strong><br/><br/>
   	Well, we need you to provide some external URL reference for your bar, such as <a href="http://www.yelp.com" target="_blank">Yelp!</a>, so
@@ -131,14 +137,20 @@
 	    <%= f.text_field :reference, :class => 'input-xlarge' %>
     </div>
   </div>
+  <% if @show_tos %>
   <div class="clearfix">
     <label for="terms">I have read and agree to the <a target="_blank" href="<%= @base_url %>/tos.html">Terms of Use</a>: </label>
     <div class="input">
       <%= check_box_tag 'tos', 'yes', false, :class => 'accept_tos' %>
     </div>
   </div>
+  <% end %>
   <div class="actions">
+    <% if @show_tos %>
     <%=button_tag @button_text,  :type => 'button', :class => 'btn primary', :onclick => 'validateTOSAcceptance();' %>
+    <% else %>
+    <%=submit_tag @button_text, :class => 'btn primary' %>
+    <% end %>
   </div>
   </fieldset>
 <% end %>

@@ -6,6 +6,7 @@ class BarTest < ActiveSupport::TestCase
     bar = Bar.new
     assert bar.invalid?
     assert bar.errors[:address].any?
+    assert bar.errors[:bar_type].any?
     assert bar.errors[:city].any?
     assert bar.errors[:email].any?
     assert bar.errors[:lat].any?
@@ -20,6 +21,7 @@ class BarTest < ActiveSupport::TestCase
   test "Zip code must be 5 digits" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_type => 'Pub',
       :city => 'Medfield',
       :email => 'dan@bar-view.com',
       :lat => 1.5,
@@ -54,6 +56,7 @@ class BarTest < ActiveSupport::TestCase
   test "no duplicate usernames" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_type => 'Pub',
       :city => 'Medfield',
       :email => 'dan@bar-view.com',
       :lat => 1.5,
@@ -77,6 +80,7 @@ class BarTest < ActiveSupport::TestCase
   test "Email must be in correct format" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_type => 'Pub',
       :city => 'Medfield',
       :email => 'dan',
       :lat => 1.5,
@@ -113,6 +117,7 @@ class BarTest < ActiveSupport::TestCase
   test "get coordinates for juniper lane" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_type => 'Pub',
       :city => 'Medfield',
       :state => 'MA',
       :email => 'dan@bar-view.com',

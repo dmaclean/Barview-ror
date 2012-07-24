@@ -65,6 +65,7 @@ class BarsController < ApplicationController
   def new
     @bar = Bar.new
     @button_text = "Sign up!"
+    @show_tos = true
 
     respond_to do |format|
       format.html # new.html.erb
@@ -76,6 +77,7 @@ class BarsController < ApplicationController
   def edit
     @bar = Bar.find(params[:id])
     @button_text = "Update info"
+    @show_tos = false
   end
 
   # POST /bars
@@ -83,6 +85,7 @@ class BarsController < ApplicationController
   def create
     @bar = Bar.new
     @bar.address = params[:bar][:address]
+    @bar.bar_type = params[:bar][:bar_type]
     @bar.city = params[:bar][:city]
     @bar.email = params[:bar][:email]
     @bar.name = params[:bar][:name]
@@ -103,6 +106,8 @@ class BarsController < ApplicationController
         format.html { redirect_to '/barhome', :notice => "Bar #{@bar.name} was successfully created.  You should get an email soon from us." }
         format.json { render :json => @bar, :status => :created, :location => @bar }
       else
+        @button_text = "Sign up!"
+        @show_tos = true
         format.html { render :action => "new" }
         format.json { render :json => @bar.errors, :status => :unprocessable_entity }
       end
@@ -116,6 +121,7 @@ class BarsController < ApplicationController
     @bar.password = params[:bar][:password]
     submission_hash = {
       :address => params[:bar][:address],
+      :bar_type => params[:bar][:bar_type],
       :city => params[:bar][:city],
       :email => params[:bar][:email],
       :name => params[:bar][:name],
@@ -131,6 +137,8 @@ class BarsController < ApplicationController
         format.html { redirect_to bars_url, :notice => "#{@bar.name} was successfully updated." }
         format.json { head :no_content }
       else
+        @button_text = "Update info"
+        @show_tos = false
         format.html { render :action => "edit" }
         format.json { render :json => @bar.errors, :status => :unprocessable_entity }
       end
