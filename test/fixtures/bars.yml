@@ -6,7 +6,9 @@ one:
   id: 1
   name: MyString
   address: MyString
+  bar_phone: 508-359-4658
   bar_type: Pub
+  bar_website: www.bar-view.com
   city: MyString
   state: MyString
   zip: 01234
@@ -23,7 +25,9 @@ two:
   id: 2
   name: MyString
   address: MyString2
+  bar_phone: 508-359-1000
   bar_type: Pub
+  bar_website: www.reddit.com
   city: MyString
   state: MyString
   zip: 98765
@@ -40,7 +44,9 @@ maclean_bar:
   id: 4
   name: MacLean Bar
   address: 51 Sleeper St
+  bar_phone: 508-864-9839
   bar_type: Night Club
+  bar_website: www.google.com
   city: Boston
   state: MA
   zip: 12210
@@ -57,7 +63,9 @@ unverified:
   id: 3
   name: Unverified Bar
   address: 10 Juniper Lane
+  bar_phone: 508-359-4658
   bar_type: Pub
+  bar_website: dev.bar-view.com
   city: Medfield
   state: MA
   zip: 12345

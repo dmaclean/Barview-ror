@@ -6,7 +6,9 @@ class BarsControllerTest < ActionController::TestCase
     @new = {
       :name => 'Mom and Dads',
 	  :address => '20 Wire Village Rd',
+	  :bar_phone => '508-359-4658',
 	  :bar_type => 'Pub',
+	  :bar_website => 'www.bar-view.com',
 	  :city => 'Spencer',
 	  :state => 'MA',
 	  :zip => '01562',
@@ -22,7 +24,9 @@ class BarsControllerTest < ActionController::TestCase
     @update = {
       :name => 'MyString',
 	  :address => '51 North St',
+	  :bar_phone => '508-123-4658',
 	  :bar_type => 'Night Club',
+	  :bar_website => 'google.com',
 	  :city => 'Medfield',
 	  :state => 'MA',
 	  :zip => '02052',
@@ -57,8 +61,11 @@ class BarsControllerTest < ActionController::TestCase
 
   test "should get new" do
     get :new
+    assert_match /Bar phone/, response.body
+    assert_match /Bar website/, response.body
     assert_match /Sign up!/, response.body
     assert_match /I have read and agree to the/, response.body
+    assert_select '#password_explanation', 0
     assert_response :success
   end
 
@@ -79,8 +86,11 @@ class BarsControllerTest < ActionController::TestCase
 
   test "should get edit" do
     get :edit, :id => @bar
+    assert_match /Bar phone/, response.body
+    assert_match /Bar website/, response.body
     assert_match /Update info/, response.body
     assert_no_match /I have read and agree to the/, response.body
+    assert_select '#password_explanation', 1
     assert_response :success
   end
 
@@ -90,6 +100,8 @@ class BarsControllerTest < ActionController::TestCase
     
     @edited_bar = Bar.find(@bar.id)
     assert @edited_bar.bar_type == 'Night Club'
+    assert @edited_bar.bar_phone == '508-123-4658'
+    assert @edited_bar.bar_website == 'google.com'
     assert_redirected_to bars_path
   end
   

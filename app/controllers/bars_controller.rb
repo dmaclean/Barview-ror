@@ -66,6 +66,7 @@ class BarsController < ApplicationController
     @bar = Bar.new
     @button_text = "Sign up!"
     @show_tos = true
+    @show_password_explanation = false
 
     respond_to do |format|
       format.html # new.html.erb
@@ -78,6 +79,7 @@ class BarsController < ApplicationController
     @bar = Bar.find(params[:id])
     @button_text = "Update info"
     @show_tos = false
+    @show_password_explanation = true
   end
 
   # POST /bars
@@ -85,7 +87,9 @@ class BarsController < ApplicationController
   def create
     @bar = Bar.new
     @bar.address = params[:bar][:address]
+    @bar.bar_phone = params[:bar][:bar_phone]
     @bar.bar_type = params[:bar][:bar_type]
+    @bar.bar_website = params[:bar][:bar_website]
     @bar.city = params[:bar][:city]
     @bar.email = params[:bar][:email]
     @bar.name = params[:bar][:name]
@@ -108,6 +112,7 @@ class BarsController < ApplicationController
       else
         @button_text = "Sign up!"
         @show_tos = true
+        @show_password_explanation = false
         format.html { render :action => "new" }
         format.json { render :json => @bar.errors, :status => :unprocessable_entity }
       end
@@ -121,7 +126,9 @@ class BarsController < ApplicationController
     @bar.password = params[:bar][:password]
     submission_hash = {
       :address => params[:bar][:address],
+      :bar_phone => params[:bar][:bar_phone],
       :bar_type => params[:bar][:bar_type],
+      :bar_website => params[:bar][:bar_website],
       :city => params[:bar][:city],
       :email => params[:bar][:email],
       :name => params[:bar][:name],
@@ -139,6 +146,7 @@ class BarsController < ApplicationController
       else
         @button_text = "Update info"
         @show_tos = false
+        @show_password_explanation = true
         format.html { render :action => "edit" }
         format.json { render :json => @bar.errors, :status => :unprocessable_entity }
       end

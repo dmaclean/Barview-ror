@@ -1,14 +1,25 @@
 require 'digest/sha2'
 
 class Bar < ActiveRecord::Base
-  attr_accessible :address, :bar_type, :city, :email, :lat, :lng, :name, :reference, :state, :username, :verified, :zip
-  validates :address, :bar_type, :city, :email, :lat, :lng, :name, :reference, :state, :username, :zip, :presence => true
+  attr_accessible :address, :bar_phone, :bar_type, :bar_website, :city, :email, :lat, :lng, :name, :reference, :state, :username, :verified, :zip
+  validates :address, :bar_phone, :bar_type, :city, :email, :lat, :lng, :name, :reference, :state, :username, :zip, :presence => true
   validates :password, :confirmation => true
   validates :username, :uniqueness => true
   validates :zip, :format => { 
   					:with => /^\d{5}$/,
   					:message => "A zip code must consist of exactly 5 numbers (no letters)"
   }
+  
+  validates :bar_phone, :format => {
+  					:with => /^\d{3}-\d{3}-\d{4}$/,
+  					:message => "A valid phone number is required."
+  }
+  
+  validates :bar_website, :format => {
+  					:with => /^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&amp;?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/,
+  					:message => "A valid website is required."
+  }
+  
   validates :email, :format => {
               		:with    => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(?:[a-zA-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$/i,
               		:message => "A valid email address is required." }

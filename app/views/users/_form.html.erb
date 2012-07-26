@@ -32,6 +32,12 @@
 					<%= f.text_field :email, :class => 'input-xlarge' %>
 				</div>
 			</div>
+			<% if @show_password_explanation %>
+              <div class="alert-message info" id="password_explanation">
+			    <strong>Changing your password</strong><br/><br/>
+			    We already have your password, so you only need to fill out the field if you want to change your password.  Otherwise, go ahead and change your other information as necessary and don't worry about the password fields.
+		      </div>
+		    <% end %>
 	  		<div class="clearfix">
 				<%= f.label :password %>
 				<div class="input">
@@ -39,7 +45,7 @@
 				</div>
 	  		</div>
 	  		<div class="clearfix">
-				<%= f.label :password_confirmation, 'Confirm' %>
+				<%= f.label :password_confirmation %>
 				<div class="input">
 					<%= f.password_field :password_confirmation, :size => 40, :class => 'input-xlarge' %>
 				</div>
@@ -134,6 +140,6 @@
 				<% end %>
 	  		</div>
 	  	</fieldset>
+	  	<% end %>
 	</div> <!-- span8 -->
   </div>
-<% end %>

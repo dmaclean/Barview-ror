@@ -6,7 +6,9 @@ class BarTest < ActiveSupport::TestCase
     bar = Bar.new
     assert bar.invalid?
     assert bar.errors[:address].any?
+    assert bar.errors[:bar_phone].any?
     assert bar.errors[:bar_type].any?
+    assert bar.errors[:bar_website].any?
     assert bar.errors[:city].any?
     assert bar.errors[:email].any?
     assert bar.errors[:lat].any?
@@ -21,7 +23,9 @@ class BarTest < ActiveSupport::TestCase
   test "Zip code must be 5 digits" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_phone => '508-359-4658',
       :bar_type => 'Pub',
+      :bar_website => 'www.bar-view.com',
       :city => 'Medfield',
       :email => 'dan@bar-view.com',
       :lat => 1.5,
@@ -56,7 +60,9 @@ class BarTest < ActiveSupport::TestCase
   test "no duplicate usernames" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_phone => '508-359-4658',
       :bar_type => 'Pub',
+      :bar_website => 'www.bar-view.com',
       :city => 'Medfield',
       :email => 'dan@bar-view.com',
       :lat => 1.5,
@@ -80,7 +86,9 @@ class BarTest < ActiveSupport::TestCase
   test "Email must be in correct format" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_phone => '508-359-4658',
       :bar_type => 'Pub',
+      :bar_website => 'www.bar-view.com',
       :city => 'Medfield',
       :email => 'dan',
       :lat => 1.5,
@@ -114,10 +122,103 @@ class BarTest < ActiveSupport::TestCase
     assert bar.valid?
   end
   
+  test "Phone must be in correct format" do
+    bar = Bar.new(
+      :address => '10 Juniper Lane',
+      :bar_phone => '5083594658',
+      :bar_type => 'Pub',
+      :bar_website => 'www.bar-view.com',
+      :city => 'Medfield',
+      :email => 'dan@bar-view.com',
+      :lat => 1.5,
+      :lng => 1.5,
+      :name => 'Dan Bar',
+      :reference => 'hello',
+      :state => 'MA',
+      :username => 'dmaclean',
+      :verified => 0,
+      :zip => '12345'
+    )
+    bar.password = 'password'
+    
+    assert bar.invalid?
+    assert_equal "A valid phone number is required.", bar.errors[:bar_phone].join('; ')
+    
+    bar.bar_phone = 'abcd'
+    assert bar.invalid?
+    assert_equal "A valid phone number is required.", bar.errors[:bar_phone].join('; ')
+    
+    bar.bar_phone = '50-359-4658'
+    assert bar.invalid?
+    assert_equal "A valid phone number is required.", bar.errors[:bar_phone].join('; ')
+    
+    bar.bar_phone = '508-35-4658'
+    assert bar.invalid?
+    assert_equal "A valid phone number is required.", bar.errors[:bar_phone].join('; ')
+    
+    bar.bar_phone = '508-359-658'
+    assert bar.invalid?
+    assert_equal "A valid phone number is required.", bar.errors[:bar_phone].join('; ')
+    
+    bar.bar_phone = '508-359-4658'
+    assert bar.valid?
+  end
+  
+  test "Website must be in correct format" do
+    bar = Bar.new(
+      :address => '10 Juniper Lane',
+      :bar_phone => '508-359-4658',
+      :bar_type => 'Pub',
+      :bar_website => 'bar-view',
+      :city => 'Medfield',
+      :email => 'dan@bar-view.com',
+      :lat => 1.5,
+      :lng => 1.5,
+      :name => 'Dan Bar',
+      :reference => 'hello',
+      :state => 'MA',
+      :username => 'dmaclean',
+      :verified => 0,
+      :zip => '12345'
+    )
+    bar.password = 'password'
+    
+    assert bar.invalid?
+    assert_equal "A valid website is required.", bar.errors[:bar_website].join('; ')
+    
+    bar.bar_website = 'bar-view.'
+    assert bar.invalid?
+    assert_equal "A valid website is required.", bar.errors[:bar_website].join('; ')
+    
+    bar.bar_website = '.bar-view.'
+    assert bar.invalid?
+    assert_equal "A valid website is required.", bar.errors[:bar_website].join('; ')
+    
+    bar.bar_website = 'https://www.bar-view.com'
+    assert bar.valid?
+    
+    bar.bar_website = 'https://bar-view.com'
+    assert bar.valid?
+    
+    bar.bar_website = 'http://www.bar-view.com'
+    assert bar.valid?
+    
+    bar.bar_website = 'http://bar-view.com'
+    assert bar.valid?
+    
+    bar.bar_website = 'www.bar-view.com'
+    assert bar.valid?
+    
+    bar.bar_website = 'bar-view.com'
+    assert bar.valid?
+  end
+  
   test "get coordinates for juniper lane" do
     bar = Bar.new(
       :address => '10 Juniper Lane',
+      :bar_phone => '508-359-4658',
       :bar_type => 'Pub',
+      :bar_website => 'www.bar-view.com',
       :city => 'Medfield',
       :state => 'MA',
       :email => 'dan@bar-view.com',

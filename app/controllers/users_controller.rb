@@ -33,6 +33,7 @@ class UsersController < ApplicationController
     @user = User.new
     @button_text = "Sign up!"
     @show_tos = true
+    @show_password_explanation = false
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,6 +46,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @button_text = "Update info"
     @show_tos = false
+    @show_password_explanation = true
   end
 
   # POST /users
@@ -71,6 +73,7 @@ class UsersController < ApplicationController
       else
         @button_text = 'Sign up!'
         @show_tos = true
+        @show_password_explanation = false
         format.html { render :action => "new" }
         #format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
@@ -99,6 +102,7 @@ class UsersController < ApplicationController
       else
         @button_text = 'Update info'
         @show_tos = false
+        @show_password_explanation = true
         format.html { render :action => "edit" }
         format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end

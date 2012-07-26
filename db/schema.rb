@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120723214522) do
+ActiveRecord::Schema.define(:version => 20120724124450) do
 
   create_table "admins", :force => true do |t|
     t.string   "name"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(:version => 20120723214522) do
     t.string   "hashed_password"
     t.string   "salt"
     t.string   "bar_type"
+    t.string   "bar_phone"
+    t.string   "bar_website"
   end
 
   create_table "favorites", :force => true do |t|

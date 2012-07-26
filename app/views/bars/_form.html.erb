@@ -95,11 +95,29 @@
     </div>
   </div>
   <div class="clearfix">
+    <%= f.label :bar_phone %>
+    <div class="input">
+	    <%= f.text_field :bar_phone, :class => 'input-xlarge' %>
+    </div>
+  </div>
+  <div class="clearfix">
+    <%= f.label :bar_website %>
+    <div class="input">
+	    <%= f.text_field :bar_website, :class => 'input-xlarge' %>
+    </div>
+  </div>
+  <div class="clearfix">
     <%= f.label :username %>
     <div class="input">
 	    <%= f.text_field :username, :class => 'input-xlarge' %>
     </div>
   </div>
+  <% if @show_password_explanation %>
+	<div class="alert-message info" id="password_explanation">
+		<strong>Changing your password</strong><br/><br/>
+		We already have your password, so you only need to fill out the field if you want to change your password.  Otherwise, go ahead and change your other information as necessary and don't worry about the password fields.
+	</div>
+  <% end %>
   <div class="clearfix">
     <%= f.label :password %>
     <div class="input">
