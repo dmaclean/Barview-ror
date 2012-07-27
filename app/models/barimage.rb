@@ -6,6 +6,7 @@ class Barimage < ActiveRecord::Base
   belongs_to :bar
   
   def read_file
+    start = Time.now
     s3init
     
     if AWS::S3::S3Object.exists? self.image, @bucketname
@@ -13,6 +14,9 @@ class Barimage < ActiveRecord::Base
     else
       @img_binary = AWS::S3::S3Object.value 'barview.jpg', @bucketname
     end
+    
+    finish = Time.now
+    logger.info("Read request took #{ (finish - start) * 1000 } milliseconds")
     
     @img_binary
   end
