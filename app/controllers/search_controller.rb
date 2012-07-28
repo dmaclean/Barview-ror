@@ -1,6 +1,11 @@
 class SearchController < ApplicationController
   def index
-    @results = Bar.find(:all, :select => 'id, name, address, city, state', :conditions => ['lower(name) like lower(?) and verified = 1', [ '%' + params[:search] + '%' ]] )
+    logger.info(params[:bar_type])
+    if params[:bar_type]
+      @results = Bar.find(:all, :select => 'id, name, address, city, state', :conditions => ['bar_type = ? and verified = 1', [ params[:bar_type]] ])
+    else
+      @results = Bar.find(:all, :select => 'id, name, address, city, state', :conditions => ['lower(name) like lower(?) and verified = 1', [ '%' + params[:search] + '%' ]] )
+    end
     
     # Fetch favorites if we're logged in
     if session[:user_id]

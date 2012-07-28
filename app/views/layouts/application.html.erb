@@ -151,6 +151,12 @@
 				<%= form_tag("/search/index", :method => "get") do %>
 					<input type="text" id="search" name="search" maxlength="100" value="Search bars" onclick="clearSearchText();" />
 				<% end %>
+				<%= form_tag("/search/index", :method => "get") do %>
+					<%= select_tag 'bar_type', 
+						options_for_select(['Pub','Sports Bar','Night Club','Wine Bar','Cocktail Lounge','College Bar','Specialty']),
+						:prompt => 'Search bars by type',
+						:onchange => 'this.form.submit();' %>
+				<% end %>
 				<ul class="nav secondary-nav">
 					<% if not session[:user_id] %>
 						<li><a href="<%= @base_url %>/barhome">Bar Owners</a></li>
@@ -173,6 +179,7 @@
 	</div>
 	<div class="container">
 		<% if not ( @search_results or @no_hero )	%>
+		    <br/><br/><br/>
 			<div class="hero-unit">
 				<h1>Your night starts here</h1>
 				<!--<p>Barview lets you do cool stuff...</p>-->

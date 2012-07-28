@@ -51,4 +51,21 @@ class SearchControllerTest < ActionController::TestCase
     assert_select '#no_results', 'No results found.'
   end
 
+  test "should get index bar_type = Pub" do
+    get :index, :bar_type => 'Pub'
+    assert_response :success
+    assert_select 'img#1', 1
+    assert_select 'img#2', 1
+    assert_select 'img#3', 0
+    assert_select 'img#4', 0
+  end
+  
+  test "should get index bar_type = Night Club" do
+    get :index, :bar_type => 'Night Club'
+    assert_response :success
+    assert_select 'img#1', 0
+    assert_select 'img#2', 0
+    assert_select 'img#3', 0
+    assert_select 'img#4', 1
+  end
 end
