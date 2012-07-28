@@ -141,6 +141,9 @@ class BarsControllerTest < ActionController::TestCase
     
     assert_select '#name_h1', 'MyString'
     assert_select '#address_content', :text => %r'MyString\s+MyString, MyString 668'	# No clue why 668 keeps coming up
+    assert_select '#phone_content', '508-359-4658'
+    assert_select '#website_content', 'website'
+    assert_match /<a href="http:\/\/www\.bar-view\.com">website<\/a>/, response.body
     assert_select '#1', 1
     assert_select '#1_favorite', 'Remove from favorites'
     assert_select '.detail_deal', 'MyText'

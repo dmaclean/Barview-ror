@@ -7,11 +7,20 @@
 				<h1 id="name_h1"><div style="text-align:center"><%= @bar.name %></div></h1>
 			</div>
 			<div class="span4 columns">
-				<h2 id="address_h2">Address</h2>
+				<h2 id="address_h2">Information</h2>
 				<p id="address_content">
 					<%= @bar.address; %><br/>
 					<%= @bar.city %>, <%= @bar.state %> <%= @bar.zip %>
 				</p>
+				<p id="phone_content"><%= @bar.bar_phone %></p>
+				<% if @bar.bar_website 
+				    site = @bar.bar_website
+				    if not @bar.bar_website.starts_with?('http://')
+				      site = "http://#{@bar.bar_website}"
+				    end
+				%>
+					<p id="website_content"><%= link_to 'website', site %></p>
+				<% end %>
 			</div>
 			
 			<div class="span6 columns">
