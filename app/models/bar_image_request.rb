@@ -19,9 +19,9 @@ class BarImageRequest < ActiveRecord::Base
 		users = ''
 		for r in results do
 		  if users == ''
-			users += "#{ r.first_name } #{ r.last_name } (#{ r.email })"
+			users += "#{ r.first_name } #{ r.last_name[0].chr } (#{ r.email })"
 		  else
-			users += "|#{ r.first_name } #{ r.last_name } (#{ r.email })"
+			users += "|#{ r.first_name } #{ r.last_name[0].chr } (#{ r.email })"
 		  end
 		end
 		

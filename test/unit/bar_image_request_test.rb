@@ -19,7 +19,7 @@ class BarImageRequestTest < ActiveSupport::TestCase
   test "fetch two bar image requests" do
     viewers = BarImageRequest.get_realtime_viewers(1, 2)
     
-    assert viewers != ''
+    assert viewers == 'MyString M (dmaclean@agencyport.com)|Paul S (psmith@example.com)'
   end
   
   test "fetch zero bar image requests" do
