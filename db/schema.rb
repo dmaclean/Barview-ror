@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120724124450) do
+ActiveRecord::Schema.define(:version => 20120729203438) do
 
   create_table "admins", :force => true do |t|
     t.string   "name"
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(:version => 20120724124450) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "bar_image_requests", ["bar_id"], :name => "index_bar_image_requests_on_bar_id"
+  add_index "bar_image_requests", ["created_at"], :name => "index_bar_image_requests_on_created_at"
 
   create_table "barimages", :force => true do |t|
     t.integer  "bar_id"
@@ -61,6 +64,9 @@ ActiveRecord::Schema.define(:version => 20120724124450) do
     t.string   "bar_phone"
     t.string   "bar_website"
   end
+
+  add_index "bars", ["lat"], :name => "index_bars_on_lat"
+  add_index "bars", ["lng"], :name => "index_bars_on_lng"
 
   create_table "favorites", :force => true do |t|
     t.integer  "user_id"
