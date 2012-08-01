@@ -47,3 +47,6 @@ gem 'aws-s3'
 
 # Ruby profiler
 gem 'ruby-prof'
+
+# Dalli memcache client
+gem 'dalli'
