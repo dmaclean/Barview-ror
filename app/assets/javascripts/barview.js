@@ -283,3 +283,24 @@ function clearSearchText() {
 		$('#search').val("");
 	}
 }
+
+/**
+ * Makes sure that the password and confirmation fields in Change Password
+ * for users and bars exist and match.  This is used because putting this
+ * validation in the model is awkward.
+ *
+ * This is put in the onclick event in the Change Password submit button.
+ */
+function checkChangePassword(type) {
+	var pass = "#" + type + "_password";
+	var conf = "#" + type + "_password_confirmation";
+	var pass_val = $(pass).val();
+	var conf_val = $(conf).val();
+
+	if(pass_val == "" || conf_val == "" || pass_val != conf_val) {
+		alert("Password and confirmation fields must match and cannot be blank.");
+	}
+	else {
+		$(pass).closest('form').submit();
+	}
+}

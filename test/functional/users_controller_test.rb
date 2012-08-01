@@ -66,7 +66,6 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :id => @user
     assert_match /Update info/, response.body
     assert_no_match /I have read and agree to the/, response.body
-    assert_select '#password_explanation', 1
     assert_response :success
   end
 
@@ -74,6 +73,17 @@ class UsersControllerTest < ActionController::TestCase
     #put :update, :id => @user, :user => { :city => @user.city, :dob => @user.dob, :email => @user.email, :first_name => @user.first_name, :gender => @user.gender, :hashed_password => @user.hashed_password, :last_name => @user.last_name, :state => @user.state }
     put :update, :id => @user, :user => @update
     assert_redirected_to '/'#user_path(assigns(:user))
+  end
+  
+  test "change password" do
+    old_pw = @user.hashed_password
+  
+    put :update, :id => @user, :user => { :password => 'newpass', :password_confirmation => 'newpass' }
+    assert flash[:notice] == 'MyString MyString was successfully updated.'
+    assert_redirected_to '/'
+    
+    @edited_user = User.find(@user.id)
+    assert @edited_user.hashed_password != old_pw and @edited_user.hashed_password != ""
   end
 
   test "non-admin cannot destroy user" do

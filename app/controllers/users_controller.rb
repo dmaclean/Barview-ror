@@ -33,7 +33,6 @@ class UsersController < ApplicationController
     @user = User.new
     @button_text = "Sign up!"
     @show_tos = true
-    @show_password_explanation = false
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +45,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @button_text = "Update info"
     @show_tos = false
-    @show_password_explanation = true
   end
 
   # POST /users
@@ -73,7 +71,6 @@ class UsersController < ApplicationController
       else
         @button_text = 'Sign up!'
         @show_tos = true
-        @show_password_explanation = false
         format.html { render :action => "new" }
         #format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
@@ -84,25 +81,22 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-    @user.password = params[:user][:password]
+    @user.password = params[:user][:password] unless params[:user][:password] == nil
+    @user.password_confirmation = params[:user][:password_confirmation] unless params[:user][:password_confirmation] == nil
+    @user.city = params[:user][:city] unless params[:user][:city] == nil
+    @user.dob = params[:user][:dob] unless params[:user][:dob] == nil
+    @user.first_name = params[:user][:first_name] unless params[:user][:first_name] == nil
+    @user.gender = params[:user][:gender] unless params[:user][:gender] == nil
+    @user.last_name = params[:user][:last_name] unless params[:user][:last_name] == nil
+    @user.state = params[:user][:state] unless params[:user][:state] == nil
     
-    submission_hash = {
-      :city => params[:user][:city],
-      :dob => params[:user][:dob],
-      :first_name => params[:user][:first_name],
-      :gender => params[:user][:gender],
-      :last_name => params[:user][:last_name],
-      :state => params[:user][:state]
-    }
-
     respond_to do |format|
-      if @user.update_attributes(submission_hash)
-        format.html { redirect_to '/', :notice => "#{params[:user][:first_name]} #{params[:user][:last_name]} was successfully updated." }
+      if @user.save
+        format.html { redirect_to '/', :notice => "#{ @user.first_name } #{ @user.last_name } was successfully updated." }
         format.json { head :no_content }
       else
         @button_text = 'Update info'
         @show_tos = false
-        @show_password_explanation = true
         format.html { render :action => "edit" }
         format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end

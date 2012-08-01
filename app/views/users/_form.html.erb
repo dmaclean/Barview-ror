@@ -32,12 +32,10 @@
 					<%= f.text_field :email, :class => 'input-xlarge' %>
 				</div>
 			</div>
-			<% if @show_password_explanation %>
-              <div class="alert-message info" id="password_explanation">
-			    <strong>Changing your password</strong><br/><br/>
-			    We already have your password, so you only need to fill out the field if you want to change your password.  Otherwise, go ahead and change your other information as necessary and don't worry about the password fields.
-		      </div>
-		    <% end %>
+			
+			<% if @button_text != 'Update info' %>
+			<!-- We are only showing the password fields if this is a new user signing up.  Otherwise,
+				 the password fields will be in their own form at the bottom of the screen. -->
 	  		<div class="clearfix">
 				<%= f.label :password %>
 				<div class="input">
@@ -50,6 +48,8 @@
 					<%= f.password_field :password_confirmation, :size => 40, :class => 'input-xlarge' %>
 				</div>
 	 		</div>
+	 		<% end %>
+	  		
 	  		<div class="clearfix">
 				<label for="dob">Date of Birth (YYYY-MM-DD)</label>
 				<div class="input">
@@ -140,6 +140,29 @@
 				<% end %>
 	  		</div>
 	  	</fieldset>
+	  	<% end %>
+	  	
+	  	<% if @button_text == 'Update info' %>
+			<%= form_for(@user) do |f| %>
+			  <fieldset>
+				<legend>Change Password</legend>
+				  <div class="clearfix">
+                <%= f.label :password %>
+                <div class="input">
+	              <%= f.password_field :password, :class => 'input-xlarge' %>
+                </div>
+              </div>
+              <div class="clearfix">
+                <%= f.label :password_confirmation, 'Confirm' %>
+                <div class="input">
+	              <%= f.password_field :password_confirmation, :size => 40, :class => 'input-xlarge' %>
+                </div>
+              </div>
+			  <div class="actions">
+				<%=button_tag "Change password", :type => 'button', :class => 'btn primary', :onclick => 'checkChangePassword("user");' %>
+			  </div>
+			  </fieldset>
+			<% end %>
 	  	<% end %>
 	</div> <!-- span8 -->
   </div>

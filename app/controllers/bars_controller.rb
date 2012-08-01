@@ -123,25 +123,23 @@ class BarsController < ApplicationController
   # PUT /bars/1.json
   def update
     @bar = Bar.find(params[:id])
-    @bar.password = params[:bar][:password]
-    submission_hash = {
-      :address => params[:bar][:address],
-      :bar_phone => params[:bar][:bar_phone],
-      :bar_type => params[:bar][:bar_type],
-      :bar_website => params[:bar][:bar_website],
-      :city => params[:bar][:city],
-      :email => params[:bar][:email],
-      :name => params[:bar][:name],
-      :state => params[:bar][:state],
-      :zip => params[:bar][:zip]
-    }
+    @bar.password = params[:bar][:password] unless params[:bar][:password] == nil
+    @bar.password_confirmation = params[:bar][:password_confirmation] unless params[:bar][:password_confirmation] == nil
+    @bar.address = params[:bar][:address] unless params[:bar][:address] == nil
+    @bar.bar_phone = params[:bar][:bar_phone] unless params[:bar][:bar_phone] == nil
+    @bar.bar_type = params[:bar][:bar_type] unless params[:bar][:bar_type] == nil
+    @bar.bar_website = params[:bar][:bar_website] unless params[:bar][:bar_website] == nil
+    @bar.city = params[:bar][:city] unless params[:bar][:city] == nil
+    @bar.email = params[:bar][:email] unless params[:bar][:email] == nil
+    @bar.name = params[:bar][:name] unless params[:bar][:name] == nil
+    @bar.state = params[:bar][:state] unless params[:bar][:state] == nil
+    @bar.zip = params[:bar][:zip] unless params[:bar][:zip] == nil
+    
+    @bar.fetch_coordinates
 
     respond_to do |format|
-      if @bar.update_attributes(submission_hash)
-        @bar.fetch_coordinates
-        @bar.save
-        
-        format.html { redirect_to bars_url, :notice => "#{@bar.name} was successfully updated." }
+      if @bar.save
+        format.html { redirect_to barhome_url, :notice => "#{@bar.name} was successfully updated." }
         format.json { head :no_content }
       else
         @button_text = "Update info"

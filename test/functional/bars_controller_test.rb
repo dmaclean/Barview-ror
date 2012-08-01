@@ -90,7 +90,6 @@ class BarsControllerTest < ActionController::TestCase
     assert_match /Bar website/, response.body
     assert_match /Update info/, response.body
     assert_no_match /I have read and agree to the/, response.body
-    assert_select '#password_explanation', 1
     assert_response :success
   end
 
@@ -102,7 +101,15 @@ class BarsControllerTest < ActionController::TestCase
     assert @edited_bar.bar_type == 'Night Club'
     assert @edited_bar.bar_phone == '508-123-4658'
     assert @edited_bar.bar_website == 'google.com'
-    assert_redirected_to bars_path
+    assert_redirected_to barhome_path
+  end
+  
+  test "change password" do
+    old_pw = @bar.hashed_password
+    put :update, :id => @bar, :bar => { :password => 'newpass', :password_confirmation => 'newpass' }
+    
+    @edited_bar = Bar.find(@bar.id)
+    assert @edited_bar.hashed_password != "" and @edited_bar.hashed_password != old_pw
   end
   
   test "non-admin cannot destroy bar" do
