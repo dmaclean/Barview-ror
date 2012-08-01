@@ -26,11 +26,14 @@ class Barimage < ActiveRecord::Base
       return @img_binary
     end
     
-    # Looks like we didn't find the image in the cache.  Go to S3.
+    # Looks like we didn't find the image in the cache.  Go to S3, grab the image,
+    # and add it to Memcache.
     s3init
     
     if AWS::S3::S3Object.exists? self.image, @bucketname
+      logger.info("Grabbing image for bar #{ self.bar_id } from S3 and writing to Memcache.")
       @img_binary = AWS::S3::S3Object.value self.image, @bucketname
+      Rails.cache.write("bar_image_#{ self.bar_id }", @img_binary)
     else
       @img_binary = AWS::S3::S3Object.value 'barview.jpg', @bucketname
     end
@@ -73,6 +76,7 @@ class Barimage < ActiveRecord::Base
   def prime_cache_with_default_image
     s3init
     
+    logger.info("Priming cache with default image")
     Rails.cache.fetch("bar_image_-1") { AWS::S3::S3Object.value 'barview.jpg', @bucketname }
   end
 end
