@@ -20,16 +20,19 @@ class UserQuestionnaireAnswerTest < ActiveSupport::TestCase
   end
   
   test "insert a hash of question-answer pairs" do
-    answers = {1 => 2, 2 => 6}
+    answers = {1 => ["", "8", "2"], 2 => ["", "6"]}
     a = UserQuestionnaireAnswer.new
     a.user_id = 5
     
-    assert_difference("UserQuestionnaireAnswer.count", 2) do
+    assert_difference("UserQuestionnaireAnswer.count", 3) do
       a.insert_user_answers(answers)
     end
     
     result = UserQuestionnaireAnswer.find(:all, :conditions => ['user_id = ? and user_questionnaire_option_id = ? and user_questionnaire_question_id = ?', a.user_id, 2, 1])
     assert result.length == 1
+    
+    result = UserQuestionnaireAnswer.find(:all, :conditions => ['user_id = ? and user_questionnaire_question_id = ?', a.user_id, 1])
+    assert result.length == 2
     
     result = UserQuestionnaireAnswer.find(:all, :conditions => ['user_id = ? and user_questionnaire_option_id = ? and user_questionnaire_question_id = ?', a.user_id, 6, 2])
     assert result.length == 1

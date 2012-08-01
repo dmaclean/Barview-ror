@@ -24,6 +24,11 @@ q2.save
 ##################################
 # Questionnaire question options
 ##################################
+hangout_q = UserQuestionnaireOption.new
+hangout_q.user_questionnaire_question_id = q1.id
+hangout_q.answer = "To hang out with friends"
+hangout_q.save
+
 club_q = UserQuestionnaireOption.new
 club_q.user_questionnaire_question_id = q1.id
 club_q.answer = "To go clubbing"

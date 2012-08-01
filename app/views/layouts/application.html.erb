@@ -214,7 +214,7 @@
 										<div class="clearfix">
 											<label for="q<%= k %>"><%= q['question'] %></label>
 											<div class="input">
-												<%= select('q' + k.to_s, 0, options_for_select(q['options'].invert)) %>
+												<%= select('q' + k.to_s, 0, options_for_select(q['options'].invert), {}, { :multiple => true }) %>
 											</div>
 										</div>
 									<%   end

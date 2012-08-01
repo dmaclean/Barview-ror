@@ -12,6 +12,8 @@ class UserQuestionnaireController < ApplicationController
   def create
     answers = Hash.new
     for k,v in params do
+      logger.info(k.inspect)
+      logger.info(v.inspect)
       if k.index('q') == 0
         answers[k.slice(1..k.size)] = v["0"]
       end
